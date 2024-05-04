@@ -10,6 +10,7 @@ Members of our teams:
 - Alexander [@fedaliaks](https://github.com/fedaliaks) - teamlead,
 - Darya [@DaryaAniskevich](https://github.com/DaryaAniskevich) - developer,
 - Sergio [@sergioivanov008](https://github.com/sergioivanov008) - developer.
+
 Mentor of our team - Dmitry [@Mowgle88](https://github.com/Mowgle88).
 
 You will find the working application [here](https://github.com/FedAliaks/eCommerce-app) (right link will be later)
@@ -21,11 +22,7 @@ The goal of this project is to learn to work in a team and create an e-commerce 
 - Vite,
 - Vitest,
 - TypeScript,
-- React,
-- React-router-dom,
-- Redux Toolkit,
-- CommerseTools,
-... will be adding ???
+- React
 
 ## scripts:
 - `npm run dev` - run development mode, for development;
