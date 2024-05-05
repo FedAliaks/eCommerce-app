@@ -18,7 +18,7 @@ You will find the working application [here](https://github.com/FedAliaks/eComme
 ### purpose of the project:
 The goal of this project is to learn to work in a team and create an e-commerce application using CommerseTools.
 
-### using technogies:
+### using technologies:
 - Vite,
 - Vitest,
 - TypeScript,
@@ -35,7 +35,7 @@ The goal of this project is to learn to work in a team and create an e-commerce 
 - `npm run test` - run test for project;
 - `npm run test:coverage` - run tool for get test coverage for project;
 
-### Install and run the application locally:
+## Install and run the application locally:
 - clone the repository.
 - install the dependencies with `npm i`.
 - Create the project in CommerceTools, setting up the currencies, languages, and other configurations in the Merchant Center.
