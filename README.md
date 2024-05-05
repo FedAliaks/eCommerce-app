@@ -22,7 +22,8 @@ The goal of this project is to learn to work in a team and create an e-commerce 
 - Vite,
 - Vitest,
 - TypeScript,
-- React
+- React,
+- Commercetools
 
 ## scripts:
 - `npm run dev` - run development mode, for development;
@@ -35,6 +36,19 @@ The goal of this project is to learn to work in a team and create an e-commerce 
 - `npm run test:coverage` - run tool for get test coverage for project;
 
 ### Install and run the application locally:
-- clone the repository
-- install the dependencies with `npm i`
+- clone the repository.
+- install the dependencies with `npm i`.
+- Create the project in CommerceTools, setting up the currencies, languages, and other configurations in the Merchant Center.
+- Create the API client for CommerceTools, enabling access to the platform's APIs and managing permissions and scopes required for the project.
+- Save the API environment variables file `.env` in the root directory of your project.
+Save your API environment variables file (.env) in the project directory.
+- rename variables in your `.env` file:
+
+`CTP_PROJECT_KEY` to `VITE_CTP_PROJECT_KEY`
+`CTP_CLIENT_SECRET` to `VITE_CTP_CLIENT_SECRET`
+`CTP_CLIENT_ID` to `VITE_CTP_CLIENT_ID`
+`CTP_AUTH_URL` to `VITE_CTP_AUTH_URL`
+`CTP_API_URL` to `VITE_CTP_API_URL`
+`CTP_SCOPES` to `VITE_CTP_SCOPES`
+
 - start the local server using `npm run dev`
