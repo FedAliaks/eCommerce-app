@@ -10,4 +10,12 @@ export default defineConfig({
     globals: true,
     setupFiles: './setup.ts',
   },
+  define: {
+    global: {},
+  },
+  resolve: {
+    alias: {
+      'node-fetch': 'isomorphic-fetch',
+    },
+  },
 });
