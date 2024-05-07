@@ -1,12 +1,16 @@
-import LoginPage from 'pages/login-page/login-page';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import routes from 'utils/routes';
 
 function App() {
   return (
-    <div>
-      Start Final Project
-      <LoginPage />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {routes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.component} />
+        ))}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
