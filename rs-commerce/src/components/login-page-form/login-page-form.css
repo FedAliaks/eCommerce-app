@@ -1,0 +1,76 @@
+.login-page-form {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.login-page-form-title {
+  font-family: var(--font-family);
+  font-weight: bold;
+  font-size: 48px;
+  color: #333;
+}
+.login-page-form-register {
+  font-family: var(--font-family);
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+.text-blue {
+  color: #209fc1;
+  cursor: pointer;
+  transition: var(--transition-time);
+}
+.text-blue:hover {
+  color: #eb5798;
+}
+.input-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.input-field-name {
+  font-family: var(--font-family);
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+}
+.input-field {
+  border: 1px solid #9f9f9f;
+  border-radius: 10px;
+  width: 453px;
+  height: 65px;
+  background: #fff;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  color: #333;
+  padding: 0 28px;
+}
+.input-field-hints {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 13px;
+  color: #eb5757;
+}
+.login-page-btn {
+  border: 1px solid var(--primary);
+  border-radius: 5px;
+  width: 237px;
+  height: 55px;
+  background: var(--primary);
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.login-page-btn.btn-not-active {
+  border: 1px solid #adadad;
+  background: #adadad;
+  cursor: not-allowed;
+}
