@@ -37,69 +37,57 @@ function LoginPageForm(): JSX.Element {
   const [isCanSubmit, setIsCanSubmit] = useState(false);
 
   const checkIsEmailValid = (): void => {
-    if (emailTouched) {
-      if (checkIsValueEmpty(emailValue)) {
-        setEmailTips(EMAIL_FORM_TIPS.tipsEmailEmpty);
-        setIsEmailValid(false);
-      } else if (checkIsValueHasWhitespaces(emailValue)) {
-        setEmailTips(EMAIL_FORM_TIPS.tipsEmailWhitespaces);
-        setIsEmailValid(false);
-      } else if (!checkEmailHasAmpSymbol(emailValue)) {
-        setEmailTips(EMAIL_FORM_TIPS.tipsEmailAmpSymbol);
-        setIsEmailValid(false);
-      } else if (checkEmailHasLocalPart(emailValue)) {
-        setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPart);
-        setIsEmailValid(false);
-      } else if (checkEmailLocalPartIsValid(emailValue)) {
-        setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPartValid);
-        setIsEmailValid(false);
-      } else if (checkEmailHasDomain(emailValue)) {
-        setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomain);
-        setIsEmailValid(false);
-      } else if (checkEmailDomainIsValid(emailValue)) {
-        setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomainValid);
-        setIsEmailValid(false);
-      } else if (!checkEmailValid(emailValue)) {
-        setEmailTips(EMAIL_FORM_TIPS.tipsEmailFormat);
-        setIsEmailValid(false);
-      } else {
-        setEmailTips('');
-        setIsEmailValid(true);
-      }
+    if (!emailTouched) return;
+
+    if (checkIsValueEmpty(emailValue)) {
+      setEmailTips(EMAIL_FORM_TIPS.tipsEmailEmpty);
+    } else if (checkIsValueHasWhitespaces(emailValue)) {
+      setEmailTips(EMAIL_FORM_TIPS.tipsEmailWhitespaces);
+    } else if (!checkEmailHasAmpSymbol(emailValue)) {
+      setEmailTips(EMAIL_FORM_TIPS.tipsEmailAmpSymbol);
+    } else if (checkEmailHasLocalPart(emailValue)) {
+      setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPart);
+    } else if (checkEmailLocalPartIsValid(emailValue)) {
+      setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPartValid);
+    } else if (checkEmailHasDomain(emailValue)) {
+      setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomain);
+    } else if (checkEmailDomainIsValid(emailValue)) {
+      setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomainValid);
+    } else if (!checkEmailValid(emailValue)) {
+      setEmailTips(EMAIL_FORM_TIPS.tipsEmailFormat);
+    } else {
+      setEmailTips('');
+      setIsEmailValid(true);
     }
+
+    setIsEmailValid(false);
   };
 
   const checkIsPasswordValid = (): void => {
-    if (passwordTouched) {
-      if (checkIsValueEmpty(passwordValue)) {
-        setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordEmpty);
-        setIsPasswordValid(false);
-      } else if (checkIsValueHasWhitespaces(passwordValue)) {
-        setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordWhitespaces);
-        setIsPasswordValid(false);
-      } else if (!checkIsValueHasLowercase(passwordValue)) {
-        setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasLowercase);
-        setIsPasswordValid(false);
-      } else if (!checkIsValueHasUppercase(passwordValue)) {
-        setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasUppercase);
-        setIsPasswordValid(false);
-      } else if (!checkIsValueHasDigit(passwordValue)) {
-        setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasDigit);
-        setIsPasswordValid(false);
-      } else if (!checkIsValueHasSpecial(passwordValue)) {
-        setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasSpecial);
-        setIsPasswordValid(false);
-      } else if (!checkIsValueHasOnlyLatin(passwordValue)) {
-        setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasOnlyLatin);
-        setIsPasswordValid(false);
-      } else if (checkPasswordLength(passwordValue)) {
-        setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordLength);
-        setIsPasswordValid(false);
-      } else {
-        setPasswordTips('');
-        setIsPasswordValid(true);
-      }
+    if (!passwordTouched) return;
+
+    if (checkIsValueEmpty(passwordValue)) {
+      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordEmpty);
+    } else if (checkIsValueHasWhitespaces(passwordValue)) {
+      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordWhitespaces);
+    } else if (!checkIsValueHasLowercase(passwordValue)) {
+      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasLowercase);
+    } else if (!checkIsValueHasUppercase(passwordValue)) {
+      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasUppercase);
+    } else if (!checkIsValueHasDigit(passwordValue)) {
+      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasDigit);
+    } else if (!checkIsValueHasSpecial(passwordValue)) {
+      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasSpecial);
+    } else if (!checkIsValueHasOnlyLatin(passwordValue)) {
+      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasOnlyLatin);
+    } else if (checkPasswordLength(passwordValue)) {
+      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordLength);
+    } else {
+      setPasswordTips('');
+      setIsPasswordValid(true);
     }
+
+    setIsPasswordValid(false);
   };
 
   const checkCanSubmit = (): void => {
