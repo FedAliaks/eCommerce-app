@@ -25,10 +25,24 @@
   color: #eb5798;
 }
 .input-wrapper {
+  width: 400px;
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.password__eye {
+  position: absolute;
+  top: 48px;
+  right: 28px;
+  width: 24px;
+  height: 24px;
+  background: transparent url(../../assets/login-page/eye_closed.svg) center center no-repeat;
+  cursor: pointer;
+  transition: var(--transition-time);
+}
+.eye-open {
+  background: transparent url(../../assets//login-page/eye_open.svg) center center no-repeat;
 }
 .input-field-name {
   font-family: var(--font-family);
@@ -39,16 +53,16 @@
 .input-field {
   border: 1px solid #9f9f9f;
   border-radius: 10px;
-  width: 453px;
   height: 65px;
   background: #fff;
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 16px;
   color: #333;
-  padding: 0 28px;
+  padding: 0 50px 0 28px;
 }
-.input-field-hints {
+.input-field-tips {
+  height: 32px;
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 13px;
@@ -68,6 +82,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: var(--transition-time);
 }
 .login-page-btn.btn-not-active {
   border: 1px solid #adadad;

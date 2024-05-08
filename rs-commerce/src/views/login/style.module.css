@@ -1,0 +1,25 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-page-wrapper {
+  border-radius: 10px;
+  width: 1000px;
+  height: 520px;
+  background-color: rgba(206, 195, 231, 0.3);
+  display: flex;
+  overflow: hidden;
+}
+.login-page-image {
+  width: 100%;
+  background-image: url(../../assets/login-page/login-page_image.png);
+}
+@media screen and (max-width: 1024px) {
+  .login-page-wrapper {
+    width: unset;
+  }
+  .login-page-image {
+    display: none;
+  }
+}
