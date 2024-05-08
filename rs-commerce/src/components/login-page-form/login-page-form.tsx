@@ -25,7 +25,7 @@ import {
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import authSelector from 'redux/selectors';
 import { authActions } from 'redux/slices/auth-slice';
-import LoginPageBtn from 'components/login-page-btn/login-page-btn';
+import ButtonBig from 'components/button-big/button-big';
 import style from './style.module.css';
 
 function LoginPageForm(): JSX.Element {
@@ -33,9 +33,11 @@ function LoginPageForm(): JSX.Element {
   const {
     emailValue,
     emailTouched,
+    isEmailValid,
     emailTips,
     passwordValue,
     passwordTouched,
+    isPasswordValid,
     passwordTips,
     isOpenEye,
   } = useAppSelector(authSelector);
@@ -115,10 +117,18 @@ function LoginPageForm(): JSX.Element {
     dispatch(authActions.setIsOpenEye(!isOpenEye));
   };
 
+  const handleBtnLogin = (): void => {
+    if (isEmailValid && isPasswordValid) {
+      console.log('handle login with data: ', { email: emailValue, password: passwordValue });
+    }
+  };
+
   const eyeStyle = (): string =>
     isOpenEye ? `${style['password__eye']} ${style['eye-open']}` : `${style['password__eye']}`;
 
   const passwordType = (): string => (isOpenEye ? 'text' : 'password');
+
+  const isActiveStyle = (): boolean => isEmailValid && isPasswordValid;
 
   return (
     <div className={style['login-page-form']}>
@@ -153,7 +163,11 @@ function LoginPageForm(): JSX.Element {
         />
         <div className={style['input-field-tips']}>{passwordTips}</div>
       </div>
-      <LoginPageBtn />
+      <ButtonBig
+        isActiveStyle={isActiveStyle()}
+        content={LOGIN_PAGE_TEXT.loginPageBtn}
+        onClick={handleBtnLogin}
+      />
     </div>
   );
 }

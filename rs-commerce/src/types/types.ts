@@ -11,7 +11,7 @@ export type AuthSliceState = {
 };
 
 export type ButtonBigProps = {
-  style: string;
+  isActiveStyle: boolean;
   content: string;
   onClick: () => void;
 };
