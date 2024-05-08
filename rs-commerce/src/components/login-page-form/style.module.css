@@ -5,13 +5,13 @@
   justify-content: space-between;
 }
 .login-page-form-title {
-  font-family: var(--font-family);
+  font-family: var(--font-poppins);
   font-weight: bold;
   font-size: 48px;
   color: #333;
 }
 .login-page-form-register {
-  font-family: var(--font-family);
+  font-family: var(--font-poppins);
   font-weight: bold;
   font-size: 16px;
   color: #333;
@@ -45,7 +45,7 @@
   background: transparent url(../../assets//login-page/eye_open.svg) center center no-repeat;
 }
 .input-field-name {
-  font-family: var(--font-family);
+  font-family: var(--font-poppins);
   font-weight: bold;
   font-size: 16px;
   color: #000;
@@ -55,7 +55,7 @@
   border-radius: 10px;
   height: 65px;
   background: #fff;
-  font-family: var(--font-family);
+  font-family: var(--font-poppins);
   font-weight: 500;
   font-size: 16px;
   color: #333;
@@ -63,7 +63,7 @@
 }
 .input-field-tips {
   height: 32px;
-  font-family: var(--font-family);
+  font-family: var(--font-poppins);
   font-weight: 500;
   font-size: 13px;
   color: #eb5757;
@@ -74,7 +74,7 @@
   width: 237px;
   height: 55px;
   background: var(--primary);
-  font-family: var(--font-family);
+  font-family: var(--font-poppins);
   font-weight: 400;
   font-size: 16px;
   color: #fff;
