@@ -9,3 +9,9 @@ export type AuthSliceState = {
   passwordTips: string;
   isOpenEye: boolean;
 };
+
+export type ButtonBigProps = {
+  style: string;
+  content: string;
+  onClick: () => void;
+};
