@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import Logo from 'assets/logo.png';
+import Logo from 'assets/images/logo.png';
 import style from './style.module.css';
 
 function Header() {
@@ -22,7 +22,7 @@ function Header() {
   const toggleBurgerMenu = () => setIsBurgerMenuOpen(!isBurgerMenuOpen);
 
   return (
-    <header className={style['header']}>
+    <header className={`${style['header']} container`}>
       <Link to="/" className={style['logo']}>
         <img src={Logo} width="40" height="40" alt="Hurricane bookstore logo" />
         <span>Hurricane bookstore</span>
