@@ -1,4 +1,9 @@
-import { EMAIL_FORM_TIPS, LOGIN_PAGE_TEXT, PASSWORD_FORM_TIPS } from 'constants/constants';
+import {
+  EMAIL_FORM_TIPS,
+  LOGIN_PAGE_TEXT,
+  PASSWORD_FORM_TIPS,
+  ROUTE_PATH,
+} from 'constants/constants';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -149,7 +154,7 @@ function LoginPageForm(): JSX.Element {
       <div className={style['login-page-form-title']}>{LOGIN_PAGE_TEXT.titleForm}</div>
       <div className={style['login-page-form-register']}>
         {LOGIN_PAGE_TEXT.linkRegistration}
-        <Link to="/registration" className={style['text-blue']}>
+        <Link to={ROUTE_PATH.registration} className={style['text-blue']}>
           {LOGIN_PAGE_TEXT.linkTo}
         </Link>
       </div>

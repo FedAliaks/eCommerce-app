@@ -45,3 +45,9 @@ export const REGEXP = {
   hasOnlyLatin: /^[A-Za-z0-9!@#$%^&*]+$/,
   minPasswordLength: 8,
 };
+
+export const ROUTE_PATH = {
+  main: '/',
+  login: '/login',
+  registration: '/registration',
+};
