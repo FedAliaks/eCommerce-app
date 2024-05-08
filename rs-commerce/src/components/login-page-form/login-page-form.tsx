@@ -4,7 +4,7 @@ import {
   PASSWORD_FORM_TIPS,
   ROUTE_PATH,
 } from 'constants/constants';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   checkEmailDomainIsValid,
@@ -22,80 +22,79 @@ import {
   checkIsValueHasWhitespaces,
   checkPasswordLength,
 } from 'utils/check-utils';
+import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
+import authSelector from 'redux/selectors';
+import { authActions } from 'redux/slices/auth-slice';
 import style from './style.module.css';
 
 function LoginPageForm(): JSX.Element {
-  const [emailValue, setEmailValue] = useState('');
-  const [emailTouched, setEmailTouched] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [emailTips, setEmailTips] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
-  const [passwordTouched, setPasswordTouched] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [passwordTips, setPasswordTips] = useState('');
-  const [isOpenEye, setIsOpenEye] = useState(false);
-  const [isCanSubmit, setIsCanSubmit] = useState(false);
+  const dispatch = useAppDispatch();
+  const {
+    emailValue,
+    emailTouched,
+    isEmailValid,
+    emailTips,
+    passwordValue,
+    passwordTouched,
+    isPasswordValid,
+    passwordTips,
+    isOpenEye,
+  } = useAppSelector(authSelector);
 
   const checkIsEmailValid = (): void => {
     if (!emailTouched) return;
 
     if (checkIsValueEmpty(emailValue)) {
-      setEmailTips(EMAIL_FORM_TIPS.tipsEmailEmpty);
+      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailEmpty));
     } else if (checkIsValueHasWhitespaces(emailValue)) {
-      setEmailTips(EMAIL_FORM_TIPS.tipsEmailWhitespaces);
+      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailWhitespaces));
     } else if (!checkEmailHasAmpSymbol(emailValue)) {
-      setEmailTips(EMAIL_FORM_TIPS.tipsEmailAmpSymbol);
+      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailAmpSymbol));
     } else if (checkEmailHasLocalPart(emailValue)) {
-      setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPart);
+      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPart));
     } else if (checkEmailLocalPartIsValid(emailValue)) {
-      setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPartValid);
+      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPartValid));
     } else if (checkEmailHasDomain(emailValue)) {
-      setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomain);
+      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomain));
     } else if (checkEmailDomainIsValid(emailValue)) {
-      setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomainValid);
+      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomainValid));
     } else if (!checkEmailValid(emailValue)) {
-      setEmailTips(EMAIL_FORM_TIPS.tipsEmailFormat);
+      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailFormat));
     } else {
-      setEmailTips('');
-      setIsEmailValid(true);
+      dispatch(authActions.setEmailTips(''));
+      dispatch(authActions.setIsEmailValid(true));
+      return;
     }
 
-    setIsEmailValid(false);
+    dispatch(authActions.setIsEmailValid(false));
   };
 
   const checkIsPasswordValid = (): void => {
     if (!passwordTouched) return;
 
     if (checkIsValueEmpty(passwordValue)) {
-      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordEmpty);
+      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordEmpty));
     } else if (checkIsValueHasWhitespaces(passwordValue)) {
-      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordWhitespaces);
+      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordWhitespaces));
     } else if (!checkIsValueHasLowercase(passwordValue)) {
-      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasLowercase);
+      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasLowercase));
     } else if (!checkIsValueHasUppercase(passwordValue)) {
-      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasUppercase);
+      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasUppercase));
     } else if (!checkIsValueHasDigit(passwordValue)) {
-      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasDigit);
+      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasDigit));
     } else if (!checkIsValueHasSpecial(passwordValue)) {
-      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasSpecial);
+      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasSpecial));
     } else if (!checkIsValueHasOnlyLatin(passwordValue)) {
-      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasOnlyLatin);
-    } else if (checkPasswordLength(passwordValue)) {
-      setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordLength);
+      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasOnlyLatin));
+    } else if (!checkPasswordLength(passwordValue)) {
+      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordLength));
     } else {
-      setPasswordTips('');
-      setIsPasswordValid(true);
+      dispatch(authActions.setPasswordTips(''));
+      dispatch(authActions.setIsPasswordValid(true));
+      return;
     }
 
-    setIsPasswordValid(false);
-  };
-
-  const checkCanSubmit = (): void => {
-    if (isEmailValid && isPasswordValid) {
-      setIsCanSubmit(true);
-    } else {
-      setIsCanSubmit(false);
-    }
+    dispatch(authActions.setIsPasswordValid(false));
   };
 
   useEffect(() => {
@@ -103,22 +102,18 @@ function LoginPageForm(): JSX.Element {
     checkIsPasswordValid();
   }, [emailValue, passwordValue]);
 
-  useEffect(() => {
-    checkCanSubmit();
-  }, [isEmailValid, isPasswordValid]);
-
   const handleInputEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setEmailTouched(true);
-    setEmailValue(e.target.value);
+    dispatch(authActions.setEmailTouched(true));
+    dispatch(authActions.setEmailValue(e.target.value));
   };
 
   const handleInputPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setPasswordTouched(true);
-    setPasswordValue(e.target.value);
+    dispatch(authActions.setPasswordTouched(true));
+    dispatch(authActions.setPasswordValue(e.target.value));
   };
 
   const openEye = (): void => {
-    setIsOpenEye(!isOpenEye);
+    dispatch(authActions.setIsOpenEye(!isOpenEye));
   };
 
   const handleBtnLogin = (): void => {
@@ -128,7 +123,7 @@ function LoginPageForm(): JSX.Element {
   };
 
   const loginPageBtnStyle = (): string =>
-    isCanSubmit
+    isEmailValid && isPasswordValid
       ? `${style['login-page-btn']}`
       : `${style['login-page-btn']} ${style['btn-not-active']}`;
 

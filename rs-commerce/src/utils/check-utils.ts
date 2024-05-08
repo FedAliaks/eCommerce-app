@@ -61,5 +61,5 @@ export function checkIsValueHasOnlyLatin(value: string): boolean {
 }
 
 export function checkPasswordLength(value: string): boolean {
-  return value.length < REGEXP.minPasswordLength;
+  return value.length >= REGEXP.minPasswordLength;
 }
