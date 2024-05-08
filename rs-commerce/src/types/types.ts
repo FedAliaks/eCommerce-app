@@ -7,11 +7,18 @@ export type AuthSliceState = {
   passwordTouched: boolean;
   isPasswordValid: boolean;
   passwordTips: string;
-  isOpenEye: boolean;
 };
 
 export type ButtonBigProps = {
   isActiveStyle: boolean;
   content: string;
   onClick: () => void;
+};
+
+export type InputProps = {
+  nameWrapper: string;
+  namePlaceholder: string;
+  inputValue: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  inputTips: string;
 };

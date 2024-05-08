@@ -26,6 +26,8 @@ import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import authSelector from 'redux/selectors';
 import { authActions } from 'redux/slices/auth-slice';
 import ButtonBig from 'components/button-big/button-big';
+import InputPassword from 'components/input-password/input-password';
+import InputText from 'components/input-text/input-text';
 import style from './style.module.css';
 
 function LoginPageForm(): JSX.Element {
@@ -39,7 +41,6 @@ function LoginPageForm(): JSX.Element {
     passwordTouched,
     isPasswordValid,
     passwordTips,
-    isOpenEye,
   } = useAppSelector(authSelector);
 
   const checkIsEmailValid = (): void => {
@@ -113,20 +114,11 @@ function LoginPageForm(): JSX.Element {
     dispatch(authActions.setPasswordValue(e.target.value));
   };
 
-  const openEye = (): void => {
-    dispatch(authActions.setIsOpenEye(!isOpenEye));
-  };
-
   const handleBtnLogin = (): void => {
     if (isEmailValid && isPasswordValid) {
       console.log('handle login with data: ', { email: emailValue, password: passwordValue });
     }
   };
-
-  const eyeStyle = (): string =>
-    isOpenEye ? `${style['password__eye']} ${style['eye-open']}` : `${style['password__eye']}`;
-
-  const passwordType = (): string => (isOpenEye ? 'text' : 'password');
 
   const isActiveStyle = (): boolean => isEmailValid && isPasswordValid;
 
@@ -139,30 +131,20 @@ function LoginPageForm(): JSX.Element {
           {LOGIN_PAGE_TEXT.linkTo}
         </Link>
       </div>
-      <div className={style['input-wrapper']}>
-        <div className={style['input-field-name']}>{LOGIN_PAGE_TEXT.titleEmail}</div>
-        <input
-          className={style['input-field']}
-          id="login-email"
-          placeholder={LOGIN_PAGE_TEXT.placeholderEmail}
-          value={emailValue}
-          onChange={handleInputEmail}
-        />
-        <div className={style['input-field-tips']}>{emailTips}</div>
-      </div>
-      <div className={style['input-wrapper']}>
-        <div className={eyeStyle()} onClick={openEye} role="presentation" />
-        <div className={style['input-field-name']}>{LOGIN_PAGE_TEXT.titlePassword}</div>
-        <input
-          className={style['input-field']}
-          id="login-password"
-          type={passwordType()}
-          placeholder={LOGIN_PAGE_TEXT.placeholderPassword}
-          value={passwordValue}
-          onChange={handleInputPassword}
-        />
-        <div className={style['input-field-tips']}>{passwordTips}</div>
-      </div>
+      <InputText
+        nameWrapper={LOGIN_PAGE_TEXT.titleEmail}
+        namePlaceholder={LOGIN_PAGE_TEXT.placeholderEmail}
+        inputValue={emailValue}
+        onChange={handleInputEmail}
+        inputTips={emailTips}
+      />
+      <InputPassword
+        nameWrapper={LOGIN_PAGE_TEXT.titlePassword}
+        namePlaceholder={LOGIN_PAGE_TEXT.placeholderPassword}
+        inputValue={passwordValue}
+        onChange={handleInputPassword}
+        inputTips={passwordTips}
+      />
       <ButtonBig
         isActiveStyle={isActiveStyle()}
         content={LOGIN_PAGE_TEXT.loginPageBtn}

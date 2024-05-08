@@ -10,7 +10,6 @@ const initialState: AuthSliceState = {
   passwordTouched: false,
   isPasswordValid: false,
   passwordTips: '',
-  isOpenEye: false,
 };
 
 export const authSlice = createSlice({
@@ -41,9 +40,6 @@ export const authSlice = createSlice({
     setPasswordTips(state, action: PayloadAction<string>) {
       state.passwordTips = action.payload;
     },
-    setIsOpenEye(state, action: PayloadAction<boolean>) {
-      state.isOpenEye = action.payload;
-    },
     resetSlice(state) {
       state.emailValue = '';
       state.emailTouched = false;
@@ -53,7 +49,6 @@ export const authSlice = createSlice({
       state.passwordTouched = false;
       state.isPasswordValid = false;
       state.passwordTips = '';
-      state.isOpenEye = false;
     },
   },
 });
