@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Logo from 'assets/images/logo.png';
 import style from './style.module.css';
 
 function Header() {
+  const location = useLocation();
+
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
   const rightList = [
@@ -20,6 +22,10 @@ function Header() {
   ];
 
   const toggleBurgerMenu = () => setIsBurgerMenuOpen(!isBurgerMenuOpen);
+
+  useEffect(() => {
+    setIsBurgerMenuOpen(false);
+  }, [location]);
 
   return (
     <header className={`${style['header']} container`}>
