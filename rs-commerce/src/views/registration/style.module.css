@@ -17,18 +17,3 @@
 .formTitle {
   text-align: center;
 }
-
-.fieldForm {
-  padding: 5px 10px;
-  display: grid;
-  grid-template-columns: 100px 1fr;
-}
-
-.inputMistake {
-  font-size: 12px;
-  color: red;
-}
-
-.fieldBtn {
-  text-align: center;
-}
