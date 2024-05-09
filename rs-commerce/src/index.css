@@ -16,8 +16,13 @@
   --lilac-light-30: #cec3e730;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   background-color: var(--white);
   font-size: 16px;
+  overflow-x: hidden;
 }
