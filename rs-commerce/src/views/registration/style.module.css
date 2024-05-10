@@ -18,34 +18,7 @@ h3 {
 
 .registration__wrapper {
   padding: 20px 10px;
-  background-color: rgba(206, 195, 231, 0.3);
-}
-
-.registration__title-block {
-  display: flex;
-  justify-content: space-between;
-}
-
-.registration__title {
-  color: rgb(51, 51, 51);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 48px;
-}
-
-.registration__login-content {
-  color: rgb(0, 0, 0);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-}
-
-.registration__link {
-  color: rgb(99, 28, 122);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  text-decoration: underline;
+  background-color: var(#cec3e7);
 }
 
 .input__label {
@@ -74,14 +47,6 @@ h3 {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-}
-
-.registration__login-block {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 300px;
-  width: 100%;
 }
 
 .registration__input {

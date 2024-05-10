@@ -1,3 +1,4 @@
+import ButtonRegistration from './components/ButtonRegistration/ButtonRegistration';
 import classes from './style.module.css';
 
 function RegistrationForm(): JSX.Element {
@@ -192,9 +193,7 @@ function RegistrationForm(): JSX.Element {
           </div>
         </div>
       </div>
-      <button type="submit" className={classes['registration__button']}>
-        Submit
-      </button>
+      <ButtonRegistration />
     </form>
   );
 }

@@ -6,14 +6,12 @@ function ButtonRegistration(): JSX.Element {
     console.log('click registration');
   };
   return (
-    <div className={classes['fieldBtn']}>
-      <button
-        type="submit"
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) => registrationClick(e)}
-        className={classes['btn']}>
-        Registration
-      </button>
-    </div>
+    <button
+      type="submit"
+      onClick={(e) => registrationClick(e)}
+      className={classes['registration__button']}>
+      Submit
+    </button>
   );
 }
 
