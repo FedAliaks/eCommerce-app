@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { AuthSliceState } from 'types/types';
+import { LoginFormSliceState } from 'types/types';
 
-const initialState: AuthSliceState = {
+const initialState: LoginFormSliceState = {
   emailValue: '',
   emailTouched: false,
   isEmailValid: false,
@@ -12,8 +12,8 @@ const initialState: AuthSliceState = {
   passwordTips: '',
 };
 
-export const authSlice = createSlice({
-  name: 'auth',
+export const loginFormSlice = createSlice({
+  name: 'loginForm',
   initialState,
   reducers: {
     setEmailValue(state, action: PayloadAction<string>) {
@@ -40,7 +40,7 @@ export const authSlice = createSlice({
     setPasswordTips(state, action: PayloadAction<string>) {
       state.passwordTips = action.payload;
     },
-    resetSlice(state) {
+    resetLoginFormSlice(state) {
       state.emailValue = '';
       state.emailTouched = false;
       state.isEmailValid = false;
@@ -53,4 +53,4 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reducer: authReducer, actions: authActions } = authSlice;
+export const { reducer: loginFormReducer, actions: loginFormActions } = loginFormSlice;
