@@ -8,7 +8,9 @@
 
 :root {
   --white: #fff;
+  --black: #000;
   --gray-middle: #333333;
+  --gray-light: #9f9f9f;
   --lilac-dark: #631c7a;
   --lilac-light: #cec3e7;
   --lilac-light-30: #cec3e730;
@@ -18,8 +20,13 @@
   --transition-time: 0.2s;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   background-color: var(--white);
   font-size: 16px;
+  overflow-x: hidden;
 }
