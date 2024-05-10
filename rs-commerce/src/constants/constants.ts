@@ -3,8 +3,10 @@ export const LOGIN_PAGE_TEXT = {
   linkRegistration: "Don't have an account yet? ",
   linkTo: 'Register',
   titleEmail: 'Email',
+  idEmail: 'login-email',
   placeholderEmail: 'Enter email',
   titlePassword: 'Password',
+  idPassword: 'login-password',
   placeholderPassword: 'Enter password',
   loginPageBtn: 'Submit',
 };

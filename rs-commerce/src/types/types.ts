@@ -17,6 +17,7 @@ export type ButtonBigProps = {
 
 export type InputProps = {
   nameWrapper: string;
+  nameId: string;
   namePlaceholder: string;
   inputValue: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

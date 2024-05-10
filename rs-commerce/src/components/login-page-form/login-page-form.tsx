@@ -133,6 +133,7 @@ function LoginPageForm(): JSX.Element {
       </div>
       <InputText
         nameWrapper={LOGIN_PAGE_TEXT.titleEmail}
+        nameId={LOGIN_PAGE_TEXT.idEmail}
         namePlaceholder={LOGIN_PAGE_TEXT.placeholderEmail}
         inputValue={emailValue}
         onChange={handleInputEmail}
@@ -140,6 +141,7 @@ function LoginPageForm(): JSX.Element {
       />
       <InputPassword
         nameWrapper={LOGIN_PAGE_TEXT.titlePassword}
+        nameId={LOGIN_PAGE_TEXT.idPassword}
         namePlaceholder={LOGIN_PAGE_TEXT.placeholderPassword}
         inputValue={passwordValue}
         onChange={handleInputPassword}
