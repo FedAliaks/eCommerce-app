@@ -1,6 +1,7 @@
 import { ROUTE_PATH } from 'constants/constants';
 import Login from 'views/login/Login';
 import Main from 'views/main/Main';
+import NotFound from 'views/notFound/NotFound';
 import Registration from 'views/registration/Registration';
 
 const routes = [
@@ -15,6 +16,10 @@ const routes = [
   {
     path: ROUTE_PATH.registration,
     component: <Registration />,
+  },
+  {
+    path: '*',
+    component: <NotFound />,
   },
 ];
 

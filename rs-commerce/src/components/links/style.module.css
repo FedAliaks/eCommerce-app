@@ -1,0 +1,25 @@
+.link {
+  padding: 12px 80px;
+  border: 1px solid var(--lilac-dark);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.link:hover {
+  background-color: var(--lilac-light-30);
+}
+
+@media screen and (max-width: 768px) {
+  .link {
+    font-size: 14px;
+    padding: 10px 60px;
+  }
+}
+
+@media screen and (max-width: 412px) {
+  .link {
+    font-size: 12px;
+    padding: 10px 40px;
+  }
+}
