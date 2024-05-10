@@ -23,11 +23,13 @@ import {
   checkPasswordLength,
 } from 'utils/check-utils';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
-import authSelector from 'redux/selectors';
-import { authActions } from 'redux/slices/auth-slice';
+import loginFormSelector from 'redux/selectors';
+import { loginFormActions } from 'redux/slices/login-form-slice';
+import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import ButtonBig from 'components/button-big/button-big';
 import InputPassword from 'components/input-password/input-password';
 import InputText from 'components/input-text/input-text';
+import { LoginData } from 'types/types';
 import style from './style.module.css';
 
 function LoginPageForm(): JSX.Element {
@@ -41,62 +43,62 @@ function LoginPageForm(): JSX.Element {
     passwordTouched,
     isPasswordValid,
     passwordTips,
-  } = useAppSelector(authSelector);
+  } = useAppSelector(loginFormSelector);
 
   const checkIsEmailValid = (): void => {
     if (!emailTouched) return;
 
     if (checkIsValueEmpty(emailValue)) {
-      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailEmpty));
+      dispatch(loginFormActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailEmpty));
     } else if (checkIsValueHasWhitespaces(emailValue)) {
-      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailWhitespaces));
+      dispatch(loginFormActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailWhitespaces));
     } else if (!checkEmailHasAmpSymbol(emailValue)) {
-      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailAmpSymbol));
+      dispatch(loginFormActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailAmpSymbol));
     } else if (checkEmailHasLocalPart(emailValue)) {
-      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPart));
+      dispatch(loginFormActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPart));
     } else if (checkEmailLocalPartIsValid(emailValue)) {
-      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPartValid));
+      dispatch(loginFormActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailLocalPartValid));
     } else if (checkEmailHasDomain(emailValue)) {
-      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomain));
+      dispatch(loginFormActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomain));
     } else if (checkEmailDomainIsValid(emailValue)) {
-      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomainValid));
+      dispatch(loginFormActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailDomainValid));
     } else if (!checkEmailValid(emailValue)) {
-      dispatch(authActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailFormat));
+      dispatch(loginFormActions.setEmailTips(EMAIL_FORM_TIPS.tipsEmailFormat));
     } else {
-      dispatch(authActions.setEmailTips(''));
-      dispatch(authActions.setIsEmailValid(true));
+      dispatch(loginFormActions.setEmailTips(''));
+      dispatch(loginFormActions.setIsEmailValid(true));
       return;
     }
 
-    dispatch(authActions.setIsEmailValid(false));
+    dispatch(loginFormActions.setIsEmailValid(false));
   };
 
   const checkIsPasswordValid = (): void => {
     if (!passwordTouched) return;
 
     if (checkIsValueEmpty(passwordValue)) {
-      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordEmpty));
+      dispatch(loginFormActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordEmpty));
     } else if (checkIsValueHasWhitespaces(passwordValue)) {
-      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordWhitespaces));
+      dispatch(loginFormActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordWhitespaces));
     } else if (!checkIsValueHasLowercase(passwordValue)) {
-      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasLowercase));
+      dispatch(loginFormActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasLowercase));
     } else if (!checkIsValueHasUppercase(passwordValue)) {
-      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasUppercase));
+      dispatch(loginFormActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasUppercase));
     } else if (!checkIsValueHasDigit(passwordValue)) {
-      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasDigit));
+      dispatch(loginFormActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasDigit));
     } else if (!checkIsValueHasSpecial(passwordValue)) {
-      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasSpecial));
+      dispatch(loginFormActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasSpecial));
     } else if (!checkIsValueHasOnlyLatin(passwordValue)) {
-      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasOnlyLatin));
+      dispatch(loginFormActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordHasOnlyLatin));
     } else if (!checkPasswordLength(passwordValue)) {
-      dispatch(authActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordLength));
+      dispatch(loginFormActions.setPasswordTips(PASSWORD_FORM_TIPS.tipsPasswordLength));
     } else {
-      dispatch(authActions.setPasswordTips(''));
-      dispatch(authActions.setIsPasswordValid(true));
+      dispatch(loginFormActions.setPasswordTips(''));
+      dispatch(loginFormActions.setIsPasswordValid(true));
       return;
     }
 
-    dispatch(authActions.setIsPasswordValid(false));
+    dispatch(loginFormActions.setIsPasswordValid(false));
   };
 
   useEffect(() => {
@@ -105,18 +107,19 @@ function LoginPageForm(): JSX.Element {
   }, [emailValue, passwordValue]);
 
   const handleInputEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    dispatch(authActions.setEmailTouched(true));
-    dispatch(authActions.setEmailValue(e.target.value));
+    dispatch(loginFormActions.setEmailTouched(true));
+    dispatch(loginFormActions.setEmailValue(e.target.value));
   };
 
   const handleInputPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    dispatch(authActions.setPasswordTouched(true));
-    dispatch(authActions.setPasswordValue(e.target.value));
+    dispatch(loginFormActions.setPasswordTouched(true));
+    dispatch(loginFormActions.setPasswordValue(e.target.value));
   };
 
   const handleBtnLogin = (): void => {
     if (isEmailValid && isPasswordValid) {
-      console.log('handle login with data: ', { email: emailValue, password: passwordValue });
+      const loginData: LoginData = { email: emailValue, password: passwordValue };
+      dispatch(apiAuthActions.startAuth({ data: loginData }));
     }
   };
 

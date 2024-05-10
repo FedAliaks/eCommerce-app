@@ -53,3 +53,9 @@ export const ROUTE_PATH = {
   login: '/login',
   registration: '/registration',
 };
+
+export const LOCAL_STORAGE_TOKEN = 'hurricane_access_token';
+
+export const STATUS = {
+  CODE_400: 400,
+};

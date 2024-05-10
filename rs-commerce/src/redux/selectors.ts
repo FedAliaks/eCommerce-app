@@ -1,5 +1,5 @@
 import { RootState } from './configure-store';
 
-const authSelector = (state: RootState) => state.auth;
+const loginFormSelector = (state: RootState) => state.loginForm;
 
-export default authSelector;
+export default loginFormSelector;
