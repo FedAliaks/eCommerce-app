@@ -14,6 +14,10 @@
   --lilac-dark: #631c7a;
   --lilac-light: #cec3e7;
   --lilac-light-30: #cec3e730;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+  --primary: #631c7a;
+  --transition-time: 0.2s;
 }
 
 html {
