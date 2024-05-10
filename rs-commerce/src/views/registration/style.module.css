@@ -14,11 +14,9 @@ h3 {
 
 .registration__wrapper {
   width: 70%;
-}
-
-.registration__wrapper {
   padding: 20px 10px;
-  background-color: var(#cec3e7);
+  background-color: var(--lilac-light);
+  border-radius: 10px;
 }
 
 .input__label {
@@ -49,14 +47,39 @@ h3 {
   flex-wrap: wrap;
 }
 
-.registration__input {
-  height: 40px;
-  width: 400px;
-  font-size: 24px;
-}
-
 .registration__input_small {
   width: 240px;
+}
+
+.registration__subtitle-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.registration__column-title {
+  color: var(--gray-middle);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.checkbox__content {
+  color: var(--gray-middle);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.registration__button {
+  display: block;
+  margin: 20px auto 0;
+  width: 237px;
+  height: 55px;
+  background-color: var(--lilac-dark);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--white);
 }
 
 .input__title {
@@ -73,33 +96,8 @@ h3 {
   line-height: 20px;
 }
 
-.registration__subtitle-block {
-  display: flex;
-  justify-content: space-between;
-}
-
-.registration__column-title {
-  color: rgb(0, 0, 0);
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 24px;
-}
-
-.checkbox__content {
-  color: rgb(0, 0, 0);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-}
-
-.registration__button {
-  display: block;
-  margin: 20px auto 0;
-  width: 237px;
-  height: 55px;
-  background-color: rgb(99, 28, 122);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: rgb(255, 255, 255);
+.registration__input {
+  height: 40px;
+  width: 400px;
+  font-size: 24px;
 }

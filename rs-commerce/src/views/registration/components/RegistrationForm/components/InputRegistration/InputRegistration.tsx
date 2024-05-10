@@ -7,19 +7,23 @@ export type InputProps = {
     type: 'email' | 'password' | 'date' | 'text';
     placeholder: string;
     mistakeContent: string;
+    smallSize?: boolean;
   };
 };
 
 function InputRegistration(props: InputProps) {
   const { input } = props;
-  const { htmlFor, title, type, placeholder, mistakeContent } = input;
+  const { htmlFor, title, type, placeholder, mistakeContent, smallSize } = input;
+  let inputSize = classes['registration__input'];
+  if (smallSize) {
+    inputSize = `${classes['registration__input']} ${classes['registration__input_small']}`;
+  }
   return (
-    <label htmlFor={htmlFor} className={classes['fieldForm']}>
-      {' '}
-      {title}
-      <div>
-        <input id={htmlFor} type={type} placeholder={placeholder} />
-        <p className={classes['inputMistake']}>{mistakeContent}</p>
+    <label htmlFor={htmlFor}>
+      <p className={classes['input__title']}>{title}</p>
+      <div className={classes['input__block']}>
+        <input className={inputSize} id={htmlFor} type={type} placeholder={placeholder} />
+        <p className={classes['input__error']}>{mistakeContent}</p>
       </div>
     </label>
   );

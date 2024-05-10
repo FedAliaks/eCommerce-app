@@ -1,10 +1,23 @@
-.fieldForm {
-  padding: 5px 10px;
-  display: grid;
-  grid-template-columns: 130px 1fr;
+.input__title {
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
 }
 
-.inputMistake {
-  font-size: 12px;
-  color: red;
+.input__error {
+  color: rgb(235, 87, 87);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.registration__input {
+  height: 40px;
+  width: 400px;
+  font-size: 24px;
+}
+
+.registration__input_small {
+  width: 240px;
 }

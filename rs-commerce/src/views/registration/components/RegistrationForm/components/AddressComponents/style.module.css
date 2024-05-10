@@ -1,0 +1,28 @@
+.address__title-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.address {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.input__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input_checkbox {
+  transform: scale(1.5);
+}
+
+.checkbox__content {
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
