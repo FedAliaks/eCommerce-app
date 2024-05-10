@@ -28,20 +28,30 @@
   display: none;
 }
 
-.header a {
+.header a,
+.header .logout {
   color: var(--black);
   font-weight: 500;
   text-decoration: none;
   font-size: 16px;
 }
 
-.header a:not(.logo):hover {
+.header a:not(.logo):hover,
+.header .logout:hover {
   color: var(--lilac-dark);
 }
 
-.header a.underline {
+.header a.underline,
+.header .logout {
   text-decoration: underline;
 }
+
+.header .logout {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
 .nav {
   display: flex;
   width: 100%;
