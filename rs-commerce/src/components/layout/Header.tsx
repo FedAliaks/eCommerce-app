@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Logo from 'assets/images/logo.png';
+import { ROUTE_PATH } from 'constants/constants';
 import style from './style.module.css';
 
 function Header() {
@@ -10,12 +11,12 @@ function Header() {
 
   const rightList = [
     {
-      path: '/login',
+      path: ROUTE_PATH.login,
       title: 'Login',
       className: style['underline'],
     },
     {
-      path: '/registration',
+      path: ROUTE_PATH.registration,
       title: 'Registration',
       className: style['underline'],
     },

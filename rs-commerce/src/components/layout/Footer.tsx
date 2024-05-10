@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
+import { ROUTE_PATH } from 'constants/constants';
 import style from './style.module.css';
 
 function Footer() {
   const linkList = [
     {
-      path: '/',
+      path: ROUTE_PATH.main,
       title: 'Main',
     },
   ];
