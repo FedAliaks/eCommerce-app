@@ -22,3 +22,8 @@ export type InputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputTips: string;
 };
+
+export type LoginData = {
+  email: string;
+  password: string;
+};

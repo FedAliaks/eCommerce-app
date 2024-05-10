@@ -28,6 +28,8 @@ import { authActions } from 'redux/slices/auth-slice';
 import ButtonBig from 'components/button-big/button-big';
 import InputPassword from 'components/input-password/input-password';
 import InputText from 'components/input-text/input-text';
+import { apiLogin } from 'api/api';
+import { LoginData } from 'types/types';
 import style from './style.module.css';
 
 function LoginPageForm(): JSX.Element {
@@ -116,7 +118,8 @@ function LoginPageForm(): JSX.Element {
 
   const handleBtnLogin = (): void => {
     if (isEmailValid && isPasswordValid) {
-      console.log('handle login with data: ', { email: emailValue, password: passwordValue });
+      const loginData: LoginData = { email: emailValue, password: passwordValue };
+      apiLogin(loginData);
     }
   };
 
