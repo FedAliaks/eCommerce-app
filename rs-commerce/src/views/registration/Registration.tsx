@@ -1,5 +1,5 @@
 import RegistrationForm from './components/RegistrationForm/RegistrationForm';
-import TitleRegistration from './components/RegistrationForm/components/TitleRegistration/TitleRegistration';
+import TitleRegistration from './components/TitleRegistration/TitleRegistration';
 import classes from './style.module.css';
 
 function Registration() {

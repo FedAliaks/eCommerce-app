@@ -1,4 +1,10 @@
-.registration {
+.registration-form__wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+/* .registration {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,11 +38,7 @@
   text-decoration: underline;
 }
 
-.registration-form__wrapper {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
+
 
 .registration__login-block {
   display: flex;
@@ -60,7 +62,7 @@
 }
 
 .input__error {
-  color: rgb(235, 87, 87);
+  color: var(--mistake);
   font-size: 13px;
   font-weight: 500;
   line-height: 20px;
@@ -72,8 +74,9 @@
 }
 
 .registration__column-title {
-  color: rgb(0, 0, 0);
+  color: var(--dark);
   font-size: 20px;
   font-weight: 500;
   line-height: 24px;
 }
+ */

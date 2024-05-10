@@ -4,25 +4,10 @@
 }
 
 .registration__title {
-  color: rgb(51, 51, 51);
+  color: var(--grey-middle);
   font-size: 32px;
   font-weight: 700;
   line-height: 48px;
-}
-
-.registration__login-content {
-  color: rgb(0, 0, 0);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-}
-
-.registration__link {
-  color: rgb(99, 28, 122);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  text-decoration: underline;
 }
 
 .registration__login-block {
@@ -31,4 +16,19 @@
   align-items: center;
   max-width: 300px;
   width: 100%;
+}
+
+.registration__login-content {
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.registration__link {
+  color: var(--lilac-dark);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-decoration: underline;
 }

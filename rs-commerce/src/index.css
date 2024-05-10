@@ -8,10 +8,12 @@
 
 :root {
   --white: #fff;
+  --dark: #000;
   --gray-middle: #333333;
   --lilac-dark: #631c7a;
   --lilac-light: #cec3e7;
   --lilac-light-30: #cec3e730;
+  --mistake: rgb(235, 87, 87);
 }
 
 body {
