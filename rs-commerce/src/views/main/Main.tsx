@@ -1,4 +1,4 @@
-import { RangeBlock, TopBlock, BenefitsBlock } from './components';
+import { RangeBlock, TopBlock, BenefitsBlock, ShareBlock } from './components';
 
 function Main() {
   return (
@@ -6,6 +6,7 @@ function Main() {
       <TopBlock />
       <RangeBlock />
       <BenefitsBlock />
+      <ShareBlock />
     </>
   );
 }
