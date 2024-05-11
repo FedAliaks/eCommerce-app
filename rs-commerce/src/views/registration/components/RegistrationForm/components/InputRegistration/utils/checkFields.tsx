@@ -12,7 +12,7 @@ export enum TypeFields {
   shippingPostCode = 'shippingPostCode',
 }
 
-const registrationParamsObj = {
+export const registrationParamsObj = {
   dateOfBirth: '',
   firstName: '',
   lastName: '',
@@ -24,6 +24,8 @@ const registrationParamsObj = {
   password: '',
   billingPostCode: '',
   shippingPostCode: '',
+  billingCountry: '',
+  shippingCountry: '',
 };
 
 const regExpObj = {
