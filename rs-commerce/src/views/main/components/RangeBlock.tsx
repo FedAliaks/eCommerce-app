@@ -1,24 +1,7 @@
 import { Heading, SubHeading } from 'components/heading';
-import romance from 'assets/main/romance.png';
-import psychology from 'assets/main/psychology.png';
-import thriller from 'assets/main/thriller.png';
 import RangeItem from './RangeItem';
 import style from '../style.module.css';
-
-const rangeItems = [
-  {
-    image: romance,
-    text: 'Romance',
-  },
-  {
-    image: thriller,
-    text: 'Thriller',
-  },
-  {
-    image: psychology,
-    text: 'Psychology',
-  },
-];
+import { rangeItems } from './constants';
 
 function RangeBlock() {
   return (
