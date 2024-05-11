@@ -8,20 +8,19 @@ export type InputProps = {
     title: string;
     type: 'email' | 'password' | 'date' | 'text';
     placeholder: string;
-    mistakeContent: string;
     smallSize?: boolean;
   };
 };
 
 function InputRegistration(props: InputProps) {
   const { input } = props;
-  const { htmlFor, title, type, placeholder, mistakeContent, smallSize } = input;
+  const { htmlFor, title, type, placeholder, smallSize } = input;
   let inputSize = classes['registration__input'];
   if (smallSize) {
     inputSize = `${classes['registration__input']} ${classes['registration__input_small']}`;
   }
 
-  const [errorContent, setErrorContent] = useState(mistakeContent);
+  const [errorContent, setErrorContent] = useState('');
 
   function clearField(e: React.FocusEvent<HTMLInputElement, Element>) {
     e.target.value = '';

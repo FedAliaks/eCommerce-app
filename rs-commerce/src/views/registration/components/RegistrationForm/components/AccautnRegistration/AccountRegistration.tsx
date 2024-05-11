@@ -10,7 +10,6 @@ function AccountRegistration() {
           title: 'Email:',
           type: 'email',
           placeholder: 'your email',
-          mistakeContent: 'error message',
         }}
       />
       <InputRegistration
@@ -19,7 +18,6 @@ function AccountRegistration() {
           title: 'Password:',
           type: 'password',
           placeholder: 'your password',
-          mistakeContent: 'error message',
         }}
       />
       <InputRegistration
@@ -28,7 +26,6 @@ function AccountRegistration() {
           title: 'First name:',
           type: 'text',
           placeholder: 'your name',
-          mistakeContent: 'error message',
         }}
       />
       <InputRegistration
@@ -37,7 +34,6 @@ function AccountRegistration() {
           title: 'Last name:',
           type: 'text',
           placeholder: 'your last name',
-          mistakeContent: 'error message',
         }}
       />
       <InputRegistration
@@ -46,7 +42,6 @@ function AccountRegistration() {
           title: 'Date of birth:',
           type: 'date',
           placeholder: '',
-          mistakeContent: 'error message',
         }}
       />
     </div>

@@ -20,7 +20,6 @@ function AddressComponent(props: AddressType) {
             title: 'Post code:',
             type: 'text',
             placeholder: 'your post code',
-            mistakeContent: 'error message',
             smallSize: true,
           }}
         />
@@ -31,7 +30,6 @@ function AddressComponent(props: AddressType) {
             title: 'City:',
             type: 'text',
             placeholder: 'your city',
-            mistakeContent: 'error message',
             smallSize: true,
           }}
         />
@@ -42,7 +40,6 @@ function AddressComponent(props: AddressType) {
             title: 'Street:',
             type: 'text',
             placeholder: 'your street',
-            mistakeContent: 'error message',
             smallSize: true,
           }}
         />
