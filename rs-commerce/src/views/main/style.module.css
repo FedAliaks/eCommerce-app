@@ -90,6 +90,20 @@
   filter: brightness(110%);
 }
 
+.benefits-block {
+  margin-top: 30px;
+  background-color: var(--lilac-light-30);
+  padding: 55px 0 105px;
+}
+
+.benefits-block-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 45px;
+}
+
 @media screen and (max-width: 1024px) {
   .top-block {
     padding-top: 100px;
@@ -112,6 +126,9 @@
   .range-item p {
     font-size: 20px;
   }
+  .benefits-block {
+    padding: 35px 0 65px;
+  }
 }
 
 @media screen and (max-width: 769px) {
@@ -128,6 +145,12 @@
   }
   .range-block-row {
     margin-top: 30px;
+  }
+
+  .benefits-block-row {
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
