@@ -7,7 +7,7 @@ type BenefitItemProps = {
   image: string;
 };
 
-function BenefitItem({ className, title, text, image }: BenefitItemProps) {
+function BenefitItem({ className = '', title, text, image }: BenefitItemProps) {
   return (
     <div className={`${style['benefit-item']} ${className}`}>
       <img src={image} alt={title} />
@@ -19,7 +19,4 @@ function BenefitItem({ className, title, text, image }: BenefitItemProps) {
   );
 }
 
-BenefitItem.defaultProps = {
-  className: '',
-};
 export default BenefitItem;
