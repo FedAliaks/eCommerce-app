@@ -18,7 +18,7 @@ describe('Routing', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText('Main page')).toBeInTheDocument();
+    expect(screen.getByText('Explore the fascinating world of books')).toBeInTheDocument();
   });
 
   it('should render the login page when the route matches', () => {

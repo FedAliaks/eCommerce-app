@@ -1,5 +1,7 @@
+import TopBlock from './components/TopBlock';
+
 function Main() {
-  return <div>Main page</div>;
+  return <TopBlock />;
 }
 
 export default Main;
