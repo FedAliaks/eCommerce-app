@@ -4,13 +4,13 @@ import {
   ExistingTokenMiddlewareOptions,
   type HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { LOCAL_STORAGE_TOKEN } from 'constants/constants';
+import { getToken } from 'utils/token-utils';
 
 const ENV = import.meta.env;
 const projectKey = ENV.VITE_CTP_PROJECT_KEY;
 
 function apiRootWithExistingTokenFlow() {
-  const authorization: string = `Bearer ${JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN) as string).token}`;
+  const authorization: string = `Bearer ${getToken().token}`;
 
   const existingTokenMiddlewareOptions: ExistingTokenMiddlewareOptions = {
     force: true,
