@@ -25,7 +25,7 @@ function apiRootWithClientCredentialsFlow() {
         return getToken();
       },
       set(cache) {
-        setToken(cache);
+        setToken(cache, false);
       },
     },
   };

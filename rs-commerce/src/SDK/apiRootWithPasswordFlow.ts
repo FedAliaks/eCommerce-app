@@ -30,7 +30,7 @@ function apiRootWithPasswordFlow(data: LoginData) {
         return getToken();
       },
       set(cache) {
-        setToken(cache);
+        setToken(cache, true);
       },
     },
   };

@@ -56,6 +56,8 @@ export const ROUTE_PATH = {
 
 export const LOCAL_STORAGE_TOKEN = 'hurricane_access_token';
 
+export const LOCAL_STORAGE_AUTH = 'hurricane_auth';
+
 export const STATUS = {
   CODE_400: 400,
 };
