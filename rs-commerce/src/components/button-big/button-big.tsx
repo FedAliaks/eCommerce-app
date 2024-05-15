@@ -1,9 +1,7 @@
 import { ButtonBigProps } from 'types/types';
 import style from './style.module.css';
 
-function ButtonBig(props: ButtonBigProps): JSX.Element {
-  const { isActiveStyle, content, onClick } = props;
-
+function ButtonBig({ isActiveStyle, content, onClick }: ButtonBigProps): JSX.Element {
   const btnStyle = (): string =>
     isActiveStyle
       ? `${style['login-page-btn']}`

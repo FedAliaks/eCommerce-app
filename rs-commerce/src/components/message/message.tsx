@@ -3,9 +3,7 @@ import { useEffect } from 'react';
 import { MESSAGE_TIMEOUT } from 'constants/constants';
 import style from './style.module.css';
 
-function Message(props: MessageProps): JSX.Element {
-  const { isOk, content, closeElement } = props;
-
+function Message({ isOk, content, closeElement }: MessageProps): JSX.Element {
   useEffect(() => {
     setTimeout(closeElement, MESSAGE_TIMEOUT);
   });
