@@ -6,7 +6,7 @@
 .login-page-wrapper {
   border-radius: 10px;
   width: 1000px;
-  height: 520px;
+  min-height: 520px;
   background-color: rgba(206, 195, 231, 0.3);
   display: flex;
   overflow: hidden;
