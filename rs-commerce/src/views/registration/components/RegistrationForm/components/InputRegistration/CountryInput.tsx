@@ -4,12 +4,18 @@ import { registrationParamsObj } from './utils/checkFields';
 
 type TypeCountry = 'shippingCountry' | 'billingCountry';
 
+const countryArr = ['USA', 'Belarus'];
+
 function CountryInput(props: AddressType): JSX.Element {
   const { typeComponent } = props;
   function getValue(e: React.ChangeEvent<HTMLInputElement>) {
     console.log(e.target.value);
     const field = `${typeComponent}Country` as TypeCountry;
     registrationParamsObj[field] = e.target.value;
+  }
+
+  function clearInput(e: React.FocusEvent<HTMLInputElement, Element>) {
+    e.target.value = '';
   }
 
   return (
@@ -20,11 +26,13 @@ function CountryInput(props: AddressType): JSX.Element {
           id={`${typeComponent}Country`}
           className={`${classes['registration__input']} ${classes['registration__input_small']}`}
           onChange={(e) => getValue(e)}
+          onFocus={(e) => clearInput(e)}
           list="country"
         />
         <datalist id="country">
-          <option>USA</option>
-          <option>Belarus</option>
+          {countryArr.map((item) => (
+            <option>{item}</option>
+          ))}
         </datalist>
       </div>
     </label>
