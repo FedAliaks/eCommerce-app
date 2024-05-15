@@ -1,3 +1,4 @@
+import CheckboxRegistration from 'views/registration/components/RegistrationForm/components/CheckboxRegistrarion/CheckboxRegistration';
 import classes from './style.module.css';
 
 export type AddressType = {
@@ -10,14 +11,10 @@ function AddressTitleComponent(props: AddressType) {
   return (
     <div className={classes['address__title-block']}>
       <h3 className={classes['address__subtitle']}>{`${typeComponentUpper} address`}</h3>
-      <label className={classes['input__label']} htmlFor={`set${typeComponentUpper}DefaultAddress`}>
-        <input
-          className={classes['input_checkbox']}
-          type="checkbox"
-          id={`set${typeComponentUpper}DefaultAddress`}
-        />
-        <p className={classes['checkbox__content']}>Set as a default address</p>
-      </label>
+      <CheckboxRegistration
+        content="Set as a default address"
+        htmlFor={`set${typeComponentUpper}DefaultAddress`}
+      />
     </div>
   );
 }
