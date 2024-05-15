@@ -8,7 +8,6 @@ const inputFieldsArray = [
       title: 'Email:',
       type: 'email',
       placeholder: 'your email',
-      mistakeContent: 'error message',
     }}
   />,
   <InputRegistration
@@ -17,7 +16,6 @@ const inputFieldsArray = [
       title: 'Password:',
       type: 'password',
       placeholder: 'your password',
-      mistakeContent: 'error message',
     }}
   />,
   <InputRegistration
@@ -26,7 +24,6 @@ const inputFieldsArray = [
       title: 'First name:',
       type: 'text',
       placeholder: 'your name',
-      mistakeContent: 'error message',
     }}
   />,
   <InputRegistration
@@ -35,7 +32,6 @@ const inputFieldsArray = [
       title: 'Last name:',
       type: 'text',
       placeholder: 'your last name',
-      mistakeContent: 'error message',
     }}
   />,
   <InputRegistration
@@ -44,7 +40,6 @@ const inputFieldsArray = [
       title: 'Date of birth:',
       type: 'date',
       placeholder: '',
-      mistakeContent: 'error message',
     }}
   />,
 ];

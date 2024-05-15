@@ -14,7 +14,6 @@ const inputFieldsArray = [
       title: 'Post code:',
       type: 'text',
       placeholder: 'your post code',
-      mistakeContent: 'error message',
       smallSize: true,
     }}
   />,
@@ -25,7 +24,6 @@ const inputFieldsArray = [
       title: 'City:',
       type: 'text',
       placeholder: 'your city',
-      mistakeContent: 'error message',
       smallSize: true,
     }}
   />,
@@ -36,7 +34,6 @@ const inputFieldsArray = [
       title: 'Street:',
       type: 'text',
       placeholder: 'your street',
-      mistakeContent: 'error message',
       smallSize: true,
     }}
   />,
@@ -50,6 +47,7 @@ function AddressComponent(props: AddressType) {
 
       <div className={classes['address']}>
         <CountryInput typeComponent={typeComponent} />
+
         {inputFieldsArray.map((item) => item)}
       </div>
     </div>
