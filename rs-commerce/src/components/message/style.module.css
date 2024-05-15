@@ -1,0 +1,30 @@
+.message-wrapper {
+  padding: 20px;
+  border-radius: 10px;
+}
+.message-content {
+  display: flex;
+  gap: 20px;
+}
+.message-image {
+  min-width: 24px;
+  min-height: 24px;
+}
+.message-text {
+  font-weight: bold;
+}
+.message-wrapper.ok {
+  background-color: #aaffda;
+}
+.message-wrapper.error {
+  background-color: #ffaaaa;
+}
+.message-wrapper.ok .message-image {
+  background: transparent url(../../assets/service-message/service-message-ok.svg) center center
+    no-repeat;
+}
+
+.message-wrapper.error .message-image {
+  background: transparent url(../../assets/service-message/service-message-error.svg) center center
+    no-repeat;
+}

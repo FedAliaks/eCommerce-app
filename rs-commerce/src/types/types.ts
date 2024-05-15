@@ -27,6 +27,12 @@ export type ApiAuthSliceState = {
   userData: Nullable<UserData>;
 };
 
+export type ServiceMessageSliceState = {
+  authOk: boolean;
+  authError400: boolean;
+  loginFormErrorMessage: boolean;
+};
+
 export type ButtonBigProps = {
   isActiveStyle: boolean;
   content: string;
@@ -40,9 +46,16 @@ export type InputProps = {
   inputValue: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputTips: string;
+  clearFunction?: () => void;
 };
 
 export type LoginData = {
   email: string;
   password: string;
+};
+
+export type MessageProps = {
+  isOk: boolean;
+  content: string;
+  closeElement: () => void;
 };

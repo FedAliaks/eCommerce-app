@@ -25,7 +25,7 @@ function apiRootWithAnonymousSessionFlow() {
         return getToken();
       },
       set(cache) {
-        setToken(cache, false);
+        setToken(cache);
       },
     },
   };

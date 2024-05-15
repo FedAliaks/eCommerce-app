@@ -1,17 +1,20 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Logo from 'assets/images/logo.png';
-import { LOCAL_STORAGE_TOKEN, ROUTE_PATH } from 'constants/constants';
+import { LOCAL_STORAGE_AUTH, /* LOCAL_STORAGE_TOKEN, */ ROUTE_PATH } from 'constants/constants';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSlice } from 'redux/slices/api-auth-slice';
+import { apiAuthSelector } from 'redux/selectors';
 import style from './style.module.css';
 
 function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isAuth =
-    !!localStorage.getItem(LOCAL_STORAGE_TOKEN) && useAppSelector((state) => state.apiAuth.isAuth);
+  // const isAuth =
+  //   !!localStorage.getItem(LOCAL_STORAGE_TOKEN) && useAppSelector((state) => state.apiAuth.isAuth);
+
+  const { isAuth } = useAppSelector(apiAuthSelector);
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
@@ -37,7 +40,8 @@ function Header() {
   }, [location]);
 
   const handleLogout = () => {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+    // localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+    localStorage.setItem(LOCAL_STORAGE_AUTH, JSON.stringify(false));
     apiAuthSlice.actions.resetApiAuthSlice();
 
     navigate(ROUTE_PATH.main);

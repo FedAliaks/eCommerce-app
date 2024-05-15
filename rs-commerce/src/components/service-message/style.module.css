@@ -1,0 +1,9 @@
+.service-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

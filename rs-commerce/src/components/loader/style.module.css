@@ -1,0 +1,29 @@
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  backdrop-filter: blur(6px);
+}
+.loader.show {
+  display: flex;
+}
+.loader-element {
+  width: 68.75px;
+  height: 68.75px;
+  background: url(../../assets/loader/loader.svg) center center no-repeat;
+
+  animation: loader-rotate 1s infinite linear;
+}
+@keyframes loader-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

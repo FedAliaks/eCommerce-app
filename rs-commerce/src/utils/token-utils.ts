@@ -1,9 +1,8 @@
 import { TokenStore } from '@commercetools/sdk-client-v2';
-import { LOCAL_STORAGE_AUTH, LOCAL_STORAGE_TOKEN } from 'constants/constants';
+import { LOCAL_STORAGE_TOKEN } from 'constants/constants';
 
-export function setToken(cache: TokenStore, isAuthorized: boolean): void {
+export function setToken(cache: TokenStore): void {
   localStorage.setItem(LOCAL_STORAGE_TOKEN, JSON.stringify(cache));
-  localStorage.setItem(LOCAL_STORAGE_AUTH, JSON.stringify(isAuthorized));
 }
 
 export function getToken(): TokenStore {
