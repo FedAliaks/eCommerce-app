@@ -1,9 +1,7 @@
-import { InputType } from '../../../AccautnRegistration/AccountRegistration';
+import { AddressType, InputType } from 'types/registrationTypes';
 import CountryInput from '../../../InputRegistration/CountryInput';
 import InputRegistration from '../../../InputRegistration/InputRegistration';
-import AddressTitleComponent, {
-  AddressType,
-} from './components/AddresTitleComponent/AddresTitleComponent';
+import AddressTitleComponent from './components/AddresTitleComponent/AddresTitleComponent';
 import classes from './style.module.css';
 
 let typeComponent: 'billing' | 'shipping' = 'billing';
@@ -34,7 +32,7 @@ const inputFieldsArray: InputType[] = [
   },
 ];
 
-function AddressComponent(props: AddressType) {
+function AddressComponent(props: AddressType): JSX.Element {
   ({ typeComponent } = props);
   return (
     <div className={classes['registration__address-container']}>

@@ -1,13 +1,6 @@
+import { InputType } from 'types/registrationTypes';
 import InputRegistration from '../InputRegistration/InputRegistration';
 import classes from './style.module.css';
-
-export type InputType = {
-  htmlFor: string;
-  title: string;
-  type: 'email' | 'password' | 'text' | 'date';
-  placeholder: string;
-  smallSize?: boolean;
-};
 
 const inputFieldsArray: InputType[] = [
   {
@@ -42,7 +35,7 @@ const inputFieldsArray: InputType[] = [
   },
 ];
 
-function AccountRegistration() {
+function AccountRegistration(): JSX.Element {
   return (
     <div className={classes['form__column']}>
       {inputFieldsArray.map((item: InputType) => (

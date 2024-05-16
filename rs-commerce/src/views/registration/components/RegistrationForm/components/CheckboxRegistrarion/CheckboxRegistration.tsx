@@ -1,11 +1,7 @@
+import { CheckboxRegistrationType } from 'types/registrationTypes';
 import classes from './style.module.css';
 
-export type CheckboxRegistrationType = {
-  content: string;
-  htmlFor: string;
-};
-
-function CheckboxRegistration(props: CheckboxRegistrationType) {
+function CheckboxRegistration(props: CheckboxRegistrationType): JSX.Element {
   const { content, htmlFor } = props;
 
   return (

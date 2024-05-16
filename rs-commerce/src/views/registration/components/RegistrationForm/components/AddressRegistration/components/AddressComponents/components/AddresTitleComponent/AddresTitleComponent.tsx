@@ -1,11 +1,8 @@
 import CheckboxRegistration from 'views/registration/components/RegistrationForm/components/CheckboxRegistrarion/CheckboxRegistration';
+import { AddressType } from 'types/registrationTypes';
 import classes from './style.module.css';
 
-export type AddressType = {
-  typeComponent: 'billing' | 'shipping';
-};
-
-function AddressTitleComponent(props: AddressType) {
+function AddressTitleComponent(props: AddressType): JSX.Element {
   const { typeComponent } = props;
   const typeComponentUpper: string = `${typeComponent[0]?.toUpperCase()}${typeComponent?.slice(1)}`;
   return (

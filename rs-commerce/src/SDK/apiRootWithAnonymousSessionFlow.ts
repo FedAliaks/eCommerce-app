@@ -9,7 +9,6 @@ import { LOCAL_STORAGE_TOKEN } from 'constants/constants';
 
 const ENV = import.meta.env;
 const projectKey = ENV.VITE_CTP_PROJECT_KEY;
-console.log(ENV.VITE_CTP_SCOPES);
 const scopes = ENV.VITE_CTP_SCOPES.split(' ');
 
 function apiRootWithAnonymousSessionFlow() {

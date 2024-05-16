@@ -1,18 +1,9 @@
 import { useState } from 'react';
+import { InputProps, TypeFields } from 'types/registrationTypes';
 import classes from './styles.module.css';
-import { TypeFields, checkData, checkRegistrationField } from './utils/checkFields';
+import { checkData, checkRegistrationField } from './utils/checkFields';
 
-export type InputProps = {
-  input: {
-    htmlFor: string;
-    title: string;
-    type: 'email' | 'password' | 'date' | 'text';
-    placeholder: string;
-    smallSize?: boolean;
-  };
-};
-
-function InputRegistration(props: InputProps) {
+function InputRegistration(props: InputProps): JSX.Element {
   const { input } = props;
   const { htmlFor, title, type, placeholder, smallSize } = input;
   let inputSize = classes['registration__input'];

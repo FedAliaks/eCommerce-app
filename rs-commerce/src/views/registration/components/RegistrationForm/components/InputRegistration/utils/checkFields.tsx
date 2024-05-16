@@ -1,16 +1,4 @@
-export enum TypeFields {
-  /*     dateOfBirth = 'dateOfBirth', */
-  firstName = 'firstName',
-  lastName = 'lastName',
-  billingCity = 'billingCity',
-  shippingCity = 'shippingCity',
-  billingStreet = 'billingStreet',
-  shippingStreet = 'shippingStreet',
-  email = 'email',
-  password = 'password',
-  billingPostCode = 'billingPostCode',
-  shippingPostCode = 'shippingPostCode',
-}
+import { TypeFields } from 'types/registrationTypes';
 
 export const registrationParamsObj = {
   dateOfBirth: '',
