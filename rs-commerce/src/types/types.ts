@@ -1,3 +1,5 @@
+import { CustomerSignInResult, MyCustomerDraft } from '@commercetools/platform-sdk';
+
 export type LoginFormSliceState = {
   emailValue: string;
   emailTouched: boolean;
@@ -12,20 +14,18 @@ export type LoginFormSliceState = {
 
 export type Nullable<T> = T | null;
 
-export type UserData = {
-  email: string | undefined;
-  firstName: string | undefined;
-  id: string | undefined;
-  lastName: string | undefined;
-  middleName: string | undefined;
-};
-
 export type ApiAuthSliceState = {
   isLoadingAuth: boolean;
   isAuth: boolean;
   loginData: Nullable<LoginData>;
   isAuthError400: boolean;
-  userData: Nullable<UserData>;
+  userData: Nullable<CustomerSignInResult>;
+};
+
+export type ApiRegistrationSliceState = {
+  isLoadingRegistration: boolean;
+  registrationData: Nullable<MyCustomerDraft>;
+  isRegistrationError400: boolean;
 };
 
 export type ButtonBigProps = {

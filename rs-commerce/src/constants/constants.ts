@@ -67,4 +67,7 @@ export const MESSAGE_TIMEOUT = 4000;
 export const TOASTS_TEXT = {
   authOkMessage: 'Login successful',
   authError400Message: 'Error: You entered an incorrect username or password',
+  registrationOkMessage: 'Registration successful',
+  registrationError400Message:
+    'Error: There is already an existing customer with the provided email.',
 };
