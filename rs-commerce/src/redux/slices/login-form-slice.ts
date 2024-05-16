@@ -10,6 +10,7 @@ const initialState: LoginFormSliceState = {
   passwordTouched: false,
   isPasswordValid: false,
   passwordTips: '',
+  loginFormErrorMessage: '',
 };
 
 export const loginFormSlice = createSlice({
@@ -49,6 +50,9 @@ export const loginFormSlice = createSlice({
       state.passwordTouched = false;
       state.isPasswordValid = false;
       state.passwordTips = '';
+    },
+    setLoginFormErrorMessage(state, action: PayloadAction<string>) {
+      state.loginFormErrorMessage = action.payload;
     },
   },
 });

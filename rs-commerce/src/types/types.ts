@@ -7,6 +7,7 @@ export type LoginFormSliceState = {
   passwordTouched: boolean;
   isPasswordValid: boolean;
   passwordTips: string;
+  loginFormErrorMessage: string;
 };
 
 export type Nullable<T> = T | null;
@@ -25,12 +26,6 @@ export type ApiAuthSliceState = {
   loginData: Nullable<LoginData>;
   isAuthError400: boolean;
   userData: Nullable<UserData>;
-};
-
-export type ServiceMessageSliceState = {
-  authOk: boolean;
-  authError400: boolean;
-  loginFormErrorMessage: boolean;
 };
 
 export type ButtonBigProps = {

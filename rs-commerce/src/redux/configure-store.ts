@@ -3,7 +3,6 @@ import createSagaMiddleware from 'redux-saga';
 import { apiAuthReducer } from './slices/api-auth-slice';
 import { loginFormReducer } from './slices/login-form-slice';
 import rootSaga from './sagas/sagas';
-import { serviceMessageReducer } from './slices/service-message-slice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,7 +10,6 @@ export const store = configureStore({
   reducer: {
     apiAuth: apiAuthReducer,
     loginForm: loginFormReducer,
-    serviceMessage: serviceMessageReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

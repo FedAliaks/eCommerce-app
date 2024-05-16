@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from 'redux/configure-store';
 import Loader from 'components/loader/loader';
-import ServiceMessage from 'components/service-message/service-message';
+import { Toaster } from 'react-hot-toast';
 import App from './App';
 import './index.css';
 
@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <App />
       <Loader />
-      <ServiceMessage />
+      <Toaster />
     </Provider>
   </React.StrictMode>,
 );

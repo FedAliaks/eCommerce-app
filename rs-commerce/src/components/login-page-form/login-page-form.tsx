@@ -1,7 +1,6 @@
 import {
   EMAIL_FORM_TIPS,
   LOGIN_PAGE_TEXT,
-  MESSAGE_TEXT,
   PASSWORD_FORM_TIPS,
   ROUTE_PATH,
 } from 'constants/constants';
@@ -23,14 +22,13 @@ import {
   checkPasswordLength,
 } from 'utils/check-utils';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { loginFormSelector, serviceMessageSelector } from 'redux/selectors';
+import { loginFormSelector } from 'redux/selectors';
 import { loginFormActions } from 'redux/slices/login-form-slice';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import ButtonBig from 'components/button-big/button-big';
 import InputPassword from 'components/input-password/input-password';
 import InputText from 'components/input-text/input-text';
 import { LoginData } from 'types/types';
-import { serviceMessageActions } from 'redux/slices/service-message-slice';
 import CustomLink from 'components/custom-link/custom-link';
 import style from './style.module.css';
 
@@ -45,9 +43,8 @@ function LoginPageForm(): JSX.Element {
     passwordTouched,
     isPasswordValid,
     passwordTips,
+    loginFormErrorMessage,
   } = useAppSelector(loginFormSelector);
-
-  const { loginFormErrorMessage } = useAppSelector(serviceMessageSelector);
 
   const checkIsEmailValid = (): void => {
     if (!emailTouched) return;
@@ -128,7 +125,7 @@ function LoginPageForm(): JSX.Element {
   };
 
   const clearLoginFormErrorMessage = (): void => {
-    dispatch(serviceMessageActions.setLoginFormErrorMessage(false));
+    dispatch(loginFormActions.setLoginFormErrorMessage(''));
   };
 
   const isActiveStyle = (): boolean => isEmailValid && isPasswordValid;
@@ -136,9 +133,6 @@ function LoginPageForm(): JSX.Element {
   return (
     <div className={style['login-page-form']}>
       <div className={style['login-page-form-title']}>{LOGIN_PAGE_TEXT.titleForm}</div>
-      <div className={style['login-page-error']}>
-        {loginFormErrorMessage && MESSAGE_TEXT.authError400Message}
-      </div>
       <div className={style['login-page-form-register']}>
         {LOGIN_PAGE_TEXT.linkRegistration}
         <CustomLink
@@ -165,6 +159,7 @@ function LoginPageForm(): JSX.Element {
         clearFunction={clearLoginFormErrorMessage}
         inputTips={passwordTips}
       />
+      <div className={style['login-page-error']}>{loginFormErrorMessage}</div>
       <ButtonBig
         isActiveStyle={isActiveStyle()}
         content={LOGIN_PAGE_TEXT.loginPageBtn}
