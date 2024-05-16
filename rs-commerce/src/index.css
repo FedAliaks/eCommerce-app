@@ -9,15 +9,26 @@
 :root {
   --white: #fff;
   --dark: #000;
+  --black: #000;
   --gray-middle: #333333;
+  --gray-light: #9f9f9f;
   --lilac-dark: #631c7a;
   --lilac-light: #cec3e7;
   --lilac-light-30: #cec3e730;
   --mistake: rgb(235, 87, 87);
+  --font-poppins: 'Poppins', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+  --primary: #631c7a;
+  --transition-time: 0.2s;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 body {
   font-family: 'Poppins', sans-serif;
   background-color: var(--white);
   font-size: 16px;
+  overflow-x: hidden;
 }

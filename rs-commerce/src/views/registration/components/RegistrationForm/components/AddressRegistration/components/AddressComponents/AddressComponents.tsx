@@ -1,3 +1,4 @@
+import { InputType } from '../../../AccautnRegistration/AccountRegistration';
 import CountryInput from '../../../InputRegistration/CountryInput';
 import InputRegistration from '../../../InputRegistration/InputRegistration';
 import AddressTitleComponent, {
@@ -7,36 +8,30 @@ import classes from './style.module.css';
 
 let typeComponent: 'billing' | 'shipping' = 'billing';
 
-const inputFieldsArray = [
-  <InputRegistration
-    input={{
-      htmlFor: `${typeComponent}PostCode`,
-      title: 'Post code:',
-      type: 'text',
-      placeholder: 'your post code',
-      smallSize: true,
-    }}
-  />,
+const inputFieldsArray: InputType[] = [
+  {
+    htmlFor: `${typeComponent}PostCode`,
+    title: 'Post code:',
+    type: 'text',
+    placeholder: 'your post code',
+    smallSize: true,
+  },
 
-  <InputRegistration
-    input={{
-      htmlFor: `${typeComponent}City`,
-      title: 'City:',
-      type: 'text',
-      placeholder: 'your city',
-      smallSize: true,
-    }}
-  />,
+  {
+    htmlFor: `${typeComponent}City`,
+    title: 'City:',
+    type: 'text',
+    placeholder: 'your city',
+    smallSize: true,
+  },
 
-  <InputRegistration
-    input={{
-      htmlFor: `${typeComponent}Street`,
-      title: 'Street:',
-      type: 'text',
-      placeholder: 'your street',
-      smallSize: true,
-    }}
-  />,
+  {
+    htmlFor: `${typeComponent}Street`,
+    title: 'Street:',
+    type: 'text',
+    placeholder: 'your street',
+    smallSize: true,
+  },
 ];
 
 function AddressComponent(props: AddressType) {
@@ -48,7 +43,17 @@ function AddressComponent(props: AddressType) {
       <div className={classes['address']}>
         <CountryInput typeComponent={typeComponent} />
 
-        {inputFieldsArray.map((item) => item)}
+        {inputFieldsArray.map((item: InputType) => (
+          <InputRegistration
+            input={{
+              htmlFor: item.htmlFor,
+              title: item.title,
+              type: item.type,
+              placeholder: item.placeholder,
+              smallSize: item.smallSize,
+            }}
+          />
+        ))}
       </div>
     </div>
   );
