@@ -3,7 +3,8 @@ import { useState } from 'react';
 import style from './style.module.css';
 
 function InputPassword(props: InputProps): JSX.Element {
-  const { nameWrapper, nameId, namePlaceholder, inputValue, onChange, inputTips } = props;
+  const { nameWrapper, nameId, namePlaceholder, inputValue, onChange, clearFunction, inputTips } =
+    props;
   const [isOpenEye, setIsOpenEye] = useState(false);
 
   const eyeStyle = (): string =>
@@ -26,6 +27,7 @@ function InputPassword(props: InputProps): JSX.Element {
         placeholder={namePlaceholder}
         value={inputValue}
         onChange={onChange}
+        onMouseEnter={clearFunction}
       />
       <div className={style['input-field-tips']}>{inputTips}</div>
     </div>

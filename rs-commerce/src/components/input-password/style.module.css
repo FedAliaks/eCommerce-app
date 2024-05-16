@@ -36,7 +36,7 @@
   padding: 0 50px 0 28px;
 }
 .input-field-tips {
-  height: 32px;
+  min-height: 40px;
   font-family: var(--font-poppins);
   font-weight: 500;
   font-size: 13px;

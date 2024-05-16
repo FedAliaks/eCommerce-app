@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 8px;
 }
 .login-page-form-title {
   font-family: var(--font-poppins);
@@ -10,17 +11,16 @@
   font-size: 48px;
   color: #333;
 }
+.login-page-error {
+  width: 400px;
+  min-height: 50px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #f42c4f;
+}
 .login-page-form-register {
   font-family: var(--font-poppins);
   font-weight: bold;
   font-size: 16px;
   color: #333;
-}
-.text-blue {
-  color: #209fc1;
-  cursor: pointer;
-  transition: var(--transition-time);
-}
-.text-blue:hover {
-  color: #eb5798;
 }

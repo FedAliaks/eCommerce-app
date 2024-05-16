@@ -56,6 +56,15 @@ export const ROUTE_PATH = {
 
 export const LOCAL_STORAGE_TOKEN = 'hurricane_access_token';
 
+export const LOCAL_STORAGE_AUTH = 'hurricane_auth';
+
 export const STATUS = {
   CODE_400: 400,
+};
+
+export const MESSAGE_TIMEOUT = 4000;
+
+export const TOASTS_TEXT = {
+  authOkMessage: 'Login successful',
+  authError400Message: 'Error: You entered an incorrect username or password',
 };

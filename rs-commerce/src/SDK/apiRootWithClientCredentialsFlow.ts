@@ -1,11 +1,10 @@
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import {
   ClientBuilder,
-  TokenStore,
   type AuthMiddlewareOptions,
   type HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { LOCAL_STORAGE_TOKEN } from 'constants/constants';
+import { getToken, setToken } from 'utils/token-utils';
 
 const ENV = import.meta.env;
 const projectKey = ENV.VITE_CTP_PROJECT_KEY;
@@ -23,10 +22,10 @@ function apiRootWithClientCredentialsFlow() {
     fetch,
     tokenCache: {
       get() {
-        return JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN)!) as TokenStore;
+        return getToken();
       },
       set(cache) {
-        localStorage.setItem(LOCAL_STORAGE_TOKEN, JSON.stringify(cache));
+        setToken(cache);
       },
     },
   };
