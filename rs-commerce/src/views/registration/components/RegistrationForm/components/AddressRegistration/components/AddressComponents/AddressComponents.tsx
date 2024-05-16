@@ -4,11 +4,11 @@ import InputRegistration from '../../../InputRegistration/InputRegistration';
 import AddressTitleComponent from './components/AddresTitleComponent/AddresTitleComponent';
 import classes from './style.module.css';
 
-let typeComponent: 'billing' | 'shipping' = 'billing';
+/* let typeComponent: 'billing' | 'shipping' = 'billing'; */
 
 const inputFieldsArray: InputType[] = [
   {
-    htmlFor: `${typeComponent}PostCode`,
+    htmlFor: `PostCode`,
     title: 'Post code:',
     type: 'text',
     placeholder: 'your post code',
@@ -16,7 +16,7 @@ const inputFieldsArray: InputType[] = [
   },
 
   {
-    htmlFor: `${typeComponent}City`,
+    htmlFor: `City`,
     title: 'City:',
     type: 'text',
     placeholder: 'your city',
@@ -24,7 +24,7 @@ const inputFieldsArray: InputType[] = [
   },
 
   {
-    htmlFor: `${typeComponent}Street`,
+    htmlFor: `Street`,
     title: 'Street:',
     type: 'text',
     placeholder: 'your street',
@@ -33,7 +33,7 @@ const inputFieldsArray: InputType[] = [
 ];
 
 function AddressComponent(props: AddressType): JSX.Element {
-  ({ typeComponent } = props);
+  const { typeComponent } = props;
   return (
     <div className={classes['registration__address-container']}>
       <AddressTitleComponent typeComponent={typeComponent} />
@@ -44,12 +44,13 @@ function AddressComponent(props: AddressType): JSX.Element {
         {inputFieldsArray.map((item: InputType) => (
           <InputRegistration
             input={{
-              htmlFor: item.htmlFor,
+              htmlFor: `${typeComponent}${item.htmlFor}`,
               title: item.title,
               type: item.type,
               placeholder: item.placeholder,
               smallSize: item.smallSize,
             }}
+            key={`${typeComponent}${item.htmlFor}`}
           />
         ))}
       </div>

@@ -46,6 +46,7 @@ function AccountRegistration(): JSX.Element {
             type: item.type,
             placeholder: item.placeholder,
           }}
+          key={item.htmlFor}
         />
       ))}
     </div>

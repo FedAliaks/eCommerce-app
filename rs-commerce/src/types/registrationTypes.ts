@@ -1,4 +1,5 @@
 type TypesOfInput = 'email' | 'password' | 'text' | 'date';
+export type TypesOfAddress = 'billitg' | 'shipping';
 
 export type InputType = {
   htmlFor: string;
@@ -13,7 +14,7 @@ export type InputProps = {
 };
 
 export type AddressType = {
-  typeComponent: 'billing' | 'shipping';
+  typeComponent: TypesOfAddress;
 };
 
 export type CheckboxRegistrationType = {

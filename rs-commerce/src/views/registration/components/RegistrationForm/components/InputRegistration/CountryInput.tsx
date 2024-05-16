@@ -29,7 +29,7 @@ function CountryInput(props: AddressType): JSX.Element {
         />
         <datalist id="country">
           {countryArr.map((item) => (
-            <option>{item}</option>
+            <option key={item}>{item}</option>
           ))}
         </datalist>
       </div>
