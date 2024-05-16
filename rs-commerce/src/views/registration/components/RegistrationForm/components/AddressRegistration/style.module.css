@@ -1,0 +1,14 @@
+.registration__subtitle-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input_checkbox {
+  transform: scale(1.5);
+}
