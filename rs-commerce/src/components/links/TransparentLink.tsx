@@ -8,7 +8,7 @@ type TransparentLinkProps = {
 
 function TransparentLink({ to, text }: TransparentLinkProps) {
   return (
-    <Link to={to} className={style['link']}>
+    <Link to={to} className={style['link_transparent']}>
       {text}
     </Link>
   );

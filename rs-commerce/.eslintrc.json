@@ -22,7 +22,8 @@
   "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "react/require-default-props": "off"
   },
   "settings": {
     "import/resolver": {
