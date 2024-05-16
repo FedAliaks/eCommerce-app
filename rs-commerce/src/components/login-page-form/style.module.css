@@ -1,0 +1,26 @@
+.login-page-form {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.login-page-form-title {
+  font-family: var(--font-poppins);
+  font-weight: bold;
+  font-size: 48px;
+  color: #333;
+}
+.login-page-form-register {
+  font-family: var(--font-poppins);
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+.text-blue {
+  color: #209fc1;
+  cursor: pointer;
+  transition: var(--transition-time);
+}
+.text-blue:hover {
+  color: #eb5798;
+}

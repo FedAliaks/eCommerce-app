@@ -2,5 +2,10 @@
   max-width: 1242px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+main {
+  min-height: calc(100vh - 100px - 128px);
 }

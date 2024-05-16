@@ -1,0 +1,20 @@
+p,
+h1,
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.registration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.registration__wrapper {
+  width: 70%;
+  padding: 20px 10px;
+  background-color: var(--lilac-light);
+  border-radius: 10px;
+}
