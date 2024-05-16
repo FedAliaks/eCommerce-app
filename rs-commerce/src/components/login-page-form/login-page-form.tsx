@@ -6,7 +6,6 @@ import {
   ROUTE_PATH,
 } from 'constants/constants';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import {
   checkEmailDomainIsValid,
   checkEmailHasAmpSymbol,
@@ -32,6 +31,7 @@ import InputPassword from 'components/input-password/input-password';
 import InputText from 'components/input-text/input-text';
 import { LoginData } from 'types/types';
 import { serviceMessageActions } from 'redux/slices/service-message-slice';
+import CustomLink from 'components/custom-link/custom-link';
 import style from './style.module.css';
 
 function LoginPageForm(): JSX.Element {
@@ -141,9 +141,11 @@ function LoginPageForm(): JSX.Element {
       </div>
       <div className={style['login-page-form-register']}>
         {LOGIN_PAGE_TEXT.linkRegistration}
-        <Link to={ROUTE_PATH.registration} className={style['text-blue']}>
-          {LOGIN_PAGE_TEXT.linkTo}
-        </Link>
+        <CustomLink
+          to={ROUTE_PATH.registration}
+          elStyle="text-blue"
+          text={LOGIN_PAGE_TEXT.linkTo}
+        />
       </div>
       <InputText
         nameWrapper={LOGIN_PAGE_TEXT.titleEmail}

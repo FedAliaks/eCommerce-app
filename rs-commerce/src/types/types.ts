@@ -59,3 +59,9 @@ export type MessageProps = {
   content: string;
   closeElement: () => void;
 };
+
+export type CustomLinkProps = {
+  to: string;
+  elStyle: string;
+  text: string;
+};
