@@ -5,7 +5,6 @@ import {
   ROUTE_PATH,
 } from 'constants/constants';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import {
   checkEmailDomainIsValid,
   checkEmailHasAmpSymbol,
@@ -23,13 +22,14 @@ import {
   checkPasswordLength,
 } from 'utils/check-utils';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
-import loginFormSelector from 'redux/selectors';
+import { loginFormSelector } from 'redux/selectors';
 import { loginFormActions } from 'redux/slices/login-form-slice';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import ButtonBig from 'components/button-big/button-big';
 import InputPassword from 'components/input-password/input-password';
 import InputText from 'components/input-text/input-text';
 import { LoginData } from 'types/types';
+import CustomLink from 'components/custom-link/custom-link';
 import style from './style.module.css';
 
 function LoginPageForm(): JSX.Element {
@@ -43,6 +43,7 @@ function LoginPageForm(): JSX.Element {
     passwordTouched,
     isPasswordValid,
     passwordTips,
+    loginFormErrorMessage,
   } = useAppSelector(loginFormSelector);
 
   const checkIsEmailValid = (): void => {
@@ -123,6 +124,10 @@ function LoginPageForm(): JSX.Element {
     }
   };
 
+  const clearLoginFormErrorMessage = (): void => {
+    dispatch(loginFormActions.setLoginFormErrorMessage(''));
+  };
+
   const isActiveStyle = (): boolean => isEmailValid && isPasswordValid;
 
   return (
@@ -130,9 +135,11 @@ function LoginPageForm(): JSX.Element {
       <div className={style['login-page-form-title']}>{LOGIN_PAGE_TEXT.titleForm}</div>
       <div className={style['login-page-form-register']}>
         {LOGIN_PAGE_TEXT.linkRegistration}
-        <Link to={ROUTE_PATH.registration} className={style['text-blue']}>
-          {LOGIN_PAGE_TEXT.linkTo}
-        </Link>
+        <CustomLink
+          to={ROUTE_PATH.registration}
+          elStyle="text-blue"
+          text={LOGIN_PAGE_TEXT.linkTo}
+        />
       </div>
       <InputText
         nameWrapper={LOGIN_PAGE_TEXT.titleEmail}
@@ -140,6 +147,7 @@ function LoginPageForm(): JSX.Element {
         namePlaceholder={LOGIN_PAGE_TEXT.placeholderEmail}
         inputValue={emailValue}
         onChange={handleInputEmail}
+        clearFunction={clearLoginFormErrorMessage}
         inputTips={emailTips}
       />
       <InputPassword
@@ -148,8 +156,10 @@ function LoginPageForm(): JSX.Element {
         namePlaceholder={LOGIN_PAGE_TEXT.placeholderPassword}
         inputValue={passwordValue}
         onChange={handleInputPassword}
+        clearFunction={clearLoginFormErrorMessage}
         inputTips={passwordTips}
       />
+      <div className={style['login-page-error']}>{loginFormErrorMessage}</div>
       <ButtonBig
         isActiveStyle={isActiveStyle()}
         content={LOGIN_PAGE_TEXT.loginPageBtn}

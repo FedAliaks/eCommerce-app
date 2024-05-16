@@ -2,11 +2,10 @@ import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import {
   ClientBuilder,
   PasswordAuthMiddlewareOptions,
-  TokenStore,
   type HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { LOCAL_STORAGE_TOKEN } from 'constants/constants';
 import { LoginData } from 'types/types';
+import { getToken, setToken } from 'utils/token-utils';
 
 const ENV = import.meta.env;
 const projectKey = ENV.VITE_CTP_PROJECT_KEY;
@@ -28,10 +27,10 @@ function apiRootWithPasswordFlow(data: LoginData) {
     fetch,
     tokenCache: {
       get() {
-        return JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN)!) as TokenStore;
+        return getToken();
       },
       set(cache) {
-        localStorage.setItem(LOCAL_STORAGE_TOKEN, JSON.stringify(cache));
+        setToken(cache);
       },
     },
   };

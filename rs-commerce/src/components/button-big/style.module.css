@@ -1,7 +1,6 @@
 .login-page-btn {
   border: 1px solid var(--primary);
   border-radius: 5px;
-  width: 237px;
   height: 55px;
   background: var(--primary);
   font-family: var(--font-poppins);

@@ -2,7 +2,8 @@ import { InputProps } from 'types/types';
 import style from './style.module.css';
 
 function InputText(props: InputProps): JSX.Element {
-  const { nameWrapper, nameId, namePlaceholder, inputValue, onChange, inputTips } = props;
+  const { nameWrapper, nameId, namePlaceholder, inputValue, onChange, clearFunction, inputTips } =
+    props;
 
   return (
     <div className={style['input-wrapper']}>
@@ -13,6 +14,7 @@ function InputText(props: InputProps): JSX.Element {
         placeholder={namePlaceholder}
         value={inputValue}
         onChange={onChange}
+        onMouseEnter={clearFunction}
       />
       <div className={style['input-field-tips']}>{inputTips}</div>
     </div>
