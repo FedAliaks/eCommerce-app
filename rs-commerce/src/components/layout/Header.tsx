@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Logo from 'assets/images/logo.png';
-import { LOCAL_STORAGE_AUTH, /* LOCAL_STORAGE_TOKEN, */ ROUTE_PATH } from 'constants/constants';
+import { LOCAL_STORAGE_AUTH, LOCAL_STORAGE_TOKEN, ROUTE_PATH } from 'constants/constants';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSlice } from 'redux/slices/api-auth-slice';
 import { apiAuthSelector } from 'redux/selectors';
@@ -40,7 +40,7 @@ function Header() {
   }, [location]);
 
   const handleLogout = () => {
-    // localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN);
     localStorage.setItem(LOCAL_STORAGE_AUTH, JSON.stringify(false));
     apiAuthSlice.actions.resetApiAuthSlice();
 
