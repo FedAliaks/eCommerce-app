@@ -1,12 +1,22 @@
 import { useState } from 'react';
 import { InputProps, TypeFields, DispatchObj } from 'types/registrationTypes';
-import { useAppDispatch } from 'hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { registrationFormActions } from 'redux/slices/registration-slice';
+import { registrationFormSelector } from 'redux/selectors';
 import classes from './styles.module.css';
 import { checkData, checkRegistrationField } from './utils/checkFields';
 
+export enum DispatchSameAddress {
+  shippingCity = 'setBillingCity',
+  shippingStreet = 'setBillingStreet',
+  shippingPostCode = 'setBillingPostCode',
+  shippingCountry = 'setBillingCountry',
+}
+
 function InputRegistration(props: InputProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const { sameAddressForShippingAndBilling } = useAppSelector(registrationFormSelector);
+
   const { input } = props;
   const { htmlFor, title, type, placeholder, smallSize } = input;
   let inputSize = classes['registration__input'];
@@ -22,6 +32,9 @@ function InputRegistration(props: InputProps): JSX.Element {
     dispatch(registrationFormActions[DispatchObj[htmlFor]](''));
   }
 
+  const addDisabled = (): boolean =>
+    sameAddressForShippingAndBilling && htmlFor.startsWith('billing');
+
   function checkValue(e: React.FocusEvent<HTMLInputElement, Element>) {
     const target = e.target.value;
 
@@ -31,6 +44,16 @@ function InputRegistration(props: InputProps): JSX.Element {
       }
     } else if (checkRegistrationField(target, setErrorContent, htmlFor as TypeFields)) {
       dispatch(registrationFormActions[DispatchObj[htmlFor]](target));
+
+      if (
+        sameAddressForShippingAndBilling &&
+        (htmlFor === 'shippingCity' ||
+          htmlFor === 'shippingStreet' ||
+          htmlFor === 'shippingPostCode' ||
+          htmlFor === 'shippingCountry')
+      ) {
+        dispatch(registrationFormActions[DispatchSameAddress[htmlFor]](target));
+      }
     }
   }
 
@@ -43,6 +66,7 @@ function InputRegistration(props: InputProps): JSX.Element {
             className={inputSize}
             id={htmlFor}
             type={type}
+            disabled={addDisabled()}
             placeholder={placeholder}
             onBlur={(e) => checkValue(e)}
             onFocus={(e) => clearField(e)}
