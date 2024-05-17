@@ -17,10 +17,9 @@ function InputRegistration(props: InputProps): JSX.Element {
   const [errorContent, setErrorContent] = useState('');
 
   function clearField(e: React.FocusEvent<HTMLInputElement, Element>) {
-    console.log('focus');
-    console.log(e.target);
     e.target.value = '';
     setErrorContent('');
+    dispatch(registrationFormActions[DispatchObj[htmlFor]](''));
   }
 
   function checkValue(e: React.FocusEvent<HTMLInputElement, Element>) {
