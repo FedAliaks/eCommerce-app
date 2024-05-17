@@ -1,13 +1,13 @@
 import LilacLink from 'components/links/LilacLink';
-import { LOCAL_STORAGE_TOKEN, ROUTE_PATH } from 'constants/constants';
+import { ROUTE_PATH } from 'constants/constants';
 import loginIcon from 'assets/main/login_icon.svg';
 import signupIcon from 'assets/main/signup_icon.svg';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
+import { apiAuthSelector } from 'redux/selectors';
 import style from '../style.module.css';
 
 function TopBlock() {
-  const isAuth =
-    !!localStorage.getItem(LOCAL_STORAGE_TOKEN) && useAppSelector((state) => state.apiAuth.isAuth);
+  const { isAuth } = useAppSelector(apiAuthSelector);
 
   return (
     <section className={style['top-block']}>
