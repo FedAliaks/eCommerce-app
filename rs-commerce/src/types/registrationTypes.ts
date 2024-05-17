@@ -37,3 +37,19 @@ export enum TypeFields {
 }
 
 export type TypeCountry = 'shippingCountry' | 'billingCountry';
+
+export type RegistrationFormSliceState = {
+  dateOfBirth: string;
+  firstName: string;
+  lastName: string;
+  billingCity: string;
+  shippingCity: string;
+  billingStreet: string;
+  shippingStreet: string;
+  email: string;
+  password: string;
+  billingPostCode: string;
+  shippingPostCode: string;
+  billingCountry: string;
+  shippingCountry: string;
+};
