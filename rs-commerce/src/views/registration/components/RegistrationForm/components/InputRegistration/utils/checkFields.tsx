@@ -1,21 +1,5 @@
 import { TypeFields } from 'types/registrationTypes';
 
-export const registrationParamsObj = {
-  dateOfBirth: '',
-  firstName: '',
-  lastName: '',
-  billingCity: '',
-  shippingCity: '',
-  billingStreet: '',
-  shippingStreet: '',
-  email: '',
-  password: '',
-  billingPostCode: '',
-  shippingPostCode: '',
-  billingCountry: '',
-  shippingCountry: '',
-};
-
 const regExpObj = {
   firstName: /[A-Z]+/i,
   lastName: /[A-Z]+/i,
@@ -47,21 +31,21 @@ export function checkRegistrationField(
   data: string,
   setErrorContent: React.Dispatch<React.SetStateAction<string>>,
   nameField: TypeFields,
-) {
+): boolean {
   if (!regExpObj[nameField].test(data)) {
     setErrorContent(errorMsgObj[nameField]);
-    registrationParamsObj[nameField] = '';
-  } else {
-    setErrorContent('');
-    registrationParamsObj[nameField] = data;
+    return false;
   }
+  setErrorContent('');
+  console.log(data);
+  return true;
 }
 
 export function checkData(
   data: string,
   setErrorContent: React.Dispatch<React.SetStateAction<string>>,
   nameField: TypeFields,
-) {
+): boolean {
   const limitData = new Date();
   limitData.setFullYear(limitData.getFullYear() - 13);
 
@@ -69,9 +53,8 @@ export function checkData(
 
   if (birthdayData <= limitData) {
     setErrorContent('');
-    registrationParamsObj[nameField] = data;
-  } else {
-    setErrorContent(errorMsgObj[nameField]);
-    registrationParamsObj.dateOfBirth = '';
+    return true;
   }
+  setErrorContent(errorMsgObj[nameField]);
+  return false;
 }

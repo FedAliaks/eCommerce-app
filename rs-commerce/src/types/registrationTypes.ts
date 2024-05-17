@@ -1,8 +1,22 @@
 type TypesOfInput = 'email' | 'password' | 'text' | 'date';
 export type TypesOfAddress = 'billitg' | 'shipping';
+export type HtmlForType =
+  | 'billingCity'
+  | 'dateOfBirth'
+  | 'firstName'
+  | 'lastName'
+  | 'shippingCity'
+  | 'billingStreet'
+  | 'shippingStreet'
+  | 'email'
+  | 'password'
+  | 'billingPostCode'
+  | 'shippingPostCode'
+  | 'billingCountry'
+  | 'shippingCountry';
 
 export type InputType = {
-  htmlFor: string;
+  htmlFor: HtmlForType;
   title: string;
   type: TypesOfInput;
   placeholder: string;
@@ -53,3 +67,19 @@ export type RegistrationFormSliceState = {
   billingCountry: string;
   shippingCountry: string;
 };
+
+export enum DispatchObj {
+  billingCity = 'setBillingCity',
+  dateOfBirth = 'setDateOfBirth',
+  firstName = 'setFirstName',
+  lastName = 'setLastName',
+  shippingCity = 'setShippingCity',
+  billingStreet = 'setBillingStreet',
+  shippingStreet = 'setShippingStreet',
+  email = 'setEmail',
+  password = 'setPassword',
+  billingPostCode = 'setBillingPostCode',
+  shippingPostCode = 'setShippingPostCode',
+  billingCountry = 'setBillingCountry',
+  shippingCountry = 'setShippingCountry',
+}

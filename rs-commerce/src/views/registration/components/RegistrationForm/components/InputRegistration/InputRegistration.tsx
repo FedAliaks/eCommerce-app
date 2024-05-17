@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { InputProps, TypeFields } from 'types/registrationTypes';
+import { InputProps, TypeFields, DispatchObj } from 'types/registrationTypes';
+import { useAppDispatch } from 'hooks/typed-react-redux-hooks';
+import { registrationFormActions } from 'redux/slices/registration-slice';
 import classes from './styles.module.css';
 import { checkData, checkRegistrationField } from './utils/checkFields';
 
 function InputRegistration(props: InputProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const { input } = props;
   const { htmlFor, title, type, placeholder, smallSize } = input;
   let inputSize = classes['registration__input'];
@@ -14,6 +17,8 @@ function InputRegistration(props: InputProps): JSX.Element {
   const [errorContent, setErrorContent] = useState('');
 
   function clearField(e: React.FocusEvent<HTMLInputElement, Element>) {
+    console.log('focus');
+    console.log(e.target);
     e.target.value = '';
     setErrorContent('');
   }
@@ -22,27 +27,31 @@ function InputRegistration(props: InputProps): JSX.Element {
     const target = e.target.value;
 
     if (htmlFor === 'dateOfBirth') {
-      checkData(target, setErrorContent, htmlFor as TypeFields);
-    } else {
-      checkRegistrationField(target, setErrorContent, htmlFor as TypeFields);
+      if (checkData(target, setErrorContent, htmlFor as TypeFields)) {
+        dispatch(registrationFormActions[DispatchObj[htmlFor]](target));
+      }
+    } else if (checkRegistrationField(target, setErrorContent, htmlFor as TypeFields)) {
+      dispatch(registrationFormActions[DispatchObj[htmlFor]](target));
     }
   }
 
   return (
-    <label htmlFor={htmlFor}>
+    <div>
       <p className={classes['input__title']}>{title}</p>
-      <div className={classes['input__block']}>
-        <input
-          className={inputSize}
-          id={htmlFor}
-          type={type}
-          placeholder={placeholder}
-          onBlur={(e) => checkValue(e)}
-          onFocus={(e) => clearField(e)}
-        />
-        <p className={classes['input__error']}>{errorContent}</p>
-      </div>
-    </label>
+      <label htmlFor={htmlFor}>
+        <div className={classes['input__block']}>
+          <input
+            className={inputSize}
+            id={htmlFor}
+            type={type}
+            placeholder={placeholder}
+            onBlur={(e) => checkValue(e)}
+            onFocus={(e) => clearField(e)}
+          />
+        </div>
+      </label>
+      <p className={classes['input__error']}>{errorContent}</p>
+    </div>
   );
 }
 
