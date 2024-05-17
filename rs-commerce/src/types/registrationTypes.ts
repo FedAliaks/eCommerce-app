@@ -31,9 +31,14 @@ export type AddressType = {
   typeComponent: TypesOfAddress;
 };
 
+export type HtmlForCheckboxType =
+  | 'setSameAddress'
+  | 'setShippingDefaultAddress'
+  | 'setBillingDefaultAddress';
+
 export type CheckboxRegistrationType = {
   content: string;
-  htmlFor: string;
+  htmlFor: HtmlForCheckboxType;
 };
 
 export enum TypeFields {
@@ -66,6 +71,9 @@ export type RegistrationFormSliceState = {
   shippingPostCode: string;
   billingCountry: string;
   shippingCountry: string;
+  sameAddressForShippingAndBilling: boolean;
+  defaultShippingAddress: boolean;
+  defaultBillingAddress: boolean;
 };
 
 export enum DispatchObj {
@@ -82,4 +90,7 @@ export enum DispatchObj {
   shippingPostCode = 'setShippingPostCode',
   billingCountry = 'setBillingCountry',
   shippingCountry = 'setShippingCountry',
+  setSameAddress = 'setSameAddressForShippingAndBilling',
+  setShippingDefaultAddress = 'setDefaultShippingAddress',
+  setBillingDefaultAddress = 'setDefaultBillingAddress',
 }

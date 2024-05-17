@@ -15,6 +15,9 @@ const initialState: RegistrationFormSliceState = {
   shippingPostCode: '',
   billingCountry: '',
   shippingCountry: '',
+  sameAddressForShippingAndBilling: false,
+  defaultBillingAddress: false,
+  defaultShippingAddress: false,
 };
 
 export const registrationFormSlice = createSlice({
@@ -59,6 +62,15 @@ export const registrationFormSlice = createSlice({
     },
     setShippingCountry(state, action: PayloadAction<string>) {
       state.shippingCountry = action.payload;
+    },
+    setSameAddressForShippingAndBilling(state, action: PayloadAction<boolean>) {
+      state.sameAddressForShippingAndBilling = action.payload;
+    },
+    setDefaultShippingAddress(state, action: PayloadAction<boolean>) {
+      state.defaultShippingAddress = action.payload;
+    },
+    setDefaultBillingAddress(state, action: PayloadAction<boolean>) {
+      state.defaultBillingAddress = action.payload;
     },
   },
 });
