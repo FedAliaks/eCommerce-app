@@ -1,11 +1,15 @@
 import { AddressType, TypeCountry, DispatchObj } from 'types/registrationTypes';
 import { registrationFormActions } from 'redux/slices/registration-slice';
 import { useDispatch } from 'react-redux';
+import { useAppSelector } from 'hooks/typed-react-redux-hooks';
+import { registrationFormSelector } from 'redux/selectors';
 import classes from './styles.module.css';
 
-const countryArr = ['USA', 'Belarus'];
+const countryArr = ['US', 'BY'];
 
 function CountryInput(props: AddressType): JSX.Element {
+  const { sameAddressForShippingAndBilling } = useAppSelector(registrationFormSelector);
+
   const dispatch = useDispatch();
   const { typeComponent } = props;
   function getValue(e: React.ChangeEvent<HTMLInputElement>) {
@@ -16,6 +20,9 @@ function CountryInput(props: AddressType): JSX.Element {
   function clearInput(e: React.FocusEvent<HTMLInputElement, Element>): void {
     e.target.value = '';
   }
+
+  const addDisabled = (htmlFor: string): boolean =>
+    sameAddressForShippingAndBilling && htmlFor.startsWith('billing');
 
   return (
     <div>
@@ -29,6 +36,7 @@ function CountryInput(props: AddressType): JSX.Element {
             onFocus={(e) => clearInput(e)}
             list="country"
             placeholder="Choose your country"
+            disabled={addDisabled(typeComponent)}
           />
           <datalist id="country">
             {countryArr.map((item) => (
