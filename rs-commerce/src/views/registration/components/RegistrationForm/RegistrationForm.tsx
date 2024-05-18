@@ -26,7 +26,7 @@ function RegistrationForm(): JSX.Element {
     console.log('start registration');
 
     const bodyRegistration: RegistrationCustomerType = {
-      email: 'finalTestqweqweqweqwe@example.com',
+      email: 'fina12341234@mail.ru',
       password: 'examplePassword',
     };
 
@@ -48,6 +48,7 @@ function RegistrationForm(): JSX.Element {
     await createCustomer(bodyRegistration)
       .then(({ body }) => {
         const idCustomer = body.customer.id;
+        console.log(idCustomer);
         const { version } = body.customer;
 
         addCustomerParameters(idCustomer, objParameters, version).then().catch(console.error);
