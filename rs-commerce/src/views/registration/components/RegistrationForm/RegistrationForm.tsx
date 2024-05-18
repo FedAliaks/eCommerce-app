@@ -24,21 +24,9 @@ function RegistrationForm(): JSX.Element {
 
   const ButtonRegistrationClick = async (): Promise<void> => {
     console.log('start registration');
-    /* 
-    billingStreet: string,
-    billingCity: string,
-    billingPostCode: string,
-    billingCountry: string,
-    shippingCity: string,    
-    shippingStreet: string,
-    shippingPostCode: string,
-    shippingCountry: string,
-
-
-     */
 
     const bodyRegistration: RegistrationCustomerType = {
-      email: '1usertestsfdasdf1@example.com',
+      email: 'finalTestqweqweqweqwe@example.com',
       password: 'examplePassword',
     };
 
@@ -54,7 +42,6 @@ function RegistrationForm(): JSX.Element {
       shippingStreet: 'string',
       shippingPostCode: 'string',
       shippingCountry: 'BY',
-      email: bodyRegistration.email,
     };
 
     // Create the customer and output the Customer ID

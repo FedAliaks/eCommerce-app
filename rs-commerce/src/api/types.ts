@@ -15,5 +15,4 @@ export type CustomerParametersType = {
   shippingStreet: string;
   shippingPostCode: string;
   shippingCountry: string;
-  email: string;
 };
