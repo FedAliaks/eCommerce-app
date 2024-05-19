@@ -38,7 +38,6 @@ export function checkRegistrationField(
     return false;
   }
   setErrorContent('');
-  console.log(data);
   return true;
 }
 

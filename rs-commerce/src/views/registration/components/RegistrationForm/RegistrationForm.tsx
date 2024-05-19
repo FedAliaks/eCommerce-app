@@ -2,7 +2,14 @@ import ButtonBig from 'components/button-big/button-big';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { registrationFormSelector } from 'redux/selectors';
 import { CustomerParametersType, RegistrationCustomerType } from 'api/types';
-import { addCustomerParameters, createCustomer } from 'api/createCustomer';
+import {
+  addBillingAddress,
+  addCustomerParameters,
+  addDefaultAddress,
+  addShippingAddress,
+  createCustomer,
+  getAddresses,
+} from 'api/createCustomer';
 import AccountRegistration from './components/AccautnRegistration/AccountRegistration';
 import AddressRegistration from './components/AddressRegistration/AddressRegistration';
 import classes from './style.module.css';
@@ -23,10 +30,8 @@ function RegistrationForm(): JSX.Element {
   } = useAppSelector(registrationFormSelector);
 
   const ButtonRegistrationClick = async (): Promise<void> => {
-    console.log('start registration');
-
     const bodyRegistration: RegistrationCustomerType = {
-      email: 'finqqwerwe123234@mail.ru',
+      email: 'finalwe11rwerwer1@mail.ru',
       password: 'examplePassword',
     };
 
@@ -42,16 +47,61 @@ function RegistrationForm(): JSX.Element {
       shippingStreet: 'string',
       shippingPostCode: 'string',
       shippingCountry: 'BY',
+      defaultBillingAddress: false,
+      defaultShippingAddress: true,
     };
 
     // Create the customer and output the Customer ID
     await createCustomer(bodyRegistration)
       .then(({ body }) => {
         const idCustomer = body.customer.id;
-        console.log(idCustomer);
         const { version } = body.customer;
 
-        addCustomerParameters(idCustomer, objParameters, version).then().catch(console.error);
+        addCustomerParameters(idCustomer, objParameters, version)
+          .then(() =>
+            getAddresses(idCustomer)
+              .then((response) => {
+                addBillingAddress(
+                  idCustomer,
+                  response.body.version,
+                  response.body?.addresses[0]?.id as string,
+                )
+                  .then((dataRequest) => {
+                    addShippingAddress(
+                      idCustomer,
+                      dataRequest.body.version,
+                      dataRequest.body?.addresses[1]?.id as string,
+                    )
+                      .then((dataObj) => {
+                        if (objParameters.defaultBillingAddress) {
+                          addDefaultAddress(
+                            idCustomer,
+                            dataObj.body.version as number,
+                            dataObj.body?.addresses[0]?.id as string,
+                            'setDefaultBillingAddress',
+                          )
+                            .then((data) => console.log(data))
+                            .catch(console.error);
+                        }
+
+                        if (objParameters.defaultShippingAddress) {
+                          addDefaultAddress(
+                            idCustomer,
+                            dataObj.body.version as number,
+                            dataObj.body?.addresses[1]?.id as string,
+                            'setDefaultShippingAddress',
+                          )
+                            .then((defaultAddressObj) => console.log(defaultAddressObj))
+                            .catch(console.error);
+                        }
+                      })
+                      .catch(console.error);
+                  })
+                  .catch(console.error);
+              })
+              .catch(console.error),
+          )
+          .catch(console.error);
       })
       .catch(console.error);
   };

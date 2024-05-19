@@ -15,4 +15,8 @@ export type CustomerParametersType = {
   shippingStreet: string;
   shippingPostCode: string;
   shippingCountry: string;
+  defaultBillingAddress: boolean;
+  defaultShippingAddress: boolean;
 };
+
+export type ActionDefaultAddress = 'setDefaultBillingAddress' | 'setDefaultShippingAddress';

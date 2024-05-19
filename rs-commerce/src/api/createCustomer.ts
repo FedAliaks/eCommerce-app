@@ -1,11 +1,70 @@
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
-import { CustomerParametersType, RegistrationCustomerType } from './types';
+import { CustomerParametersType, RegistrationCustomerType, ActionDefaultAddress } from './types';
 
 export const createCustomer = async (body: RegistrationCustomerType) =>
   apiRootWithAnonymousSessionFlow()
     .customers()
     .post({
       body,
+    })
+    .execute();
+
+export const getAddresses = async (customerID: string) =>
+  apiRootWithAnonymousSessionFlow().customers().withId({ ID: customerID }).get().execute();
+
+export const addBillingAddress = async (customerID: string, version: number, addressId: string) =>
+  apiRootWithAnonymousSessionFlow()
+    .customers()
+    .withId({ ID: customerID })
+    .post({
+      body: {
+        version,
+        actions: [
+          {
+            action: 'addBillingAddressId',
+            addressId,
+          },
+        ],
+      },
+    })
+    .execute();
+
+export const addShippingAddress = async (customerID: string, version: number, addressId: string) =>
+  apiRootWithAnonymousSessionFlow()
+    .customers()
+    .withId({ ID: customerID })
+    .post({
+      body: {
+        version,
+        actions: [
+          {
+            action: 'addShippingAddressId',
+            addressId,
+          },
+        ],
+      },
+    })
+    .execute();
+
+export const addDefaultAddress = async (
+  customerID: string,
+  version: number,
+  addressId: string,
+  action: ActionDefaultAddress,
+) =>
+  apiRootWithAnonymousSessionFlow()
+    .customers()
+    .withId({ ID: customerID })
+    .post({
+      body: {
+        version,
+        actions: [
+          {
+            action,
+            addressId,
+          },
+        ],
+      },
     })
     .execute();
 
