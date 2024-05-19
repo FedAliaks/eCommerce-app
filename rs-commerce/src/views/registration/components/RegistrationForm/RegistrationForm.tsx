@@ -11,6 +11,8 @@ import {
   getAddresses,
 } from 'api/createCustomer';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from 'constants/constants';
 import AccountRegistration from './components/AccautnRegistration/AccountRegistration';
 import AddressRegistration from './components/AddressRegistration/AddressRegistration';
 import classes from './style.module.css';
@@ -30,10 +32,11 @@ function RegistrationForm(): JSX.Element {
     shippingPostCode,
   } = useAppSelector(registrationFormSelector);
   const [errorMsg, setErrorMsg] = useState('');
+  const navigate = useNavigate();
 
   const ButtonRegistrationClick = async (): Promise<void> => {
     const bodyRegistration: RegistrationCustomerType = {
-      email: 'finalwe11rwerwer1@mail.ru',
+      email: 'final141234@mail.ru',
       password: 'examplePassword',
     };
 
@@ -96,6 +99,8 @@ function RegistrationForm(): JSX.Element {
                             .then((defaultAddressObj) => console.log(defaultAddressObj))
                             .catch(console.error);
                         }
+
+                        navigate(ROUTE_PATH.main);
                       })
                       .catch(console.error);
                   })
