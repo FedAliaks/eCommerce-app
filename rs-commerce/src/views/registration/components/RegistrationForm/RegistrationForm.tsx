@@ -10,6 +10,7 @@ import {
   createCustomer,
   getAddresses,
 } from 'api/createCustomer';
+import { useState } from 'react';
 import AccountRegistration from './components/AccautnRegistration/AccountRegistration';
 import AddressRegistration from './components/AddressRegistration/AddressRegistration';
 import classes from './style.module.css';
@@ -28,6 +29,7 @@ function RegistrationForm(): JSX.Element {
     shippingCountry,
     shippingPostCode,
   } = useAppSelector(registrationFormSelector);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const ButtonRegistrationClick = async (): Promise<void> => {
     const bodyRegistration: RegistrationCustomerType = {
@@ -103,7 +105,14 @@ function RegistrationForm(): JSX.Element {
           )
           .catch(console.error);
       })
-      .catch(console.error);
+      .catch((error) => {
+        if (error.message === 'There is already an existing customer with the provided email.') {
+          console.log('email exist');
+          setErrorMsg('Your email has already exist in our system');
+        } else {
+          setErrorMsg('Something is wrong. Try again later');
+        }
+      });
   };
 
   const isActiveStyle = (): boolean =>
@@ -127,7 +136,11 @@ function RegistrationForm(): JSX.Element {
         <AccountRegistration />
         <AddressRegistration />
       </div>
-      <ButtonBig isActiveStyle content="Registration" onClick={ButtonRegistrationClick} />
+      <div className={classes['registration-form__button']}>
+        <ButtonBig isActiveStyle content="Registration" onClick={ButtonRegistrationClick} />
+      </div>
+
+      <p className={classes['registration__error']}>{errorMsg}</p>
     </form>
   );
 }
