@@ -75,8 +75,8 @@ export const addCustomerParameters = async (
   version: number = 1,
 ) => {
   const {
-    firstCustomerName,
-    lastCustomerName,
+    firstName,
+    lastName,
     dateOfBirth,
     shippingCity,
     shippingCountry,
@@ -97,11 +97,11 @@ export const addCustomerParameters = async (
         actions: [
           {
             action: 'setFirstName',
-            firstName: firstCustomerName,
+            firstName,
           },
           {
             action: 'setLastName',
-            lastName: lastCustomerName,
+            lastName,
           },
           {
             action: 'setDateOfBirth',

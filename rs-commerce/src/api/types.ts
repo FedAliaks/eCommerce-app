@@ -4,8 +4,8 @@ export type RegistrationCustomerType = {
 };
 
 export type CustomerParametersType = {
-  firstCustomerName: string;
-  lastCustomerName: string;
+  firstName: string;
+  lastName: string;
   dateOfBirth: string;
   billingStreet: string;
   billingCity: string;

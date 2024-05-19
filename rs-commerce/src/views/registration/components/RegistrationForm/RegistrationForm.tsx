@@ -1,7 +1,7 @@
 import ButtonBig from 'components/button-big/button-big';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { registrationFormSelector } from 'redux/selectors';
-import { CustomerParametersType, RegistrationCustomerType } from 'api/types';
+import { RegistrationCustomerType } from 'api/types';
 import {
   addBillingAddress,
   addCustomerParameters,
@@ -20,6 +20,8 @@ import classes from './style.module.css';
 function RegistrationForm(): JSX.Element {
   const {
     dateOfBirth,
+    firstName,
+    lastName,
     billingCity,
     shippingCity,
     billingStreet,
@@ -30,30 +32,16 @@ function RegistrationForm(): JSX.Element {
     billingPostCode,
     shippingCountry,
     shippingPostCode,
+    defaultBillingAddress,
+    defaultShippingAddress,
   } = useAppSelector(registrationFormSelector);
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
   const ButtonRegistrationClick = async (): Promise<void> => {
     const bodyRegistration: RegistrationCustomerType = {
-      email: 'final141234@mail.ru',
-      password: 'examplePassword',
-    };
-
-    const objParameters: CustomerParametersType = {
-      firstCustomerName: 'first Name',
-      lastCustomerName: 'last Name',
-      dateOfBirth: '2000-01-01',
-      billingStreet: 'string',
-      billingCity: 'string',
-      billingPostCode: 'string',
-      billingCountry: 'DE',
-      shippingCity: 'string',
-      shippingStreet: 'string',
-      shippingPostCode: 'string',
-      shippingCountry: 'BY',
-      defaultBillingAddress: false,
-      defaultShippingAddress: true,
+      email,
+      password,
     };
 
     // Create the customer and output the Customer ID
@@ -62,7 +50,25 @@ function RegistrationForm(): JSX.Element {
         const idCustomer = body.customer.id;
         const { version } = body.customer;
 
-        addCustomerParameters(idCustomer, objParameters, version)
+        addCustomerParameters(
+          idCustomer,
+          {
+            firstName,
+            lastName,
+            dateOfBirth,
+            billingStreet,
+            billingCity,
+            billingCountry,
+            billingPostCode,
+            shippingCity,
+            shippingCountry,
+            shippingPostCode,
+            shippingStreet,
+            defaultBillingAddress,
+            defaultShippingAddress,
+          },
+          version,
+        )
           .then(() =>
             getAddresses(idCustomer)
               .then((response) => {
@@ -78,7 +84,7 @@ function RegistrationForm(): JSX.Element {
                       dataRequest.body?.addresses[1]?.id as string,
                     )
                       .then((dataObj) => {
-                        if (objParameters.defaultBillingAddress) {
+                        if (defaultBillingAddress) {
                           addDefaultAddress(
                             idCustomer,
                             dataObj.body.version as number,
@@ -89,7 +95,7 @@ function RegistrationForm(): JSX.Element {
                             .catch(console.error);
                         }
 
-                        if (objParameters.defaultShippingAddress) {
+                        if (defaultShippingAddress) {
                           addDefaultAddress(
                             idCustomer,
                             dataObj.body.version as number,
@@ -133,8 +139,6 @@ function RegistrationForm(): JSX.Element {
     !!shippingCountry &&
     !!shippingPostCode;
 
-  console.log(isActiveStyle);
-
   return (
     <form action="#">
       <div className={classes['registration-form__wrapper']}>
@@ -142,7 +146,11 @@ function RegistrationForm(): JSX.Element {
         <AddressRegistration />
       </div>
       <div className={classes['registration-form__button']}>
-        <ButtonBig isActiveStyle content="Registration" onClick={ButtonRegistrationClick} />
+        <ButtonBig
+          isActiveStyle={isActiveStyle()}
+          content="Registration"
+          onClick={ButtonRegistrationClick}
+        />
       </div>
 
       <p className={classes['registration__error']}>{errorMsg}</p>
