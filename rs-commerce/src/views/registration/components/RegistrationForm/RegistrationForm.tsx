@@ -13,6 +13,8 @@ import {
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from 'constants/constants';
+import { apiAuthActions } from 'redux/slices/api-auth-slice';
+import { useDispatch } from 'react-redux';
 import AccountRegistration from './components/AccautnRegistration/AccountRegistration';
 import AddressRegistration from './components/AddressRegistration/AddressRegistration';
 import classes from './style.module.css';
@@ -37,6 +39,7 @@ function RegistrationForm(): JSX.Element {
   } = useAppSelector(registrationFormSelector);
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const ButtonRegistrationClick = async (): Promise<void> => {
     const bodyRegistration: RegistrationCustomerType = {
@@ -106,6 +109,7 @@ function RegistrationForm(): JSX.Element {
                             .catch(console.error);
                         }
 
+                        dispatch(apiAuthActions.startAuth({ data: { email, password } }));
                         navigate(ROUTE_PATH.main);
                       })
                       .catch(console.error);
