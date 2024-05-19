@@ -1,5 +1,5 @@
 type TypesOfInput = 'email' | 'password' | 'text' | 'date';
-export type TypesOfAddress = 'billitg' | 'shipping';
+export type TypesOfAddress = 'billing' | 'shipping';
 export type HtmlForType =
   | 'billingCity'
   | 'dateOfBirth'
