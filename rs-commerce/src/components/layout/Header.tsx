@@ -24,6 +24,12 @@ function Header() {
 
   const rightList = [
     {
+      path: ROUTE_PATH.catalog,
+      title: 'Catalog',
+      className: style['underline'],
+      withAuth: true,
+    },
+    {
       path: ROUTE_PATH.login,
       title: 'Login',
       className: style['underline'],

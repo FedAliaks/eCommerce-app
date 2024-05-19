@@ -1,0 +1,33 @@
+.catalog-page {
+  padding: 15px;
+  display: flex;
+  gap: 15px;
+}
+.category {
+  display: flex;
+  flex-direction: column;
+}
+.category-title {
+  font-weight: bold;
+  color: brown;
+}
+.products {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.products-title {
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  font-weight: bold;
+  color: #467d2e;
+}
+.products-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 20px;
+}

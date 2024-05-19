@@ -1,0 +1,13 @@
+.product-item {
+  cursor: pointer;
+  width: 150px;
+  height: 110px;
+  border: 1px solid black;
+}
+.item-name {
+  font-weight: bold;
+  color: #4f2aa5;
+}
+.item-image {
+  width: 50px;
+}

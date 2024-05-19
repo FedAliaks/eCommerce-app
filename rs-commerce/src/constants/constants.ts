@@ -52,6 +52,7 @@ export const ROUTE_PATH = {
   main: '/',
   login: '/login',
   registration: '/registration',
+  catalog: '/catalog',
 };
 
 export const LOCAL_STORAGE_TOKEN = 'hurricane_access_token';
@@ -70,3 +71,7 @@ export const TOASTS_TEXT = {
   registrationOkMessage: 'Registration successful',
   logoutMessage: 'Good bye!',
 };
+
+export const PAGE_NUMBER_ONE = 1;
+
+export const PRODUCTS_IN_PAGE = 20;

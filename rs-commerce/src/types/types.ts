@@ -1,4 +1,10 @@
-import { CustomerSignInResult, MyCustomerDraft } from '@commercetools/platform-sdk';
+import { QueryParam } from '@commercetools/importapi-sdk';
+import {
+  Category,
+  CustomerSignInResult,
+  MyCustomerDraft,
+  Product,
+} from '@commercetools/platform-sdk';
 
 export type LoginFormSliceState = {
   emailValue: string;
@@ -29,9 +35,9 @@ export type ApiRegistrationSliceState = {
 };
 
 export type ButtonBigProps = {
-  isActiveStyle: boolean;
   content: string;
-  onClick: () => void;
+  isActiveStyle?: boolean;
+  onClick?: () => void;
 };
 
 export type InputProps = {
@@ -59,4 +65,42 @@ export type CustomLinkProps = {
   to: string;
   elStyle: string;
   text: string;
+};
+
+export type QueryParamsCategories = {
+  expand?: string | string[];
+  sort?: string | string[];
+  limit?: number;
+  offset?: number;
+  withTotal?: boolean;
+  where?: string | string[];
+  [key: string]: QueryParam;
+};
+
+export type QueryParamsProducts = {
+  where?: string | string[];
+  priceCurrency?: string;
+  priceCountry?: string;
+  priceCustomerGroup?: string;
+  priceChannel?: string;
+  localeProjection?: string | string[];
+  expand?: string | string[];
+  sort?: string | string[];
+  limit?: number;
+  offset?: number;
+  withTotal?: boolean;
+  [key: string]: QueryParam;
+};
+
+export type ApiCategoriesProductsSliceState = {
+  isLoadingCategories: boolean;
+  categories: Nullable<Category[]>;
+  isLoadingProducts: boolean;
+  products: Nullable<Product[]>;
+  curProductsTotal: Nullable<number>;
+  curProductsPage: number;
+};
+
+export type ProductItemProps = {
+  product: Product;
 };
