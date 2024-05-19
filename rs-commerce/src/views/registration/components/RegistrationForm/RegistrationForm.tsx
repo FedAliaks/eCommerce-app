@@ -94,8 +94,8 @@ function RegistrationForm(): JSX.Element {
                             dataObj.body?.addresses[0]?.id as string,
                             'setDefaultBillingAddress',
                           )
-                            .then((data) => console.log(data))
-                            .catch(console.error);
+                            .then()
+                            .catch();
                         }
 
                         if (defaultShippingAddress) {
@@ -105,24 +105,23 @@ function RegistrationForm(): JSX.Element {
                             dataObj.body?.addresses[1]?.id as string,
                             'setDefaultShippingAddress',
                           )
-                            .then((defaultAddressObj) => console.log(defaultAddressObj))
-                            .catch(console.error);
+                            .then()
+                            .catch();
                         }
 
                         dispatch(apiAuthActions.startAuth({ data: { email, password } }));
                         navigate(ROUTE_PATH.main);
                       })
-                      .catch(console.error);
+                      .catch();
                   })
-                  .catch(console.error);
+                  .catch();
               })
-              .catch(console.error),
+              .catch(),
           )
-          .catch(console.error);
+          .catch();
       })
       .catch((error) => {
         if (error.message === 'There is already an existing customer with the provided email.') {
-          console.log('email exist');
           setErrorMsg('Your email has already exist in our system');
         } else {
           setErrorMsg('Something is wrong. Try again later');

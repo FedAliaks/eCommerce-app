@@ -7,7 +7,7 @@ function TitleRegistration(): JSX.Element {
     <div className={classes['registration__title-block']}>
       <h1 className={classes['registration__title']}>Registration</h1>
       <div className={classes['registration__login-block']}>
-        <p className={classes['registration__login-content']}>I have an account?</p>
+        <p className={classes['registration__login-content']}>I have an account</p>
         <p className={classes['registration__link']}>
           <Link to={ROUTE_PATH.login}>Login</Link>
         </p>

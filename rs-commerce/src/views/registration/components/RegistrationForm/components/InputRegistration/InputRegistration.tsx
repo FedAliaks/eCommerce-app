@@ -26,16 +26,16 @@ function InputRegistration(props: InputProps): JSX.Element {
 
   const [errorContent, setErrorContent] = useState('');
 
-  function clearField(e: React.FocusEvent<HTMLInputElement, Element>) {
+  /*   function clearField(e: React.FocusEvent<HTMLInputElement, Element>) {
     e.target.value = '';
     setErrorContent('');
     dispatch(registrationFormActions[DispatchObj[htmlFor]](''));
-  }
+  } */
 
   const addDisabled = (): boolean =>
     sameAddressForShippingAndBilling && htmlFor.startsWith('billing');
 
-  function checkValue(e: React.FocusEvent<HTMLInputElement, Element>) {
+  function checkValue(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.target.value;
 
     if (htmlFor === 'dateOfBirth') {
@@ -68,8 +68,8 @@ function InputRegistration(props: InputProps): JSX.Element {
             type={type}
             disabled={addDisabled()}
             placeholder={placeholder}
-            onBlur={(e) => checkValue(e)}
-            onFocus={(e) => clearField(e)}
+            onChange={(e) => checkValue(e)}
+            /*             onFocus={(e) => clearField(e)} */
           />
         </div>
       </label>
