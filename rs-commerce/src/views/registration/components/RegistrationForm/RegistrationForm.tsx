@@ -26,7 +26,7 @@ function RegistrationForm(): JSX.Element {
     console.log('start registration');
 
     const bodyRegistration: RegistrationCustomerType = {
-      email: 'fina12341234@mail.ru',
+      email: 'finqqwerwe123234@mail.ru',
       password: 'examplePassword',
     };
 
