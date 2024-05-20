@@ -1,10 +1,12 @@
 import { ClientResponse } from '@commercetools/importapi-sdk';
-import { CustomerSignInResult } from '@commercetools/platform-sdk';
+import { CustomerSignInResult, MyCustomerDraft } from '@commercetools/platform-sdk';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
 import apiRootWithPasswordFlow from 'SDK/apiRootWithPasswordFlow';
 import { LoginData } from 'types/types';
 
-export async function apiSignUp(data: LoginData): Promise<ClientResponse<CustomerSignInResult>> {
+export async function apiSignUp(
+  data: MyCustomerDraft,
+): Promise<ClientResponse<CustomerSignInResult>> {
   const response = await apiRootWithAnonymousSessionFlow()
     .me()
     .signup()
