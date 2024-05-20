@@ -11,7 +11,9 @@
   color: #333;
   padding: 0 23px;
 }
-
+.registration__input:disabled {
+  background-color: var(--gray-light-30);
+}
 .registration__input_small {
   max-width: 240px;
 }
