@@ -32,15 +32,7 @@ export const apiAuthSlice = createSlice({
     },
     setUserData(state, action: PayloadAction<Nullable<CustomerSignInResult>>) {
       if (action.payload) {
-        const { email, firstName, id, lastName, middleName } = action.payload.customer;
-        const newData = {
-          email,
-          firstName,
-          id,
-          lastName,
-          middleName,
-        };
-        state.userData = newData;
+        state.userData = action.payload;
       }
     },
     resetApiAuthSlice(state) {
