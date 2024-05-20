@@ -2,5 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
+  font-weight: bold;
+}
+.pagination-pages-wrapper {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }

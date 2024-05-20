@@ -75,3 +75,5 @@ export const TOASTS_TEXT = {
 export const PAGE_NUMBER_ONE = 1;
 
 export const PRODUCTS_IN_PAGE = 20;
+
+export const ZERO = 0;
