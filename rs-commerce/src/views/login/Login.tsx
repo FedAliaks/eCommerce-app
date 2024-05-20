@@ -12,7 +12,9 @@ function Login() {
   const dispatch = useAppDispatch();
   const { isAuth } = useAppSelector(apiAuthSelector);
 
-  dispatch(loginFormActions.resetLoginFormSlice());
+  useEffect(() => {
+    dispatch(loginFormActions.resetLoginFormSlice());
+  }, []);
 
   useEffect(() => {
     if (isAuth) navigate(ROUTE_PATH.main);
