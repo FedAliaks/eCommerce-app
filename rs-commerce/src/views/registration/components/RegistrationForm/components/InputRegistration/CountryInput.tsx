@@ -15,6 +15,10 @@ function CountryInput(props: AddressType): JSX.Element {
   function getValue(e: React.ChangeEvent<HTMLInputElement>) {
     const field = `${typeComponent}Country` as TypeCountry;
     dispatch(registrationFormActions[DispatchObj[field]](e.target.value));
+
+    if (sameAddressForShippingAndBilling) {
+      dispatch(registrationFormActions.setBillingCountry(e.target.value));
+    }
   }
 
   function clearInput(e: React.FocusEvent<HTMLInputElement, Element>): void {

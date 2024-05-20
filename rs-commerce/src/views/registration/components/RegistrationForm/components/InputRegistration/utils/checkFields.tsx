@@ -24,8 +24,8 @@ const errorMsgObj = {
   email: 'Use correct email',
   password:
     'Use at least 1 number, 1 big and 1 small latin letters 1 of  the next symbols !@#$%^&*. Minimal length - 8 symbols',
-  billingPostCode: 'Use correct post index',
-  shippingPostCode: 'Use correct post index',
+  billingPostCode: 'Use correct post index (for instance - 111111 for BY and 111 111 for USA)',
+  shippingPostCode: 'Use correct post index (for instance - 111111 for BY and 111 111 for USA)',
 };
 
 export function checkRegistrationField(
