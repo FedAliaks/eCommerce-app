@@ -36,4 +36,7 @@
   .registration__input_small {
     max-width: 100%;
   }
+  .input__error {
+    height: 50px;
+  }
 }
