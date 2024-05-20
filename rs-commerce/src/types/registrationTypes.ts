@@ -11,6 +11,7 @@ export type InputType = {
 
 export type InputProps = {
   input: InputType;
+  errorClassName?: string;
 };
 
 export type AddressType = {

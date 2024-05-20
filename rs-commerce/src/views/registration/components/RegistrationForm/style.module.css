@@ -1,6 +1,6 @@
 .registration-form__wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -80,3 +80,9 @@
   line-height: 24px;
 }
  */
+
+@media screen and (max-width: 1024px) {
+  .registration-form__wrapper {
+    flex-direction: column;
+  }
+}

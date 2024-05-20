@@ -12,9 +12,17 @@
   align-items: center;
   cursor: pointer;
   transition: var(--transition-time);
+  padding: 0 20px;
+  min-width: 240px;
 }
 .login-page-btn.btn-not-active {
   border: 1px solid #adadad;
   background: #adadad;
   cursor: not-allowed;
+}
+
+@media screen and (max-width: 1024px) {
+  .login-page-btn {
+    width: 100%;
+  }
 }

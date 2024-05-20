@@ -4,7 +4,7 @@ import classes from './styles.module.css';
 import { checkData, checkRegistrationField } from './utils/checkFields';
 
 function InputRegistration(props: InputProps): JSX.Element {
-  const { input } = props;
+  const { input, errorClassName } = props;
   const { htmlFor, title, type, placeholder, smallSize } = input;
   let inputSize = classes['registration__input'];
   if (smallSize) {
@@ -40,7 +40,7 @@ function InputRegistration(props: InputProps): JSX.Element {
           onBlur={(e) => checkValue(e)}
           onFocus={(e) => clearField(e)}
         />
-        <p className={classes['input__error']}>{errorContent}</p>
+        <p className={`${classes['input__error']} ${errorClassName}`}>{errorContent}</p>
       </div>
     </label>
   );

@@ -1,3 +1,9 @@
 .form__column {
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.error {
+  max-width: 400px;
+  width: 100%;
 }
