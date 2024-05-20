@@ -17,7 +17,7 @@ function InputRegistration(props: InputProps): JSX.Element {
   const dispatch = useAppDispatch();
   const { sameAddressForShippingAndBilling } = useAppSelector(registrationFormSelector);
 
-  const { input } = props;
+  const { input, errorClassName } = props;
   const { htmlFor, title, type, placeholder, smallSize } = input;
   let inputSize = classes['registration__input'];
   if (smallSize) {
@@ -73,7 +73,7 @@ function InputRegistration(props: InputProps): JSX.Element {
           />
         </div>
       </label>
-      <p className={classes['input__error']}>{errorContent}</p>
+      <p className={`${classes['input__error']} ${errorClassName}`}>{errorContent}</p>
     </div>
   );
 }

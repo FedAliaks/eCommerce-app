@@ -9,7 +9,7 @@ import classes from './style.module.css';
 const inputFieldsArray: InputType[] = [
   {
     htmlFor: `PostCode` as HtmlForType,
-    title: 'Post code:',
+    title: 'Post code',
     type: 'text',
     placeholder: 'your post code',
     smallSize: true,
@@ -17,7 +17,7 @@ const inputFieldsArray: InputType[] = [
 
   {
     htmlFor: `City` as HtmlForType,
-    title: 'City:',
+    title: 'City',
     type: 'text',
     placeholder: 'your city',
     smallSize: true,
@@ -25,7 +25,7 @@ const inputFieldsArray: InputType[] = [
 
   {
     htmlFor: `Street` as HtmlForType,
-    title: 'Street:',
+    title: 'Street',
     type: 'text',
     placeholder: 'your street',
     smallSize: true,
@@ -51,6 +51,7 @@ function AddressComponent(props: AddressType): JSX.Element {
               smallSize: item.smallSize,
             }}
             key={`${typeComponent}${item.htmlFor}`}
+            errorClassName={classes['error']}
           />
         ))}
       </div>

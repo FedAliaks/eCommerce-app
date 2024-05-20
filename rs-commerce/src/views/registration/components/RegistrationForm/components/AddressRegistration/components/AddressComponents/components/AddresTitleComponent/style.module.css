@@ -1,4 +1,13 @@
 .address__title-block {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 1024px) {
+  .address__title-block {
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
 }

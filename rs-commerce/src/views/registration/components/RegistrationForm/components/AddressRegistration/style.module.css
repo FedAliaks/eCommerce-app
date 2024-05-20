@@ -1,8 +1,11 @@
 .registration__subtitle-block {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 20px;
+  margin-bottom: 12px;
+}
+.registration__subtitle-block h2 {
+  font-size: 20px;
+  text-transform: uppercase;
 }
 
 .input__label {
@@ -15,8 +18,10 @@
   transform: scale(1.5);
 }
 
-@media screen and (max-width: 768px) {
-  .registration__column-title {
-    font-size: 18px;
+@media screen and (max-width: 1024px) {
+  .registration__subtitle-block {
+    gap: 10px;
+    flex-direction: column;
+    margin-bottom: 25px;
   }
 }

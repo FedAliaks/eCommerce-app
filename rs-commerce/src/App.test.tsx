@@ -50,7 +50,7 @@ describe('Routing', () => {
       </Provider>,
     );
 
-    expect(screen.getByText('I have an account?')).toBeInTheDocument();
+    expect(screen.getByText('I have an account')).toBeInTheDocument();
   });
 
   it('should render Not Found Page for unknown URL', () => {
