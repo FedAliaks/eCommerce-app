@@ -10,7 +10,7 @@ const regExpObj = {
   email: /^[A-Za-z0-9-_.]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,}$/i,
   password: /(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])[0-9a-zA-Z!@#$%^&*]{8,}/,
   billingPostCode: /(\d{6})|(\d{5})/,
-  shippingPostCode: /(\d{6})|(\d{5})/,
+  shippingPostCode: /^(\d{6}$)|(^\d{3} \d{3}$)/,
 };
 
 const errorMsgObj = {
