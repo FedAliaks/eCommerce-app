@@ -142,6 +142,12 @@ function RegistrationForm(): JSX.Element {
     !!shippingCountry &&
     !!shippingPostCode;
 
+  function ButtonRegistrationClickTemp() {
+    if (isActiveStyle()) {
+      ButtonRegistrationClick();
+    }
+  }
+
   return (
     <form action="#">
       <div className={classes['registration-form__wrapper']}>
@@ -152,7 +158,7 @@ function RegistrationForm(): JSX.Element {
         <ButtonBig
           isActiveStyle={isActiveStyle()}
           content="Registration"
-          onClick={ButtonRegistrationClick}
+          onClick={() => ButtonRegistrationClickTemp()}
         />
       </div>
 
