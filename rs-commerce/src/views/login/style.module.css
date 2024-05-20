@@ -2,11 +2,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 .login-page-wrapper {
   border-radius: 10px;
   width: 1000px;
   min-height: 520px;
+  margin-left: 15px;
+  margin-right: 15px;
   background-color: rgba(206, 195, 231, 0.3);
   display: flex;
   overflow: hidden;
@@ -16,8 +20,12 @@
   background-image: url(../../assets/login-page/login-page_image.png);
 }
 @media screen and (max-width: 1024px) {
+  .login-page {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
   .login-page-wrapper {
-    width: unset;
+    width: 472px;
   }
   .login-page-image {
     display: none;

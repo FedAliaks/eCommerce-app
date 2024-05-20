@@ -68,4 +68,5 @@ export const TOASTS_TEXT = {
   authOkMessage: 'Login successful',
   authError400Message: 'Error: You entered an incorrect username or password',
   registrationOkMessage: 'Registration successful',
+  logoutMessage: 'Good bye!',
 };
