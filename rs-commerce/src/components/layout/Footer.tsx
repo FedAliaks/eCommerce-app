@@ -11,7 +11,7 @@ function Footer() {
   ];
   return (
     <footer className={style['footer']}>
-      <div className={`${style['footer-container']} container`}>
+      <div className="container">
         <div className={style['footer-top']}>
           <div className={style['logo']}>Hurricane bookstore</div>
           <nav className={style['nav']}>

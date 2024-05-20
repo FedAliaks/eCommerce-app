@@ -12,10 +12,11 @@
   --black: #000;
   --gray-middle: #333333;
   --gray-light: #9f9f9f;
+  --gray-light-30: #9f9f9f30;
   --lilac-dark: #631c7a;
   --lilac-dark-70: #631c7a70;
   --lilac-light: #cec3e7;
-  --lilac-light-30: #cec3e730;
+  --lilac-light-30: rgba(206, 195, 231, 0.3);
   --mistake: rgb(235, 87, 87);
   --lilac-light-70: #cec3e770;
   --font-poppins: 'Poppins', sans-serif;

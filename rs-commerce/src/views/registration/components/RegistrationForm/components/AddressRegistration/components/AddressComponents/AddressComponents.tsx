@@ -1,4 +1,4 @@
-import { AddressType, InputType } from 'types/registrationTypes';
+import { AddressType, HtmlForType, InputType } from 'types/registrationTypes';
 import CountryInput from '../../../InputRegistration/CountryInput';
 import InputRegistration from '../../../InputRegistration/InputRegistration';
 import AddressTitleComponent from './components/AddresTitleComponent/AddresTitleComponent';
@@ -8,24 +8,24 @@ import classes from './style.module.css';
 
 const inputFieldsArray: InputType[] = [
   {
-    htmlFor: `PostCode`,
-    title: 'Post code:',
+    htmlFor: `PostCode` as HtmlForType,
+    title: 'Post code',
     type: 'text',
     placeholder: 'your post code',
     smallSize: true,
   },
 
   {
-    htmlFor: `City`,
-    title: 'City:',
+    htmlFor: `City` as HtmlForType,
+    title: 'City',
     type: 'text',
     placeholder: 'your city',
     smallSize: true,
   },
 
   {
-    htmlFor: `Street`,
-    title: 'Street:',
+    htmlFor: `Street` as HtmlForType,
+    title: 'Street',
     type: 'text',
     placeholder: 'your street',
     smallSize: true,
@@ -44,13 +44,14 @@ function AddressComponent(props: AddressType): JSX.Element {
         {inputFieldsArray.map((item: InputType) => (
           <InputRegistration
             input={{
-              htmlFor: `${typeComponent}${item.htmlFor}`,
+              htmlFor: `${typeComponent}${item.htmlFor}` as HtmlForType,
               title: item.title,
               type: item.type,
               placeholder: item.placeholder,
               smallSize: item.smallSize,
             }}
             key={`${typeComponent}${item.htmlFor}`}
+            errorClassName={classes['error']}
           />
         ))}
       </div>

@@ -5,31 +5,31 @@ import classes from './style.module.css';
 const inputFieldsArray: InputType[] = [
   {
     htmlFor: 'email',
-    title: 'Email:',
+    title: 'Email',
     type: 'email',
     placeholder: 'your email',
   },
   {
     htmlFor: 'password',
-    title: 'Password:',
+    title: 'Password',
     type: 'password',
     placeholder: 'your password',
   },
   {
     htmlFor: 'firstName',
-    title: 'First name:',
+    title: 'First name',
     type: 'text',
     placeholder: 'your name',
   },
   {
     htmlFor: 'lastName',
-    title: 'Last name:',
+    title: 'Last name',
     type: 'text',
     placeholder: 'your last name',
   },
   {
     htmlFor: 'dateOfBirth',
-    title: 'Date of birth:',
+    title: 'Date of birth',
     type: 'date',
     placeholder: '',
   },
@@ -47,6 +47,7 @@ function AccountRegistration(): JSX.Element {
             placeholder: item.placeholder,
           }}
           key={item.htmlFor}
+          errorClassName={classes['error']}
         />
       ))}
     </div>
