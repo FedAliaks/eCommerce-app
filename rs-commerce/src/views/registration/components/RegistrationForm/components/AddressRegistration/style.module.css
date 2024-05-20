@@ -1,6 +1,8 @@
 .registration__subtitle-block {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 
 .input__label {
@@ -11,4 +13,10 @@
 
 .input_checkbox {
   transform: scale(1.5);
+}
+
+@media screen and (max-width: 768px) {
+  .registration__column-title {
+    font-size: 18px;
+  }
 }

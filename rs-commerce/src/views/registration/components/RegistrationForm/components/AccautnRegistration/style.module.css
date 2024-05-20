@@ -1,3 +1,9 @@
 .form__column {
   width: 400px;
 }
+
+@media screen and (max-width: 768px) {
+  .form__column {
+    width: auto;
+  }
+}

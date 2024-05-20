@@ -18,3 +18,10 @@ h3 {
   background-color: var(--lilac-light);
   border-radius: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  .registration__wrapper {
+    width: 90%;
+    padding: 10px 5px;
+  }
+}
