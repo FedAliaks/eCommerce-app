@@ -11,9 +11,9 @@ import { LOCAL_STORAGE_AUTH, TOASTS_TEXT } from 'constants/constants';
 import toast from 'react-hot-toast';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
+import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
 import { loginFormActions } from 'redux/slices/login-form-slice';
 import { LoginData } from 'types/types';
-import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products';
 
 function* workStartAuthFetchSaga(action: PayloadAction<{ data: LoginData }>) {
   try {

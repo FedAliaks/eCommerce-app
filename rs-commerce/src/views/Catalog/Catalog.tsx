@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products';
+import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import { Category, Product } from '@commercetools/platform-sdk';
 import CategoryItem from 'components/category-item/category-item';

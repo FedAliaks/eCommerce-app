@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { apiAuthReducer } from './slices/api-auth-slice';
 import { loginFormReducer } from './slices/login-form-slice';
-import { apiCategoriesProductsReducer } from './slices/api-categories-products';
+import { apiCategoriesProductsReducer } from './slices/api-categories-products-slice';
 import { registrationFormReducer } from './slices/registration-slice';
 import rootSaga from './sagas/sagas';
 
