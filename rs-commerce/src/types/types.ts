@@ -97,6 +97,7 @@ export type ApiCategoriesProductsSliceState = {
   categories: Nullable<Category[]>;
   isLoadingProducts: boolean;
   products: Nullable<Product[]>;
+  queryParamsProducts: Nullable<QueryParamsProducts>;
   productsTotal: Nullable<number>;
   curProductsPage: number;
   productsInPage: number;

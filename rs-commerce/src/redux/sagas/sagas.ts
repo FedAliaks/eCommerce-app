@@ -7,13 +7,13 @@ import {
 } from '@commercetools/platform-sdk';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { apiLogin, getAllCategories, getAllProducts } from 'api/api';
-import { LOCAL_STORAGE_AUTH, TOASTS_TEXT } from 'constants/constants';
+import { LOCAL_STORAGE_AUTH, MAX_QUERY_LIMIT, TOASTS_TEXT } from 'constants/constants';
 import toast from 'react-hot-toast';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
 import { loginFormActions } from 'redux/slices/login-form-slice';
-import { LoginData } from 'types/types';
+import { LoginData, QueryParamsProducts } from 'types/types';
 
 function* workStartAuthFetchSaga(action: PayloadAction<{ data: LoginData }>) {
   try {
@@ -40,7 +40,7 @@ function* workStartAuthFetchSaga(action: PayloadAction<{ data: LoginData }>) {
 function* workStartGetCategoriesFetchSaga() {
   try {
     const response: ClientResponse<CategoryPagedQueryResponse> = yield call(() =>
-      getAllCategories({ limit: 500 }),
+      getAllCategories({ limit: MAX_QUERY_LIMIT }),
     );
     yield put(
       apiCategoriesProductsActions.getCategoriesSuccess({ categories: response.body.results }),
@@ -53,9 +53,12 @@ function* workStartGetCategoriesFetchSaga() {
   }
 }
 
-function* workStartGetProductsFetchSaga() {
+function* workStartGetProductsFetchSaga(action: PayloadAction<{ data: QueryParamsProducts }>) {
   try {
-    const response: ClientResponse<ProductPagedQueryResponse> = yield call(() => getAllProducts());
+    const response: ClientResponse<ProductPagedQueryResponse> = yield call(
+      getAllProducts,
+      action.payload.data,
+    );
     yield put(apiCategoriesProductsActions.getProductsSuccess({ products: response.body.results }));
     const curProductsTotal = response.body.total;
     if (curProductsTotal)
