@@ -76,4 +76,4 @@ export const PAGE_NUMBER_ONE = 1;
 
 export const PRODUCTS_IN_PAGE = 20;
 
-export const ZERO = 0;
+export const NUMBER_ZERO = 0;

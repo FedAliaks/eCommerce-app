@@ -1,6 +1,6 @@
 import { Category, Product } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { PAGE_NUMBER_ONE } from 'constants/constants';
+import { PAGE_NUMBER_ONE, PRODUCTS_IN_PAGE } from 'constants/constants';
 import { ApiCategoriesProductsSliceState, Nullable } from 'types/types';
 
 const initialState: ApiCategoriesProductsSliceState = {
@@ -8,8 +8,9 @@ const initialState: ApiCategoriesProductsSliceState = {
   categories: null,
   isLoadingProducts: false,
   products: null,
-  curProductsTotal: null,
+  productsTotal: null,
   curProductsPage: PAGE_NUMBER_ONE,
+  productsInPage: PRODUCTS_IN_PAGE,
 };
 
 export const apiCategoriesProductsSlice = createSlice({
@@ -35,7 +36,10 @@ export const apiCategoriesProductsSlice = createSlice({
       state.isLoadingProducts = action.payload;
     },
     setCurProductsTotal(state, action: PayloadAction<Nullable<number>>) {
-      state.curProductsTotal = action.payload;
+      state.productsTotal = action.payload;
+    },
+    setCurProductsPage(state, action: PayloadAction<number>) {
+      state.curProductsPage = action.payload;
     },
   },
 });

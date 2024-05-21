@@ -1,16 +1,9 @@
+import { ButtonPaginationProps } from 'types/types';
 import style from './style.module.css';
 
-export type ButtonPaginationProps = {
-  content: string;
-  isActiveStyle?: boolean;
-  onClick?: () => void;
-};
-
-function ButtonPagination({ isActiveStyle, content, onClick }: ButtonPaginationProps): JSX.Element {
+function ButtonPagination({ curStyle, content, onClick }: ButtonPaginationProps): JSX.Element {
   const btnStyle = (): string =>
-    isActiveStyle
-      ? `${style['btn-pagination']}`
-      : `${style['btn-pagination']} ${style['btn-not-active']}`;
+    `${style['btn-pagination']} ${curStyle ? style[`${curStyle}`] : ''}`;
 
   return (
     <button type="button" className={btnStyle()} onClick={onClick}>

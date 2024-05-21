@@ -97,10 +97,17 @@ export type ApiCategoriesProductsSliceState = {
   categories: Nullable<Category[]>;
   isLoadingProducts: boolean;
   products: Nullable<Product[]>;
-  curProductsTotal: Nullable<number>;
+  productsTotal: Nullable<number>;
   curProductsPage: number;
+  productsInPage: number;
 };
 
 export type ProductItemProps = {
   product: Product;
+};
+
+export type ButtonPaginationProps = {
+  content: string;
+  curStyle?: string;
+  onClick?: () => void;
 };
