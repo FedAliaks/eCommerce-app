@@ -7,9 +7,10 @@ import CategoryItem from 'components/category-item/category-item';
 import ProductItem from 'components/product-item/product-item';
 import Pagination from 'components/pagination/pagination';
 import { QueryParamsProducts } from 'types/types';
+import { CATALOG_PAGE_TEXT } from 'constants/constants';
 import style from './style.module.css';
 
-function Catalog() {
+function Catalog(): JSX.Element {
   const dispatch = useAppDispatch();
   const { categories, products, curProductsPage, productsInPage } = useAppSelector(
     apiCategoriesProductsSelector,
@@ -24,18 +25,27 @@ function Catalog() {
     dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
   }, [curProductsPage]);
 
+  const handleCategoryClick = (id: string): void => {
+    dispatch(apiCategoriesProductsActions.setCurCategory(id));
+  };
+
   return (
     <div className={style['catalog-page']}>
       <div className={style['category']}>
-        <div className={style['category-title']}>Category:</div>
+        <div className={style['category-title']}>{CATALOG_PAGE_TEXT.titleCategory}</div>
         {categories &&
           categories.map((category: Category) => (
-            <CategoryItem key={category.id} title={category.key!} />
+            <CategoryItem
+              key={category.id}
+              title={category.key!}
+              id={category.id}
+              onClick={handleCategoryClick}
+            />
           ))}
       </div>
       <div className={style['products']}>
         <div className={style['products-title']}>
-          <div className={style['title']}>Products:</div>
+          <div className={style['title']}>{CATALOG_PAGE_TEXT.titleProducts}</div>
           <Pagination />
         </div>
         <div className={style['products-items']}>

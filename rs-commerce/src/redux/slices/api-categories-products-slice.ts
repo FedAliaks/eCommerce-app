@@ -6,6 +6,7 @@ import { ApiCategoriesProductsSliceState, Nullable, QueryParamsProducts } from '
 const initialState: ApiCategoriesProductsSliceState = {
   isLoadingCategories: false,
   categories: null,
+  curCategory: null,
   isLoadingProducts: false,
   queryParamsProducts: null,
   products: null,
@@ -26,6 +27,9 @@ export const apiCategoriesProductsSlice = createSlice({
     },
     setIsLoadingCategories(state, action: PayloadAction<boolean>) {
       state.isLoadingCategories = action.payload;
+    },
+    setCurCategory(state, action: PayloadAction<Nullable<string>>) {
+      state.curCategory = action.payload;
     },
     startProductsFetch(state, action: PayloadAction<{ data: QueryParamsProducts }>) {
       state.isLoadingProducts = true;

@@ -79,3 +79,8 @@ export const PRODUCTS_IN_PAGE = 20;
 export const NUMBER_ZERO = 0;
 
 export const MAX_QUERY_LIMIT = 500;
+
+export const CATALOG_PAGE_TEXT = {
+  titleCategory: 'Category:',
+  titleProducts: 'Products:',
+};
