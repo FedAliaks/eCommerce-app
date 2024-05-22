@@ -3,15 +3,15 @@ import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import style from './style.module.css';
 
-function CategoryItem({ title, id, onClick }: CategoryItemProps) {
+function CategoryItem({ title, onClick }: CategoryItemProps) {
   const { curCategory } = useAppSelector(apiCategoriesProductsSelector);
 
   const curItemClick = (): void => {
-    onClick(id);
+    onClick(title);
   };
 
   const curItemStyle = (): string =>
-    `${style['category-item']} ${curCategory === id ? style['active'] : ''}`;
+    `${style['category-item']} ${curCategory === title ? style['active'] : ''}`;
 
   return (
     <div className={curItemStyle()} onClick={curItemClick} role="presentation">

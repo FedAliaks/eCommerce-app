@@ -81,6 +81,10 @@ export const NUMBER_ZERO = 0;
 export const MAX_QUERY_LIMIT = 500;
 
 export const CATALOG_PAGE_TEXT = {
+  headerTitle: 'Catalog',
+  headerSubtitle: 'Main > Catalog',
+  headerImage: 'Bookshelf image',
   titleCategory: 'Category:',
+  allCategories: 'All categories',
   titleProducts: 'Products:',
 };
