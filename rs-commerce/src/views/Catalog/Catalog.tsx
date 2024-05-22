@@ -8,7 +8,8 @@ import ProductItem from 'components/product-item/product-item';
 import Pagination from 'components/pagination/pagination';
 import { QueryParamsProducts } from 'types/types';
 import { CATALOG_PAGE_TEXT } from 'constants/constants';
-import CatalogPageHeader from './components/CatalogPageHeader';
+import { getAllProductsProjections } from 'api/api';
+import { CatalogFilters, CatalogPageHeader } from './components';
 import style from './style.module.css';
 
 function Catalog(): JSX.Element {
@@ -24,6 +25,7 @@ function Catalog(): JSX.Element {
   useEffect(() => {
     dispatch(apiCategoriesProductsActions.startCategoriesFetch());
     dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
+    getAllProductsProjections();
   }, [curProductsPage]);
 
   const handleCategoryClick = (id: string): void => {
@@ -33,6 +35,7 @@ function Catalog(): JSX.Element {
   return (
     <div className={style['catalog-page-wrapper']}>
       <CatalogPageHeader />
+      <CatalogFilters />
       <div className={style['catalog-page']}>
         <div className={style['category']}>
           <div className={style['category-title']}>{CATALOG_PAGE_TEXT.titleCategory}</div>

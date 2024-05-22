@@ -87,4 +87,8 @@ export const CATALOG_PAGE_TEXT = {
   titleCategory: 'Category:',
   allCategories: 'All categories',
   titleProducts: 'Products:',
+  filterMain: 'Filter',
+  filterSort: 'Sort by',
+  filterSearch: 'Search',
+  filterView: 'Showing 1–16 of 32 results',
 };
