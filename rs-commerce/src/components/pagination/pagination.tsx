@@ -29,7 +29,7 @@ function Pagination(): JSX.Element {
   };
 
   return (
-    <div className={style['pagination']}>
+    <div className={`container ${style['pagination']}`}>
       <div>Page: </div>
       <ButtonPagination content="Prev" curStyle={prevBtnStyle()} onClick={handlePrevBtnClick} />
       <div className={style['pagination-pages-wrapper']}>
