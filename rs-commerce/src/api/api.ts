@@ -6,12 +6,18 @@ import {
   MyCustomerDraft,
   ProductPagedQueryResponse,
   ProductProjection,
+  ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import apiRootWithPasswordFlow from 'SDK/apiRootWithPasswordFlow';
 import { LOCAL_STORAGE_TOKEN } from 'constants/constants';
-import { LoginData, QueryParamsCategories, QueryParamsProducts } from 'types/types';
+import {
+  LoginData,
+  QueryParamsCategories,
+  QueryParamsProducts,
+  QueryParamsProductsProjections,
+} from 'types/types';
 
 export async function apiSignUp(
   data: MyCustomerDraft,
@@ -57,6 +63,23 @@ export async function getAllProducts(
   }
 
   const response = await apiRoot.products().get({ queryArgs }).execute();
+  console.log('getAllProducts: ', response);
+
+  return response;
+}
+
+export async function getAllProductsProjections(
+  queryArgs?: QueryParamsProductsProjections,
+): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+  let apiRoot: ByProjectKeyRequestBuilder;
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    apiRoot = apiRootWithExistingTokenFlow();
+  } else {
+    apiRoot = apiRootWithAnonymousSessionFlow();
+  }
+
+  const response = await apiRoot.productProjections().search().get({ queryArgs }).execute();
+  console.log('getAllProductsProjections: ', response);
 
   return response;
 }
