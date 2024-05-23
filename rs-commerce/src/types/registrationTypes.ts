@@ -43,7 +43,6 @@ export type CheckboxRegistrationType = {
 };
 
 export enum TypeFields {
-  /*     dateOfBirth = 'dateOfBirth', */
   firstName = 'firstName',
   lastName = 'lastName',
   billingCity = 'billingCity',
