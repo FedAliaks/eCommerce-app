@@ -88,5 +88,4 @@ export const CATALOG_PAGE_TEXT = {
   filterMain: 'Filter',
   filterSort: 'Sort by',
   filterSearch: 'Search',
-  filterView: 'Showing 1–12 of 32 results',
 };
