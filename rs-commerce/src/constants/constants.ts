@@ -74,7 +74,7 @@ export const TOASTS_TEXT = {
 
 export const PAGE_NUMBER_ONE = 1;
 
-export const PRODUCTS_IN_PAGE = 20;
+export const PRODUCTS_IN_PAGE = 12;
 
 export const NUMBER_ZERO = 0;
 
@@ -88,5 +88,5 @@ export const CATALOG_PAGE_TEXT = {
   filterMain: 'Filter',
   filterSort: 'Sort by',
   filterSearch: 'Search',
-  filterView: 'Showing 1–16 of 32 results',
+  filterView: 'Showing 1–12 of 32 results',
 };
