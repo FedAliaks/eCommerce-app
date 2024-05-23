@@ -1,0 +1,31 @@
+p,
+h1,
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.registration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.registration__wrapper {
+  max-width: 1000px;
+  width: 100%;
+  padding: 30px 20px 40px;
+  background-color: var(--lilac-light-30);
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+  .registration__wrapper {
+    max-width: 472px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}

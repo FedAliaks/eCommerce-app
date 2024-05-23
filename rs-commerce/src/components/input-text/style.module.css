@@ -1,0 +1,30 @@
+.input-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.input-field-name {
+  font-family: var(--font-poppins);
+  font-weight: bold;
+  font-size: 16px;
+  color: #000;
+}
+.input-field {
+  border: 1px solid #9f9f9f;
+  border-radius: 10px;
+  height: 65px;
+  background: #fff;
+  font-family: var(--font-poppins);
+  font-weight: 500;
+  font-size: 16px;
+  color: #333;
+  padding: 0 50px 0 28px;
+}
+.input-field-tips {
+  min-height: 40px;
+  font-family: var(--font-poppins);
+  font-weight: 500;
+  font-size: 13px;
+  color: #eb5757;
+}

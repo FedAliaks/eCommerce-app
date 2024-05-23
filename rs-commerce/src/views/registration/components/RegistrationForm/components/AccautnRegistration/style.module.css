@@ -1,0 +1,15 @@
+.form__column {
+  max-width: 400px;
+  width: 100%;
+}
+
+.error {
+  max-width: 400px;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .form__column {
+    width: auto;
+  }
+}
