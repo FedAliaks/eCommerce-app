@@ -118,7 +118,7 @@ export type QueryParamsProductsProjections = {
 export type ApiCategoriesProductsSliceState = {
   isLoadingCategories: boolean;
   categories: Nullable<Category[]>;
-  curCategory: string;
+  curCategory: Nullable<Category>;
   isLoadingProducts: boolean;
   products: Nullable<ProductProjection[]>;
   queryParamsProducts: Nullable<QueryParamsProductsProjections>;
@@ -138,6 +138,6 @@ export type ButtonPaginationProps = {
 };
 
 export type CategoryItemProps = {
-  title: string;
-  onClick: (title: string) => void;
+  data: Nullable<Category>;
+  onClick: (data: Nullable<Category>) => void;
 };

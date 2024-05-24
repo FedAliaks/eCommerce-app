@@ -3,30 +3,24 @@ import { apiCategoriesProductsActions } from 'redux/slices/api-categories-produc
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import { Category } from '@commercetools/platform-sdk';
 import CategoryItem from 'components/category-item/category-item';
-import { CATALOG_PAGE_TEXT } from 'constants/constants';
+import { Nullable } from 'types/types';
 import style from '../style.module.css';
 
 function CatalogPageCategories(): JSX.Element {
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector(apiCategoriesProductsSelector);
 
-  const handleCategoryClick = (id: string): void => {
-    dispatch(apiCategoriesProductsActions.setCurCategory(id));
+  const handleCategoryClick = (data: Nullable<Category>): void => {
+    dispatch(apiCategoriesProductsActions.setCurCategory(data));
   };
 
   return (
     <div className={style['category-wrapper']}>
       <div className={`container ${style['category']}`}>
-        {categories && (
-          <CategoryItem title={CATALOG_PAGE_TEXT.allCategories} onClick={handleCategoryClick} />
-        )}
+        {categories && <CategoryItem data={null} onClick={handleCategoryClick} />}
         {categories &&
           categories.map((category: Category) => (
-            <CategoryItem
-              key={category.id}
-              title={category.name['en-US']!}
-              onClick={handleCategoryClick}
-            />
+            <CategoryItem key={category.id} data={category} onClick={handleCategoryClick} />
           ))}
       </div>
     </div>

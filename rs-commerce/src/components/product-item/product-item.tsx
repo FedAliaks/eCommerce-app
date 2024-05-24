@@ -18,10 +18,10 @@ function ProductItem({ product }: ProductProjectionItemProps) {
 
   const { prices } = product.masterVariant;
   const curCurrencyCode = prices?.length
-    ? prices[2]!.value.currencyCode
+    ? prices[0]!.value.currencyCode
     : CATALOG_PAGE_TEXT.noPriceValue;
   const curPriceFormatted = prices?.length
-    ? (prices[2]!.value.centAmount / 100).toFixed(2)
+    ? (prices[0]!.value.centAmount / 100).toFixed(2)
     : CATALOG_PAGE_TEXT.noPriceValue;
   const itemPrice = prices ? `${curCurrencyCode} ${curPriceFormatted}` : '';
 

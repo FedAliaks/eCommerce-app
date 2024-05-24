@@ -1,12 +1,12 @@
 import { Category, ProductProjection } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { CATALOG_PAGE_TEXT, PAGE_NUMBER_ONE, PRODUCTS_IN_PAGE } from 'constants/constants';
+import { PAGE_NUMBER_ONE, PRODUCTS_IN_PAGE } from 'constants/constants';
 import { ApiCategoriesProductsSliceState, Nullable, QueryParamsProducts } from 'types/types';
 
 const initialState: ApiCategoriesProductsSliceState = {
   isLoadingCategories: false,
   categories: null,
-  curCategory: CATALOG_PAGE_TEXT.allCategories,
+  curCategory: null,
   isLoadingProducts: false,
   queryParamsProducts: null,
   products: null,
@@ -28,7 +28,7 @@ export const apiCategoriesProductsSlice = createSlice({
     setIsLoadingCategories(state, action: PayloadAction<boolean>) {
       state.isLoadingCategories = action.payload;
     },
-    setCurCategory(state, action: PayloadAction<string>) {
+    setCurCategory(state, action: PayloadAction<Nullable<Category>>) {
       state.curCategory = action.payload;
     },
     startProductsFetch(state, action: PayloadAction<{ data: QueryParamsProducts }>) {

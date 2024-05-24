@@ -6,10 +6,10 @@ import style from '../style.module.css';
 function CatalogPageHeader(): JSX.Element {
   const { curCategory } = useAppSelector(apiCategoriesProductsSelector);
   const headerTitle = (): string =>
-    curCategory === CATALOG_PAGE_TEXT.allCategories ? CATALOG_PAGE_TEXT.headerTitle : curCategory;
+    curCategory?.name['en'] ? curCategory.name['en'] : CATALOG_PAGE_TEXT.headerTitle;
 
   const headerSubtitle = (): string =>
-    `${CATALOG_PAGE_TEXT.headerSubtitle} ${curCategory === CATALOG_PAGE_TEXT.allCategories ? '' : `> ${curCategory}`}`;
+    `${CATALOG_PAGE_TEXT.headerSubtitle} ${curCategory?.name['en'] ? `> ${curCategory.name['en']}` : ''}`;
 
   return (
     <div className={style['catalog-page-header']}>
