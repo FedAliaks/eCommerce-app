@@ -13,17 +13,27 @@ import {
 
 function Catalog(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { curProductsPage, productsInPage } = useAppSelector(apiCategoriesProductsSelector);
+  const { curProductsPage, productsInPage, curCategory } = useAppSelector(
+    apiCategoriesProductsSelector,
+  );
 
-  const setProductsqueryArgs = (): QueryParamsProductsProjections => ({
-    limit: productsInPage,
-    offset: (curProductsPage - 1) * productsInPage,
-  });
+  const setProductsqueryArgs = (): QueryParamsProductsProjections => {
+    const queryParams: QueryParamsProductsProjections = {
+      limit: productsInPage,
+      offset: (curProductsPage - 1) * productsInPage,
+    };
+
+    if (curCategory) {
+      queryParams.filter = [`categories.id:"${curCategory.id}"`];
+    }
+
+    return queryParams;
+  };
 
   useEffect(() => {
     dispatch(apiCategoriesProductsActions.startCategoriesFetch());
     dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
-  }, [curProductsPage]);
+  }, [curProductsPage, curCategory]);
 
   return (
     <>
