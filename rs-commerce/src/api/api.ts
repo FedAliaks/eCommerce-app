@@ -63,7 +63,6 @@ export async function getAllProducts(
   }
 
   const response = await apiRoot.products().get({ queryArgs }).execute();
-  console.log('getAllProducts: ', response);
 
   return response;
 }
@@ -79,7 +78,6 @@ export async function getAllProductsProjections(
   }
 
   const response = await apiRoot.productProjections().search().get({ queryArgs }).execute();
-  console.log('getAllProductsProjections: ', response);
 
   return response;
 }

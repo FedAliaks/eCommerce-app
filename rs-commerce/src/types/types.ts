@@ -3,7 +3,7 @@ import {
   Category,
   CustomerSignInResult,
   MyCustomerDraft,
-  Product,
+  ProductProjection,
 } from '@commercetools/platform-sdk';
 
 export type LoginFormSliceState = {
@@ -120,15 +120,15 @@ export type ApiCategoriesProductsSliceState = {
   categories: Nullable<Category[]>;
   curCategory: string;
   isLoadingProducts: boolean;
-  products: Nullable<Product[]>;
-  queryParamsProducts: Nullable<QueryParamsProducts>;
+  products: Nullable<ProductProjection[]>;
+  queryParamsProducts: Nullable<QueryParamsProductsProjections>;
   productsTotal: Nullable<number>;
   curProductsPage: number;
   productsInPage: number;
 };
 
-export type ProductItemProps = {
-  product: Product;
+export type ProductProjectionItemProps = {
+  product: ProductProjection;
 };
 
 export type ButtonPaginationProps = {

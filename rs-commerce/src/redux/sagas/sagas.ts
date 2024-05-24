@@ -3,17 +3,18 @@ import {
   ClientResponse,
   CustomerSignInResult,
   ErrorResponse,
-  ProductPagedQueryResponse,
+  // ProductPagedQueryResponse,
+  ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { apiLogin, getAllCategories, getAllProducts } from 'api/api';
+import { apiLogin, getAllCategories, getAllProductsProjections } from 'api/api';
 import { LOCAL_STORAGE_AUTH, MAX_QUERY_LIMIT, TOASTS_TEXT } from 'constants/constants';
 import toast from 'react-hot-toast';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
 import { loginFormActions } from 'redux/slices/login-form-slice';
-import { LoginData, QueryParamsProducts } from 'types/types';
+import { LoginData, QueryParamsProductsProjections } from 'types/types';
 
 function* workStartAuthFetchSaga(action: PayloadAction<{ data: LoginData }>) {
   try {
@@ -53,10 +54,12 @@ function* workStartGetCategoriesFetchSaga() {
   }
 }
 
-function* workStartGetProductsFetchSaga(action: PayloadAction<{ data: QueryParamsProducts }>) {
+function* workStartGetProductsFetchSaga(
+  action: PayloadAction<{ data: QueryParamsProductsProjections }>,
+) {
   try {
-    const response: ClientResponse<ProductPagedQueryResponse> = yield call(
-      getAllProducts,
+    const response: ClientResponse<ProductProjectionPagedQueryResponse> = yield call(
+      getAllProductsProjections,
       action.payload.data,
     );
     yield put(apiCategoriesProductsActions.getProductsSuccess({ products: response.body.results }));

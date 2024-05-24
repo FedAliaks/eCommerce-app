@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
-import { QueryParamsProducts } from 'types/types';
+import { QueryParamsProductsProjections } from 'types/types';
 import Pagination from 'components/pagination/pagination';
 import {
   CatalogPageCategories,
@@ -15,7 +15,7 @@ function Catalog(): JSX.Element {
   const dispatch = useAppDispatch();
   const { curProductsPage, productsInPage } = useAppSelector(apiCategoriesProductsSelector);
 
-  const setProductsqueryArgs = (): QueryParamsProducts => ({
+  const setProductsqueryArgs = (): QueryParamsProductsProjections => ({
     limit: productsInPage,
     offset: (curProductsPage - 1) * productsInPage,
   });

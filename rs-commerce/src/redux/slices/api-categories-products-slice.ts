@@ -1,4 +1,4 @@
-import { Category, Product } from '@commercetools/platform-sdk';
+import { Category, ProductProjection } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CATALOG_PAGE_TEXT, PAGE_NUMBER_ONE, PRODUCTS_IN_PAGE } from 'constants/constants';
 import { ApiCategoriesProductsSliceState, Nullable, QueryParamsProducts } from 'types/types';
@@ -35,7 +35,7 @@ export const apiCategoriesProductsSlice = createSlice({
       state.isLoadingProducts = true;
       state.queryParamsProducts = action.payload.data;
     },
-    getProductsSuccess: (state, action: PayloadAction<{ products: Product[] }>) => {
+    getProductsSuccess: (state, action: PayloadAction<{ products: ProductProjection[] }>) => {
       state.products = action.payload.products;
     },
     setIsLoadingProducts(state, action: PayloadAction<boolean>) {

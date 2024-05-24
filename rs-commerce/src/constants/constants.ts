@@ -88,4 +88,6 @@ export const CATALOG_PAGE_TEXT = {
   filterMain: 'Filter',
   filterSort: 'Sort by',
   filterSearch: 'Search',
+  noImageUrl: '../../assets/catalog-page/no-image.jpg',
+  noPriceValue: '-//-',
 };
