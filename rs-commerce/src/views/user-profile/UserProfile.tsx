@@ -1,22 +1,31 @@
-import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import ProfileComponent from 'components/profile-component/profileComponent';
+import {
+  inputArrayBillingAddress,
+  inputArrayPersonal,
+  inputArrayShippingAddress,
+} from './elements';
+import classes from './UserProfile.module.css';
 
 export default function UserProfile(): JSX.Element {
-  function getUser() {
-    console.log('get User');
-    console.log(apiRootWithExistingTokenFlow());
-    console.log('get User');
-    console.log(
-      apiRootWithExistingTokenFlow()
-        .customers()
-        .withId({ ID: '935f8468-3fc9-42eb-a16e-b03e943fbbc9' })
-        .get()
-        .execute(),
-    );
-  }
-
   return (
-    <button type="button" onClick={getUser}>
-      Get User Profile
-    </button>
+    <div className={classes['profile']}>
+      <div className={classes['profile__column']}>
+        <ProfileComponent title="Personal information" inputArray={inputArrayPersonal} />
+        <ProfileComponent
+          title="Address information"
+          subtitle="Shipping address"
+          defaultAddress
+          inputArray={inputArrayShippingAddress}
+        />
+        <ProfileComponent
+          subtitle="Billing address"
+          defaultAddress={false}
+          inputArray={inputArrayBillingAddress}
+        />
+      </div>
+      <div className={classes['profile__column']}>
+        <div>Change password</div>
+      </div>
+    </div>
   );
 }

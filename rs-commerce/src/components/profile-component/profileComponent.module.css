@@ -1,0 +1,26 @@
+.profile__component {
+  padding: 10px 0;
+}
+
+.profile__title-component {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile__subtitle-component {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile__edit-image {
+  background: url('../../assets/profile/edit-profile.svg');
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+}
+
+.profile__inputs-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
