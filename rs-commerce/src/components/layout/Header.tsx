@@ -35,12 +35,6 @@ function Header() {
       className: style['underline'],
       withAuth: false,
     },
-    {
-      path: ROUTE_PATH.profile,
-      title: 'Profile',
-      className: style['underline'],
-      withAuth: true,
-    },
   ];
 
   const toggleBurgerMenu = () => setIsBurgerMenuOpen(!isBurgerMenuOpen);
@@ -84,6 +78,17 @@ function Header() {
                 </Link>
               </li>
             ))}
+          {isAuth && (
+            <li>
+              <button
+                aria-label="Profile"
+                onClick={() => navigate(ROUTE_PATH.profile)}
+                className={style['logout']}
+                type="button">
+                Profile
+              </button>
+            </li>
+          )}
           {isAuth && (
             <li>
               <button
