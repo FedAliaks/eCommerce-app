@@ -1,4 +1,4 @@
-import { InputProfileType } from 'components/profile-component/types';
+import { InputProfileType, ProfileComponentType } from 'components/profile-component/types';
 
 export const inputArrayPersonal: InputProfileType[] = [
   {
@@ -83,5 +83,23 @@ export const inputArrayBillingAddress: InputProfileType[] = [
     isSizeSmall: true,
     type: 'text',
     value: 'value',
+  },
+];
+
+export const ProfileUsersComponents: ProfileComponentType[] = [
+  {
+    title: 'Personal information',
+    inputArray: inputArrayPersonal,
+  },
+  {
+    title: 'Address information',
+    subtitle: 'Shipping address',
+    defaultAddress: true,
+    inputArray: inputArrayShippingAddress,
+  },
+  {
+    subtitle: 'Billing address',
+    defaultAddress: false,
+    inputArray: inputArrayBillingAddress,
   },
 ];

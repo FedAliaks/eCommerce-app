@@ -25,6 +25,7 @@ export default function ProfileComponent(props: ProfileComponentType): JSX.Eleme
             isSizeSmall={item.isSizeSmall}
             type={item.type}
             value={item.value}
+            key={item.id}
           />
         ))}
       </div>
