@@ -35,6 +35,12 @@ function Header() {
       className: style['underline'],
       withAuth: false,
     },
+    {
+      path: ROUTE_PATH.profile,
+      title: 'Profile',
+      className: style['underline'],
+      withAuth: true,
+    },
   ];
 
   const toggleBurgerMenu = () => setIsBurgerMenuOpen(!isBurgerMenuOpen);
