@@ -25,3 +25,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
+
+.profile__input-container-1-column {
+  grid-template-columns: 1fr;
+}

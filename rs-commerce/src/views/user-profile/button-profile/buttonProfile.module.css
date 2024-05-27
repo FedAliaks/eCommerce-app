@@ -1,0 +1,17 @@
+.profile__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 40px;
+  border: 2px solid var(--dark);
+  font-size: 14px;
+  font-family: var(--font-poppins);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.profile__button_colored {
+  border-color: var(--lilac-dark);
+  color: var(--lilac-dark);
+}

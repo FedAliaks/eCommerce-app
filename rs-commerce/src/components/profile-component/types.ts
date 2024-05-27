@@ -3,7 +3,8 @@ export type InputProfileType = {
   id: string;
   isSizeSmall: boolean;
   type: string;
-  value: string;
+  value?: string;
+  isDisabled: boolean;
 };
 
 export type ProfileComponentType = {

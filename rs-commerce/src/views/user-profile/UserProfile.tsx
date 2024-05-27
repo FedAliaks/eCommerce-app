@@ -2,6 +2,8 @@ import ProfileComponent from 'components/profile-component/profileComponent';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSelector } from 'redux/selectors';
 import { InputProfileType, ProfileComponentType } from 'components/profile-component/types';
+import CustomLink from 'components/custom-link/custom-link';
+import { ROUTE_PATH } from 'constants/constants';
 import classes from './UserProfile.module.css';
 
 export default function UserProfile(): JSX.Element {
@@ -15,6 +17,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.firstName || 'name',
+      isDisabled: true,
     },
     {
       title: 'Last name',
@@ -22,6 +25,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.lastName || 'name',
+      isDisabled: true,
     },
     {
       title: 'Date of birth',
@@ -29,6 +33,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: false,
       type: 'data',
       value: customer?.dateOfBirth || '1900-01-01',
+      isDisabled: true,
     },
   ];
 
@@ -39,6 +44,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.addresses[0]?.country || '',
+      isDisabled: true,
     },
     {
       title: 'Post code',
@@ -46,6 +52,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.addresses[0]?.postalCode || '000000',
+      isDisabled: true,
     },
     {
       title: 'City',
@@ -53,6 +60,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.addresses[0]?.city || 'city',
+      isDisabled: true,
     },
     {
       title: 'Street',
@@ -60,6 +68,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.addresses[0]?.streetName || 'street',
+      isDisabled: true,
     },
   ];
 
@@ -70,6 +79,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.addresses[1]?.country || '',
+      isDisabled: true,
     },
     {
       title: 'Post code',
@@ -77,6 +87,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.addresses[1]?.postalCode || '000000',
+      isDisabled: true,
     },
     {
       title: 'City',
@@ -84,6 +95,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.addresses[1]?.city || 'city',
+      isDisabled: true,
     },
     {
       title: 'Street',
@@ -91,6 +103,7 @@ export default function UserProfile(): JSX.Element {
       isSizeSmall: true,
       type: 'text',
       value: customer?.addresses[1]?.streetName || 'street',
+      isDisabled: true,
     },
   ];
 
@@ -126,7 +139,7 @@ export default function UserProfile(): JSX.Element {
         ))}
       </div>
       <div className={classes['profile__column']}>
-        <div>Change password</div>
+        <CustomLink to={ROUTE_PATH.changePassword} text="Change password" elStyle="link" />
       </div>
     </div>
   );
