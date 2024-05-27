@@ -33,6 +33,7 @@ export default function ProfileComponent(props: ProfileComponentType): JSX.Eleme
             value={item.value}
             key={item.id}
             isDisabled={item.isDisabled}
+            handler={item.handler}
           />
         ))}
       </div>

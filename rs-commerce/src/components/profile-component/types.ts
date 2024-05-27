@@ -5,6 +5,7 @@ export type InputProfileType = {
   type: string;
   value?: string;
   isDisabled: boolean;
+  handler?: () => void;
 };
 
 export type ProfileComponentType = {

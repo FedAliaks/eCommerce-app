@@ -2,7 +2,7 @@ import { InputProfileType } from '../types';
 import classes from './inputProfile.module.css';
 
 export default function InputProfile(props: InputProfileType): JSX.Element {
-  const { title, id, isSizeSmall, type, value, isDisabled } = props;
+  const { title, id, isSizeSmall, type, value, isDisabled, handler } = props;
   return (
     <div className={classes['profile__input-component']}>
       <p className={classes['profile__input-title']}>{title}</p>
@@ -18,7 +18,7 @@ export default function InputProfile(props: InputProfileType): JSX.Element {
             type={type}
             disabled={isDisabled}
             value={value}
-            onChange={() => console.log('change')}
+            onChange={handler}
           />
         </div>
       </label>
