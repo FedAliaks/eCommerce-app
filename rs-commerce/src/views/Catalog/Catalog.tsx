@@ -10,12 +10,12 @@ import {
   CatalogPageHeader,
   CatalogPageProducts,
 } from './components';
+import FiltersPopup from './components/FiltersPopup';
 
 function Catalog(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { curProductsPage, productsInPage, curCategory } = useAppSelector(
-    apiCategoriesProductsSelector,
-  );
+  const { curProductsPage, productsInPage, curCategory, productsFilter /* , searchInputValue */ } =
+    useAppSelector(apiCategoriesProductsSelector);
 
   const setProductsqueryArgs = (): QueryParamsProductsProjections => {
     const queryParams: QueryParamsProductsProjections = {
@@ -27,13 +27,17 @@ function Catalog(): JSX.Element {
       queryParams.filter = [`categories.id:"${curCategory.id}"`];
     }
 
+    // if (searchInputValue) {
+    //   queryParams['text.en'] = searchInputValue;
+    // }
+
     return queryParams;
   };
 
   useEffect(() => {
     dispatch(apiCategoriesProductsActions.startCategoriesFetch());
     dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
-  }, [curProductsPage, curCategory]);
+  }, [curProductsPage, curCategory /* , searchInputValue */]);
 
   return (
     <>
@@ -42,6 +46,7 @@ function Catalog(): JSX.Element {
       <CatalogPageCategories />
       <CatalogPageProducts />
       <Pagination />
+      {productsFilter && <FiltersPopup />}
     </>
   );
 }

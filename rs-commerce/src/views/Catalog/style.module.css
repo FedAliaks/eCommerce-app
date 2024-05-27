@@ -108,6 +108,8 @@
 .filter-input {
   width: 370px;
   height: 100%;
+  font-size: 22px;
+  padding: 0 10px;
 }
 .filter-view {
   display: flex;
@@ -126,6 +128,18 @@
 }
 .filter4 {
   grid-area: d;
+}
+.filters-popup {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 201;
 }
 @media screen and (max-width: 1355px) {
   .filters-wrapper {

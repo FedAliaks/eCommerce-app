@@ -125,6 +125,8 @@ export type ApiCategoriesProductsSliceState = {
   productsTotal: Nullable<number>;
   curProductsPage: number;
   productsInPage: number;
+  searchInputValue: string;
+  productsFilter: Nullable<FilterType>;
 };
 
 export type ProductProjectionItemProps = {
@@ -141,3 +143,8 @@ export type CategoryItemProps = {
   data: Nullable<Category>;
   onClick: (data: Nullable<Category>) => void;
 };
+
+export enum FilterType {
+  mainFilter = 'mainFilter',
+  sortFilter = 'sortFilter',
+}

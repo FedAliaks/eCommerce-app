@@ -1,7 +1,12 @@
 import { Category, ProductProjection } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { PAGE_NUMBER_ONE, PRODUCTS_IN_PAGE } from 'constants/constants';
-import { ApiCategoriesProductsSliceState, Nullable, QueryParamsProducts } from 'types/types';
+import {
+  ApiCategoriesProductsSliceState,
+  FilterType,
+  Nullable,
+  QueryParamsProducts,
+} from 'types/types';
 
 const initialState: ApiCategoriesProductsSliceState = {
   isLoadingCategories: false,
@@ -13,6 +18,8 @@ const initialState: ApiCategoriesProductsSliceState = {
   productsTotal: null,
   curProductsPage: PAGE_NUMBER_ONE,
   productsInPage: PRODUCTS_IN_PAGE,
+  searchInputValue: '',
+  productsFilter: null,
 };
 
 export const apiCategoriesProductsSlice = createSlice({
@@ -46,6 +53,12 @@ export const apiCategoriesProductsSlice = createSlice({
     },
     setCurProductsPage(state, action: PayloadAction<number>) {
       state.curProductsPage = action.payload;
+    },
+    setSearchInputValue(state, action: PayloadAction<string>) {
+      state.searchInputValue = action.payload;
+    },
+    setProductsFilter(state, action: PayloadAction<Nullable<FilterType>>) {
+      state.productsFilter = action.payload;
     },
   },
 });
