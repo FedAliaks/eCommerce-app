@@ -34,6 +34,10 @@
   line-height: 20px;
 }
 
+.profile__input-component {
+  flex-grow: 1;
+}
+
 @media screen and (max-width: 1024px) {
   .registration__input_small {
     max-width: 100%;

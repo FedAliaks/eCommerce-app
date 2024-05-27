@@ -3,7 +3,7 @@ import classes from './profileComponent.module.css';
 import { ProfileComponentType } from './types';
 
 export default function ProfileComponent(props: ProfileComponentType): JSX.Element {
-  const { title, inputArray, subtitle, defaultAddress } = props;
+  const { title, inputArray, subtitle, defaultAddress, flexVertical } = props;
 
   return (
     <div className={classes['profile__component']}>
@@ -17,7 +17,13 @@ export default function ProfileComponent(props: ProfileComponentType): JSX.Eleme
         {subtitle && <h3>{subtitle}</h3>}
         {defaultAddress && <p>Default address</p>}
       </div>
-      <div className={classes['profile__inputs-container']}>
+
+      <div
+        className={
+          flexVertical
+            ? `${classes['profile__inputs-container']} ${classes['profile__inputs-container_column']}`
+            : classes['profile__inputs-container']
+        }>
         {inputArray.map((item) => (
           <InputProfile
             title={item.title}

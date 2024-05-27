@@ -4,7 +4,7 @@ import classes from './inputProfile.module.css';
 export default function InputProfile(props: InputProfileType): JSX.Element {
   const { title, id, isSizeSmall, type, value, isDisabled } = props;
   return (
-    <div>
+    <div className={classes['profile__input-component']}>
       <p className={classes['profile__input-title']}>{title}</p>
       <label htmlFor={id}>
         <div className={classes['profile__input-block']}>

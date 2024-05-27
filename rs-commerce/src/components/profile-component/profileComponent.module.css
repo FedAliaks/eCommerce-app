@@ -21,11 +21,13 @@
 }
 
 .profile__inputs-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 10px;
+  flex-grow: 1;
 }
 
-.profile__input-container-1-column {
-  grid-template-columns: 1fr;
+.profile__inputs-container_column {
+  flex-direction: column;
 }

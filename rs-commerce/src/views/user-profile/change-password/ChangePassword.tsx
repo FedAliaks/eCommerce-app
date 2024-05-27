@@ -31,7 +31,7 @@ export default function ChangePassword() {
   return (
     <div className={classes['profile']}>
       <div className={classes['profile__column']}>
-        <ProfileComponent inputArray={inputArrayPassword} />
+        <ProfileComponent inputArray={inputArrayPassword} flexVertical />
         <div className={classes['profile__password-btn-container']}>
           <ButtonProfile content="Cancel" colored={false} />
           <ButtonProfile content="Save" colored />

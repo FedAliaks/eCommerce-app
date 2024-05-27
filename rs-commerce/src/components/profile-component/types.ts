@@ -12,4 +12,5 @@ export type ProfileComponentType = {
   subtitle?: string;
   defaultAddress?: boolean;
   inputArray: InputProfileType[];
+  flexVertical?: boolean;
 };
