@@ -14,14 +14,22 @@ export default function ChangePassword() {
     setCurrenPass(e.target.value);
   };
 
-  const checkNewPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const checkNewPassword = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
+  ): void => {
     console.log('check new password');
     console.log(e.target.value);
     setNewPass(e.target.value);
+    setErrorMessage(e.target.value);
   };
 
-  const checkEqualNewPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const checkEqualNewPassword = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
+  ): void => {
     console.log('check equaly password');
+    setErrorMessage(e.target.value);
     if (e.target.value === newPass) {
       console.log('yes');
     } else {
@@ -44,7 +52,10 @@ export default function ChangePassword() {
       isSizeSmall: false,
       type: 'password',
       isDisabled: false,
-      handler: (e: React.ChangeEvent<HTMLInputElement>) => checkNewPassword(e),
+      handler: (
+        e: React.ChangeEvent<HTMLInputElement>,
+        setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
+      ) => checkNewPassword(e, setErrorMessage),
     },
     {
       title: 'Confirm password',
@@ -52,7 +63,10 @@ export default function ChangePassword() {
       isSizeSmall: false,
       type: 'password',
       isDisabled: false,
-      handler: (e: React.ChangeEvent<HTMLInputElement>) => checkEqualNewPassword(e),
+      handler: (
+        e: React.ChangeEvent<HTMLInputElement>,
+        setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
+      ) => checkEqualNewPassword(e, setErrorMessage),
     },
   ];
 

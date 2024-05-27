@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { InputProfileType } from '../types';
 import classes from './inputProfile.module.css';
 
 export default function InputProfile(props: InputProfileType): JSX.Element {
   const { title, id, isSizeSmall, type, value, isDisabled, handler } = props;
+  const [errorMessage, setErrorMessage] = useState('');
   return (
     <div className={classes['profile__input-component']}>
       <p className={classes['profile__input-title']}>{title}</p>
@@ -18,8 +20,13 @@ export default function InputProfile(props: InputProfileType): JSX.Element {
             type={type}
             disabled={isDisabled}
             value={value}
-            onChange={handler ? (e: React.ChangeEvent<HTMLInputElement>) => handler(e) : undefined}
+            onChange={
+              handler
+                ? (e: React.ChangeEvent<HTMLInputElement>) => handler(e, setErrorMessage)
+                : undefined
+            }
           />
+          {handler && <p className={classes['input__error']}>{errorMessage}</p>}
         </div>
       </label>
     </div>

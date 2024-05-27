@@ -5,7 +5,10 @@ export type InputProfileType = {
   type: string;
   value?: string;
   isDisabled: boolean;
-  handler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handler?: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
+  ) => void;
 };
 
 export type ProfileComponentType = {
