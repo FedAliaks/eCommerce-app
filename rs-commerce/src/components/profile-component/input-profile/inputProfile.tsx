@@ -18,7 +18,7 @@ export default function InputProfile(props: InputProfileType): JSX.Element {
             type={type}
             disabled={isDisabled}
             value={value}
-            onChange={handler}
+            onChange={handler ? (e: React.ChangeEvent<HTMLInputElement>) => handler(e) : undefined}
           />
         </div>
       </label>

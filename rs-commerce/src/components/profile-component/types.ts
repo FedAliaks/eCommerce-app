@@ -5,7 +5,7 @@ export type InputProfileType = {
   type: string;
   value?: string;
   isDisabled: boolean;
-  handler?: () => void;
+  handler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export type ProfileComponentType = {
