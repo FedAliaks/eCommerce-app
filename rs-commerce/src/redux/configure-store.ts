@@ -5,6 +5,7 @@ import { loginFormReducer } from './slices/login-form-slice';
 import rootSaga from './sagas/sagas';
 import { registrationFormReducer } from './slices/registration-slice';
 import { apiRegistrationReducer } from './slices/api-registration-slice';
+import { productDetailReducer } from './slices/product-detail-slice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,6 +15,7 @@ export const store = configureStore({
     loginForm: loginFormReducer,
     registrationFrom: registrationFormReducer,
     apiRegistration: apiRegistrationReducer,
+    productDetail: productDetailReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

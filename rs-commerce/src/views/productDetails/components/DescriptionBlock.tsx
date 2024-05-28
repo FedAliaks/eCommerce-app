@@ -1,19 +1,21 @@
-import { ProductData } from '@commercetools/platform-sdk';
 import { Heading, SubHeading } from 'components/heading';
 import { useEffect, useState } from 'react';
+import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import style from '../style.module.css';
 
-function DescriptionBlock({ product }: { product: ProductData }) {
+function DescriptionBlock() {
+  const productDetail = useAppSelector((state) => state.productDetail.productDetail);
+
   const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
-  const price = product.masterVariant.prices?.[0]?.value || null;
-  const discount = product.masterVariant.prices?.[0]?.discounted?.value || null;
+  const price = productDetail?.masterVariant.prices?.[0]?.value || null;
+  const discount = productDetail?.masterVariant.prices?.[0]?.discounted?.value || null;
 
   useEffect(() => {
     setAttributes({});
-    product.masterVariant.attributes?.forEach((item) => {
+    productDetail?.masterVariant.attributes?.forEach((item) => {
       setAttributes((prev) => ({ ...prev, [item.name]: item.value }));
     });
-  }, [product]);
+  }, [productDetail]);
 
   const descriptionList = {
     'Publication Year': attributes['publicationYear'],
@@ -23,7 +25,7 @@ function DescriptionBlock({ product }: { product: ProductData }) {
 
   return (
     <div className={style['description']}>
-      <Heading className={style['description__title']}>{product.name['en']}</Heading>
+      <Heading className={style['description__title']}>{productDetail?.name['en']}</Heading>
       <SubHeading className={style['description__text']}>{attributes['author']}</SubHeading>
       {price ? (
         <Heading className={style['description__price']}>

@@ -1,68 +1,38 @@
-import { ProductImageItem } from 'types/types';
 import { useState } from 'react';
+import Modal from 'components/modal/Modal';
+import { productDetailSliceActions } from 'redux/slices/product-detail-slice';
+import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import style from '../style.module.css';
+import PageSlider from './PageSlider';
+import ModalSlider from './ModalSlider';
 
-type ImageBlockProps = {
-  images: ProductImageItem[];
-};
+function ImageBlock() {
+  const dispatch = useAppDispatch();
+  const productDetail = useAppSelector((state) => state.productDetail.productDetail);
+  const activeSlide = useAppSelector((state) => state.productDetail.activeSlide);
+  const images = productDetail?.masterVariant.images;
 
-function ImageBlock({ images }: ImageBlockProps) {
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
-  const otherImages = images.slice(1) as ProductImageItem[];
-
-  const getPrevSlide = () => {
-    setActiveSlide((prevActiveSlide) => prevActiveSlide - 1);
+  const openModal = () => {
+    dispatch(productDetailSliceActions.setModalActiveSlide(activeSlide));
+    setShowModal(true);
   };
-
-  const getNextSlide = () => {
-    setActiveSlide((prevActiveSlide) => prevActiveSlide + 1);
-  };
+  const closeModal = () => setShowModal(false);
 
   return (
-    <div className={style['image-block']}>
-      <div className={style['image-block-main']}>
-        {images && images[activeSlide] && (
-          <>
-            <button
-              type="button"
-              onClick={getPrevSlide}
-              disabled={activeSlide === 0}
-              className={style['image-block-main-slider__btn']}>
-              ❮
-            </button>
-            <img
-              src={images[activeSlide]?.url}
-              alt={images[activeSlide]?.label}
-              key={images[activeSlide]?.url}
-              width={images[activeSlide]?.dimensions.w}
-              height={images[activeSlide]?.dimensions.h}
-              className={style['image-block-main__item']}
-            />
-            <button
-              type="button"
-              onClick={getNextSlide}
-              disabled={activeSlide === images.length - 1}
-              className={style['image-block-main-slider__btn']}>
-              ❯
-            </button>
-          </>
-        )}
+    <>
+      <div className={style['image-block']}>
+        <div className={style['image-block-main']}>
+          {images && images[activeSlide] && <PageSlider openModal={openModal} />}
+        </div>
       </div>
-
-      <div className={style['image-block-other']}>
-        {otherImages.map((image) => (
-          <img
-            src={image.url}
-            alt={image.label}
-            key={image.url}
-            width={image.dimensions.w}
-            height={image.dimensions.h}
-            className={style['image-block-other__item']}
-          />
-        ))}
-      </div>
-    </div>
+      {showModal && (
+        <Modal onClose={closeModal}>
+          <ModalSlider />
+        </Modal>
+      )}
+    </>
   );
 }
 
