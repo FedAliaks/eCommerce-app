@@ -44,6 +44,7 @@ body {
 
 .no-scroll {
   overflow: hidden;
+  margin-right: 20px;
 }
 
 @media screen and (max-width: 1024px) {

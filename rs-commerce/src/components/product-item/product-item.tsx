@@ -1,5 +1,5 @@
 import { ProductProjectionItemProps } from 'types/types';
-import { CATALOG_PAGE_TEXT } from 'constants/constants';
+import { CATALOG_PAGE_TEXT, NUMBER_ZERO } from 'constants/constants';
 import image from '../../assets/catalog-page/no-image.jpg';
 import style from './style.module.css';
 
@@ -7,14 +7,16 @@ function ProductItem({ product }: ProductProjectionItemProps) {
   const emptyImage: HTMLImageElement = new Image();
   emptyImage.src = image;
 
-  const imgSrc = product.masterVariant.images?.length
+  const itemImgSrc = product.masterVariant.images?.length
     ? product.masterVariant.images[0]?.url
     : emptyImage.src;
 
-  const itemName = product.name['en-US']!;
-
-  const { description } = product;
-  const itemDescription = description ? description['en-US'] : '';
+  const { attributes } = product.masterVariant;
+  const itemRating = attributes ? attributes[1]?.value : NUMBER_ZERO;
+  const itemName = product.name['en'];
+  const itemAuthorYear = attributes ? `${attributes[0]?.value}, ${attributes[4]?.value}` : '';
+  const itemDescription = attributes ? attributes[2]?.value : '';
+  const itemCover = attributes ? `Cover: ${attributes[3]?.value}` : '';
 
   const { prices } = product.masterVariant;
   const curCurrencyCode = prices?.length
@@ -28,11 +30,14 @@ function ProductItem({ product }: ProductProjectionItemProps) {
   return (
     <div className={style['product-item']}>
       <div className={style['item-image-wrapper']}>
-        <img alt={product.key} className={style['item-image']} src={imgSrc} />
+        <img alt={product.key} className={style['item-image']} src={itemImgSrc} />
       </div>
       <div className={style['item-text-wrapper']}>
+        <div className={style['item-rating']}>{itemRating}</div>
         <div className={style['item-name']}>{itemName}</div>
+        <div className={style['item-author-year']}>{itemAuthorYear}</div>
         <div className={style['item-description']}>{itemDescription}</div>
+        <div className={style['item-cover']}>{itemCover}</div>
         <div className={style['item-price']}>{itemPrice}</div>
       </div>
     </div>
