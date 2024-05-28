@@ -27,8 +27,12 @@ function ProductItem({ product }: ProductProjectionItemProps) {
     : CATALOG_PAGE_TEXT.noPriceValue;
   const itemPrice = prices ? `${curCurrencyCode} ${curPriceFormatted}` : '';
 
+  const handleProductItemClick = (): void => {
+    console.log('redirect to product page id:', product.id);
+  };
+
   return (
-    <div className={style['product-item']}>
+    <div className={style['product-item']} onClick={handleProductItemClick} role="presentation">
       <div className={style['item-image-wrapper']}>
         <img alt={product.key} className={style['item-image']} src={itemImgSrc} />
       </div>
