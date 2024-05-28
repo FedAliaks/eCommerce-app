@@ -60,3 +60,5 @@ export type CustomLinkProps = {
   elStyle: string;
   text: string;
 };
+
+export type ProductImageItem = { url: string; label: string; dimensions: { w: number; h: number } };
