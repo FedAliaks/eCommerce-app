@@ -11,17 +11,25 @@ function FiltersPopup(): JSX.Element {
   const dispatch = useAppDispatch();
   const { productsFilter } = useAppSelector(apiCategoriesProductsSelector);
 
-  let content: Nullable<JSX.Element> = null;
-  if (productsFilter === FilterType.mainFilter) content = <MainFilterContent />;
-  else if (productsFilter === FilterType.sortFilter) content = <SortFilterContent />;
-
   const closePopup = (): void => {
     toggleBodyNotScrollable();
     dispatch(apiCategoriesProductsActions.setProductsFilter(null));
   };
 
+  const handlePopupClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+    const curEl = e.target as HTMLDivElement;
+    if (curEl.classList.contains(`${style['filters-popup']}`)) {
+      closePopup();
+    }
+  };
+
+  let content: Nullable<JSX.Element> = null;
+  if (productsFilter === FilterType.mainFilter) content = <MainFilterContent />;
+  else if (productsFilter === FilterType.sortFilter)
+    content = <SortFilterContent onClick={closePopup} />;
+
   return (
-    <div className={style['filters-popup']} onClick={closePopup} role="presentation">
+    <div className={style['filters-popup']} onClick={handlePopupClick} role="presentation">
       {content && content}
     </div>
   );

@@ -148,3 +148,7 @@ export enum FilterType {
   mainFilter = 'mainFilter',
   sortFilter = 'sortFilter',
 }
+
+export type SortFilterContentProps = {
+  onClick?: () => void;
+};
