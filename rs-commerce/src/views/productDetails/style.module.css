@@ -103,7 +103,9 @@
   width: 80px;
   height: 80px;
   object-fit: contain;
-  cursor: pointer;
+  cursor: zoom-in;
+  border: none;
+  background-color: transparent;
 }
 
 .description {
@@ -272,7 +274,10 @@
     color: var(--gray-middle);
   }
   .modal-slider-image {
-    height: 80vh;
+    height: auto;
+    max-height: 80vh;
+    max-width: 85vw;
+    width: 100%;
   }
   .modal-slider__dots {
     bottom: 35px;
@@ -324,10 +329,8 @@
 
 @media screen and (max-width: 415px) {
   .modal-slider-image {
-    height: auto;
     max-height: 80vh;
     max-width: 95vw;
-    width: 100%;
   }
   .modal-slider__dots {
     bottom: 25px;
