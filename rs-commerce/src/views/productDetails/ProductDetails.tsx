@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { productDetailSliceActions } from 'redux/slices/product-detail-slice';
 import { Breadcrumbs, DescriptionBlock, ImageBlock } from './components';
 import style from './style.module.css';
+import breadcrumbsLinks from './components/constants';
 
 function ProductDetails() {
   const { id } = useParams();
@@ -41,7 +42,10 @@ function ProductDetails() {
 
   return (
     <>
-      <Breadcrumbs productName={productDetail?.name['en'] as string} />
+      <Breadcrumbs
+        productName={productDetail?.name['en'] as string}
+        breadcrumbLinks={breadcrumbsLinks}
+      />
       <div className={`container ${style['product-details']}`}>
         <ImageBlock />
         <DescriptionBlock />

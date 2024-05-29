@@ -2,6 +2,9 @@ import { Heading, SubHeading } from 'components/heading';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import style from '../style.module.css';
+import Price from './Price';
+import DescriptionList from './DesctiptionList';
+import DescriptionText from './DesctiptionText';
 
 function DescriptionBlock() {
   const productDetail = useAppSelector((state) => state.productDetail.productDetail);
@@ -27,31 +30,10 @@ function DescriptionBlock() {
     <div className={style['description']}>
       <Heading className={style['description__title']}>{productDetail?.name['en']}</Heading>
       <SubHeading className={style['description__text']}>{attributes['author']}</SubHeading>
-      {price ? (
-        <Heading className={style['description__price']}>
-          {discount ? (
-            <span className={style['description__price-new']}>
-              {(discount.centAmount / 100).toFixed(2)} {discount.currencyCode}
-            </span>
-          ) : null}
+      {price ? <Price price={price} discount={discount} /> : null}
 
-          <span className={discount ? style['description__price-old'] : ''}>
-            {(price.centAmount / 100).toFixed(2)} {price.currencyCode}
-          </span>
-        </Heading>
-      ) : null}
-      <div className={style['description__content']}>
-        <div className={style['description__content-title']}>Description</div>
-        <div className={style['description__content-text']}>{attributes['description']}</div>
-      </div>
-
-      <ul className={style['description__list']}>
-        {Object.entries(descriptionList).map((item) => (
-          <li key={item[0]}>
-            {item[0]}: {item[1]}
-          </li>
-        ))}
-      </ul>
+      <DescriptionText description={attributes['description'] || ''} />
+      <DescriptionList descriptionList={descriptionList} />
     </div>
   );
 }

@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom';
-import BreadcrumbsLinks from './constants';
 import style from '../style.module.css';
 
-function Breadcrumbs({ productName }: { productName: string }) {
+function Breadcrumbs({
+  productName,
+  breadcrumbLinks,
+}: {
+  productName: string;
+  breadcrumbLinks: { name: string; path: string }[];
+}) {
   return (
     <div className={style['breadcrumbs']}>
       <div className="container">
         <ul className={style['breadcrumbs__list']}>
-          {BreadcrumbsLinks.map((link) => (
+          {breadcrumbLinks?.map((link) => (
             <li key={link.path} className={style['breadcrumbs__item']}>
               <Link to={link.path} className={style['breadcrumbs__link']}>
                 {link.name}

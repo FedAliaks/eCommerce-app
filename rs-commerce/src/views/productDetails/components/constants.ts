@@ -1,14 +1,14 @@
 import { ROUTE_PATH } from 'constants/constants';
 
-const BreadcrumbsLinks = [
+const breadcrumbsLinks = [
   {
     name: 'Main',
     path: ROUTE_PATH.main,
   },
   {
     name: 'Catalog',
-    path: '',
+    path: '/',
   },
 ];
 
-export default BreadcrumbsLinks;
+export default breadcrumbsLinks;
