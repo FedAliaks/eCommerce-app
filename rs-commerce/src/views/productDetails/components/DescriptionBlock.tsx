@@ -2,13 +2,14 @@ import { Heading, SubHeading } from 'components/heading';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import star from 'assets/images/star.svg';
+import { productDetailsSelector } from 'redux/selectors';
 import style from '../style.module.css';
 import Price from './Price';
 import DescriptionText from './DescriptionText';
 import DescriptionList from './DescriptionList';
 
 function DescriptionBlock() {
-  const productDetail = useAppSelector((state) => state.productDetail.productDetail);
+  const { productDetail } = useAppSelector(productDetailsSelector);
 
   const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
   const price = productDetail?.masterVariant.prices?.[0]?.value || null;

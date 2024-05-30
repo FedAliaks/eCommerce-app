@@ -2,14 +2,14 @@ import { useState } from 'react';
 import Modal from 'components/modal/Modal';
 import { productDetailSliceActions } from 'redux/slices/product-detail-slice';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
+import { productDetailsSelector } from 'redux/selectors';
 import style from '../style.module.css';
 import PageSlider from './PageSlider';
 import ModalSlider from './ModalSlider';
 
 function ImageBlock() {
   const dispatch = useAppDispatch();
-  const productDetail = useAppSelector((state) => state.productDetail.productDetail);
-  const activeSlide = useAppSelector((state) => state.productDetail.activeSlide);
+  const { productDetail, activeSlide } = useAppSelector(productDetailsSelector);
   const images = productDetail?.masterVariant.images;
   const imagesExceptFirst = images?.slice(1);
 

@@ -5,6 +5,7 @@ import Loader from 'components/loader/loader';
 import getRequestErrorMessage from 'utils/utils';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { productDetailSliceActions } from 'redux/slices/product-detail-slice';
+import { productDetailsSelector } from 'redux/selectors';
 import { Breadcrumbs, DescriptionBlock, ImageBlock } from './components';
 import style from './style.module.css';
 import breadcrumbsLinks from './components/constants';
@@ -12,7 +13,7 @@ import breadcrumbsLinks from './components/constants';
 function ProductDetails() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const productDetail = useAppSelector((state) => state.productDetail.productDetail);
+  const { productDetail } = useAppSelector(productDetailsSelector);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 

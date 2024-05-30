@@ -2,28 +2,28 @@ import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { ProductImageItem } from 'types/types';
 import { productDetailSliceActions } from 'redux/slices/product-detail-slice';
 import useTouchMove from 'hooks/use-touch-move';
+import { productDetailsSelector } from 'redux/selectors';
 import style from '../style.module.css';
 
 function ModalSlider() {
   const dispatch = useAppDispatch();
 
-  const activeSlide = useAppSelector((state) => state.productDetail.modalActiveSlide);
+  const { modalActiveSlide, productDetail } = useAppSelector(productDetailsSelector);
 
-  const productDetail = useAppSelector((state) => state.productDetail.productDetail);
   const images = productDetail?.masterVariant.images as ProductImageItem[];
 
   const getPrevSlide = () => {
-    dispatch(productDetailSliceActions.setModalActiveSlide(activeSlide - 1));
+    dispatch(productDetailSliceActions.setModalActiveSlide(modalActiveSlide - 1));
   };
 
   const getNextSlide = () => {
-    dispatch(productDetailSliceActions.setModalActiveSlide(activeSlide + 1));
+    dispatch(productDetailSliceActions.setModalActiveSlide(modalActiveSlide + 1));
   };
 
   const { handleTouchStart, handleTouchMove } = useTouchMove({
     getPrevSlide,
     getNextSlide,
-    activeSlide,
+    activeSlide: modalActiveSlide,
     arrLength: images.length,
   });
 
@@ -33,16 +33,16 @@ function ModalSlider() {
         <button
           type="button"
           onClick={getPrevSlide}
-          disabled={activeSlide === 0}
+          disabled={modalActiveSlide === 0}
           className={`${style['image-block-main-slider__btn']} ${style['modal-slider__btn']}`}>
           ❮
         </button>
       )}
       <img
-        src={images[activeSlide]?.url}
-        alt={images[activeSlide]?.label}
-        width={images[activeSlide]?.dimensions.w}
-        height={images[activeSlide]?.dimensions.h}
+        src={images[modalActiveSlide]?.url}
+        alt={images[modalActiveSlide]?.label}
+        width={images[modalActiveSlide]?.dimensions.w}
+        height={images[modalActiveSlide]?.dimensions.h}
         className={style['modal-slider-image']}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -51,7 +51,7 @@ function ModalSlider() {
         <button
           type="button"
           onClick={getNextSlide}
-          disabled={activeSlide === images.length - 1}
+          disabled={modalActiveSlide === images.length - 1}
           className={`${style['image-block-main-slider__btn']} ${style['modal-slider__btn']}`}>
           ❯
         </button>
@@ -62,7 +62,7 @@ function ModalSlider() {
             aria-label="Check the current slide"
             type="button"
             onClick={() => dispatch(productDetailSliceActions.setModalActiveSlide(index))}
-            className={`${style['modal-slider__dot']} ${activeSlide === index ? style['active'] : ''}`}
+            className={`${style['modal-slider__dot']} ${modalActiveSlide === index ? style['active'] : ''}`}
             key={image.url}
           />
         ))}

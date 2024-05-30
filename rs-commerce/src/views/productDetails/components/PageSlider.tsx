@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { ProductImageItem } from 'types/types';
 import { productDetailSliceActions } from 'redux/slices/product-detail-slice';
 import useTouchMove from 'hooks/use-touch-move';
+import { productDetailsSelector } from 'redux/selectors';
 import style from '../style.module.css';
 
 type PageSliderProps = {
@@ -11,9 +12,8 @@ type PageSliderProps = {
 function PageSlider({ openModal }: PageSliderProps) {
   const dispatch = useAppDispatch();
 
-  const activeSlide = useAppSelector((state) => state.productDetail.activeSlide);
+  const { activeSlide, productDetail } = useAppSelector(productDetailsSelector);
 
-  const productDetail = useAppSelector((state) => state.productDetail.productDetail);
   const images = productDetail?.masterVariant.images as ProductImageItem[];
 
   const getPrevSlide = () => {
