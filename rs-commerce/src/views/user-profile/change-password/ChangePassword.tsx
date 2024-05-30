@@ -1,17 +1,27 @@
 import ProfileComponent from 'components/profile-component/profileComponent';
 import { InputProfileType } from 'components/profile-component/types';
 import { useState } from 'react';
-import classes from './ChangePassword.module.css';
+import { useAppSelector } from 'hooks/typed-react-redux-hooks';
+import { updateProfileSelector } from 'redux/selectors';
+import { useDispatch } from 'react-redux';
+import { updateProfileActions } from 'redux/slices/update-profile-slice';
+import {
+  errorMsgObj,
+  regExpObj,
+} from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import ButtonProfile from '../button-profile/ButtonProfile';
+import classes from './ChangePassword.module.css';
 
 export default function ChangePassword() {
-  const [, setCurrenPass] = useState('');
-  const [newPass, setNewPass] = useState('');
+  const [, setCurrentPass] = useState('');
+  const { password } = useAppSelector(updateProfileSelector);
+  const dispatch = useDispatch();
 
   const checkCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
     console.log('check current password');
-    console.log(e.target.value);
-    setCurrenPass(e.target.value);
+    const { value } = e.target;
+    setCurrentPass(value);
+    console.log(value);
   };
 
   const checkNewPassword = (
@@ -19,9 +29,14 @@ export default function ChangePassword() {
     setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
   ): void => {
     console.log('check new password');
-    console.log(e.target.value);
-    setNewPass(e.target.value);
-    setErrorMessage(e.target.value);
+    const { value } = e.target;
+
+    if (!regExpObj.password.test(value)) {
+      setErrorMessage(errorMsgObj.password);
+    } else {
+      dispatch(updateProfileActions.setNewPassword(value));
+      setErrorMessage('');
+    }
   };
 
   const checkEqualNewPassword = (
@@ -29,10 +44,13 @@ export default function ChangePassword() {
     setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
   ): void => {
     console.log('check equaly password');
-    setErrorMessage(e.target.value);
-    if (e.target.value === newPass) {
+
+    if (e.target.value === password) {
       console.log('yes');
+      setErrorMessage('');
     } else {
+      setErrorMessage(errorMsgObj.checkNewPassword);
+      console.log(e.target.value);
       console.log('no');
     }
   };
