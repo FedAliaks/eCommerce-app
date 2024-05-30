@@ -52,6 +52,7 @@ export const ROUTE_PATH = {
   main: '/',
   login: '/login',
   registration: '/registration',
+  productDetails: '/product-details/:id',
 };
 
 export const LOCAL_STORAGE_TOKEN = 'hurricane_access_token';

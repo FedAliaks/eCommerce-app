@@ -2,6 +2,7 @@ import { ROUTE_PATH } from 'constants/constants';
 import Login from 'views/login/Login';
 import Main from 'views/main/Main';
 import NotFound from 'views/notFound/NotFound';
+import ProductDetails from 'views/productDetails/ProductDetails';
 import Registration from 'views/registration/Registration';
 
 const routes = [
@@ -20,6 +21,10 @@ const routes = [
   {
     path: '*',
     component: <NotFound />,
+  },
+  {
+    path: ROUTE_PATH.productDetails,
+    component: <ProductDetails />,
   },
 ];
 
