@@ -23,6 +23,10 @@ const routes = [
     component: <Catalog />,
   },
   {
+    path: ROUTE_PATH.catalogCategory,
+    component: <Catalog />,
+  },
+  {
     path: '*',
     component: <NotFound />,
   },

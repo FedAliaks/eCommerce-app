@@ -142,7 +142,6 @@ export type ButtonPaginationProps = {
 
 export type CategoryItemProps = {
   data: Nullable<Category>;
-  onClick: (data: Nullable<Category>) => void;
 };
 
 export enum FilterType {

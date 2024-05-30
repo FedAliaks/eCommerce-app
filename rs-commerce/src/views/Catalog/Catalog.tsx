@@ -4,6 +4,7 @@ import { apiCategoriesProductsActions } from 'redux/slices/api-categories-produc
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import { QueryParamsProductsProjections } from 'types/types';
 import Pagination from 'components/pagination/pagination';
+import { useParams } from 'react-router-dom';
 import {
   CatalogPageCategories,
   CatalogPageFilters,
@@ -16,6 +17,7 @@ function Catalog(): JSX.Element {
   const dispatch = useAppDispatch();
   const { curProductsPage, productsInPage, curCategory, productsFilter, searchInputValue } =
     useAppSelector(apiCategoriesProductsSelector);
+  const { category } = useParams();
 
   const setProductsqueryArgs = (): QueryParamsProductsProjections => {
     const queryParams: QueryParamsProductsProjections = {
@@ -23,8 +25,8 @@ function Catalog(): JSX.Element {
       offset: (curProductsPage - 1) * productsInPage,
     };
 
-    if (curCategory) {
-      queryParams.filter = [`categories.id:"${curCategory.id}"`];
+    if (category) {
+      queryParams.filter = [`categories.id:"${curCategory?.id}"`];
       // queryParams.filter.push(`variants.scopedPrice.value.centAmount:range 1 to 200`);
       // queryParams.filter.push(`variants.attributes.color.label.en asc.max`);
       // queryParams.filter.push(`variants.attributes.name`);
@@ -39,13 +41,14 @@ function Catalog(): JSX.Element {
       // queryParams['text.EN-US'] = searchInputValue;
     }
 
+    console.log('queryParams: ', queryParams);
     return queryParams;
   };
 
   useEffect(() => {
     dispatch(apiCategoriesProductsActions.startCategoriesFetch());
     dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
-  }, [curProductsPage, curCategory, searchInputValue]);
+  }, [curProductsPage, category, searchInputValue]);
 
   return (
     <>
