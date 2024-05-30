@@ -28,6 +28,11 @@ export default function ChangePassword() {
     console.log('check current password');
     const { value } = e.target;
     setCurrentPass(value);
+    if (value.length < 1) {
+      dispatch(updateProfileActions.setCheckNewPassword(false));
+    } else if (newPass === confirmPass && regExpObj.password.test(newPass)) {
+      dispatch(updateProfileActions.setCheckNewPassword(true));
+    }
   };
 
   const checkNewPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -40,7 +45,9 @@ export default function ChangePassword() {
     } else {
       dispatch(updateProfileActions.setNewPassword(value));
       setNewPassError('');
+      if (value === confirmPass) dispatch(updateProfileActions.setCheckNewPassword(true));
     }
+    if (value !== confirmPass) dispatch(updateProfileActions.setCheckNewPassword(false));
   };
 
   const checkEqualNewPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -118,6 +125,7 @@ export default function ChangePassword() {
     setConfirmPass('');
     setNewPassError('');
     setConfirmPassError('');
+    dispatch(updateProfileActions.setCheckNewPassword(false));
   };
 
   return (
