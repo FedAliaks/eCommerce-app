@@ -13,5 +13,6 @@
 
 .profile__button_colored {
   border-color: var(--lilac-dark);
-  color: var(--lilac-dark);
+  background-color: var(--lilac-dark);
+  color: var(--white);
 }

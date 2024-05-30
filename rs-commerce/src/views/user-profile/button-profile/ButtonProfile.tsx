@@ -17,7 +17,7 @@ export default function ButtonProfile(props: BtnProfilePropsType): JSX.Element {
     <button
       type="button"
       className={
-        colored
+        colored && checkNewPassword
           ? `${classes['profile__button']} ${classes['profile__button_colored']}`
           : `${classes['profile__button']}`
       }
