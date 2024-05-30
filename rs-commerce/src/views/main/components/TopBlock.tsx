@@ -5,6 +5,7 @@ import signupIcon from 'assets/main/signup_icon.svg';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSelector } from 'redux/selectors';
 import style from '../style.module.css';
+import { promoCodes } from './constants';
 
 function TopBlock() {
   const { isAuth } = useAppSelector(apiAuthSelector);
@@ -17,6 +18,18 @@ function TopBlock() {
           <p className={style['top-block-text']}>
             Join our community to get special offers and always keep in touch
           </p>
+          <div className={style['top-block-text-promo']}>
+            <p>
+              Use our <b>promo codes</b> now:
+            </p>
+            {promoCodes.map((code) => (
+              <div className={style['top-block-text-promo__item']}>
+                <span className={style['promo-code']}>{code.code}</span> <b>{code.discount}</b>{' '}
+                {code.description}
+              </div>
+            ))}
+          </div>
+
           {!isAuth && (
             <div className={style['top-block-links']}>
               <LilacLink to={ROUTE_PATH.login}>
