@@ -25,7 +25,6 @@ export default function ChangePassword() {
   const dispatch = useDispatch();
 
   const checkCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log('check current password');
     const { value } = e.target;
     setCurrentPass(value);
     if (value.length < 1) {
@@ -36,7 +35,6 @@ export default function ChangePassword() {
   };
 
   const checkNewPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log('check new password');
     const { value } = e.target;
     setNewPass(value);
 
@@ -51,8 +49,6 @@ export default function ChangePassword() {
   };
 
   const checkEqualNewPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log('check equaly password');
-
     const { value } = e.target;
     setConfirmPass(value);
 
@@ -99,7 +95,6 @@ export default function ChangePassword() {
   ];
 
   const saveBtnClick = () => {
-    console.log('change password');
     if (userData) {
       apiRootWithExistingTokenFlow()
         .customers()
@@ -113,13 +108,12 @@ export default function ChangePassword() {
           },
         })
         .execute()
-        .then((value) => console.log(value))
+        .then()
         .catch(() => setCurrentPassError('Check your current password'));
     }
   };
 
   const clearFieldsOnPage = () => {
-    console.log('clear fields');
     setCurrentPass('');
     setNewPass('');
     setConfirmPass('');

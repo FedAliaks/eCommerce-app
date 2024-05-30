@@ -5,6 +5,7 @@
   width: 120px;
   height: 40px;
   border: 2px solid var(--dark);
+  color: var(--dark);
   font-size: 14px;
   font-family: var(--font-poppins);
   background-color: transparent;

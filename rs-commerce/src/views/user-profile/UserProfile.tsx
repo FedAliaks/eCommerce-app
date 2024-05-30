@@ -107,26 +107,20 @@ export default function UserProfile(): JSX.Element {
     },
   ];
 
-  const moveToChangePersonalInfo = () => {
-    console.log('change personal info');
-  };
-
-  const moveToChangeAddress = () => {
-    console.log('change address');
-  };
-
   const ProfileUsersComponents: ProfileComponentType[] = [
     {
       title: 'Personal information',
       inputArray: inputArrayPersonal,
-      handler: moveToChangePersonalInfo,
+
+      linkTo: ROUTE_PATH.changeName,
     },
     {
       title: 'Address information',
       subtitle: 'Shipping address',
       defaultAddress: true,
       inputArray: inputArrayShippingAddress,
-      handler: moveToChangeAddress,
+
+      linkTo: ROUTE_PATH.changeAddress,
     },
     {
       subtitle: 'Billing address',
@@ -145,6 +139,7 @@ export default function UserProfile(): JSX.Element {
             inputArray={item.inputArray}
             defaultAddress={item.defaultAddress}
             key={item.title || item.subtitle || `address${index}`}
+            linkTo={item.linkTo}
           />
         ))}
       </div>

@@ -16,4 +16,5 @@ export type ProfileComponentType = {
   inputArray: InputProfileType[];
   flexVertical?: boolean;
   handler?: () => void;
+  linkTo?: string;
 };
