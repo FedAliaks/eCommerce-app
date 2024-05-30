@@ -23,7 +23,7 @@ function TopBlock() {
               Use our <b>promo codes</b> now:
             </p>
             {promoCodes.map((code) => (
-              <div className={style['top-block-text-promo__item']}>
+              <div className={style['top-block-text-promo__item']} key={code.code}>
                 <span className={style['promo-code']}>{code.code}</span> <b>{code.discount}</b>{' '}
                 {code.description}
               </div>
