@@ -2,13 +2,14 @@ import ProfileComponent from 'components/profile-component/profileComponent';
 import { InputProfileType } from 'components/profile-component/types';
 import { useState } from 'react';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { updateProfileSelector } from 'redux/selectors';
+import { updateProfileSelector, apiAuthSelector } from 'redux/selectors';
 import { useDispatch } from 'react-redux';
 import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import {
   errorMsgObj,
   regExpObj,
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
+import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from './ChangePassword.module.css';
 
@@ -16,9 +17,11 @@ export default function ChangePassword() {
   const [currentPass, setCurrentPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
+  const [currentPassError, setCurrentPassError] = useState('');
   const [newPassError, setNewPassError] = useState('');
   const [confirmPassError, setConfirmPassError] = useState('');
   const { newPassword } = useAppSelector(updateProfileSelector);
+  const { userData } = useAppSelector(apiAuthSelector);
   const dispatch = useDispatch();
 
   const checkCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -62,7 +65,7 @@ export default function ChangePassword() {
       isSizeSmall: false,
       type: 'password',
       isDisabled: false,
-      errorMsg: '',
+      errorMsg: currentPassError,
       value: currentPass,
       handler: (e: React.ChangeEvent<HTMLInputElement>) => checkCurrentPassword(e),
     },
@@ -90,6 +93,22 @@ export default function ChangePassword() {
 
   const saveBtnClick = () => {
     console.log('change password');
+    if (userData) {
+      apiRootWithExistingTokenFlow()
+        .customers()
+        .password()
+        .post({
+          body: {
+            id: userData?.customer?.id,
+            version: userData.customer.version,
+            currentPassword: currentPass,
+            newPassword: newPass,
+          },
+        })
+        .execute()
+        .then((value) => console.log(value))
+        .catch(() => setCurrentPassError('Check your current password'));
+    }
   };
 
   const clearFieldsOnPage = () => {
