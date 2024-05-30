@@ -124,7 +124,7 @@
 
 .description__price {
   font-size: 36px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 .description__price-new {
   color: var(--lilac-dark);
@@ -134,6 +134,13 @@
   text-decoration: line-through;
   font-size: smaller;
   color: var(--gray-light);
+}
+.description__rating {
+  white-space: nowrap;
+  width: max-content;
+}
+.description__rating div {
+  overflow: hidden;
 }
 .description__content::before,
 .description__content::after {
@@ -315,6 +322,10 @@
   .description__content-title {
     font-size: 16px;
     margin-bottom: 10px;
+  }
+  .description__rating {
+    margin-left: auto;
+    margin-right: auto;
   }
   .image-block-main {
     height: 300px;

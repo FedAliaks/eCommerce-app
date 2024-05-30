@@ -1,10 +1,11 @@
 import { Heading, SubHeading } from 'components/heading';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
+import star from 'assets/images/star.svg';
 import style from '../style.module.css';
 import Price from './Price';
-import DescriptionList from './DesctiptionList';
-import DescriptionText from './DesctiptionText';
+import DescriptionText from './DescriptionText';
+import DescriptionList from './DescriptionList';
 
 function DescriptionBlock() {
   const productDetail = useAppSelector((state) => state.productDetail.productDetail);
@@ -31,7 +32,17 @@ function DescriptionBlock() {
       <Heading className={style['description__title']}>{productDetail?.name['en']}</Heading>
       <SubHeading className={style['description__text']}>{attributes['author']}</SubHeading>
       {price ? <Price price={price} discount={discount} /> : null}
-
+      {attributes['rating'] && (
+        <div className={style['description__rating']} title={attributes['rating']}>
+          <div style={{ width: `${Number(attributes['rating']) * 20}%` }}>
+            {Array(5)
+              .fill('')
+              .map(() => (
+                <img src={star} alt="star" />
+              ))}
+          </div>
+        </div>
+      )}
       <DescriptionText description={attributes['description'] || ''} />
       <DescriptionList descriptionList={descriptionList} />
     </div>

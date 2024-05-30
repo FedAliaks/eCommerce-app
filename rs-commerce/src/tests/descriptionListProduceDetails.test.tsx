@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import DescriptionList from 'views/productDetails/components/DesctiptionList';
+import DescriptionList from 'views/productDetails/components/DescriptionList';
 
 describe('Price Product Details', () => {
   it('should render only full price without discount', () => {

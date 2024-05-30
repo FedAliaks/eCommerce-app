@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import DescriptionText from 'views/productDetails/components/DesctiptionText';
+import DescriptionText from 'views/productDetails/components/DescriptionText';
 
 describe('Description Text Product Details', () => {
   it('should render description text', () => {
