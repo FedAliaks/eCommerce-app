@@ -1,4 +1,4 @@
-import { CATALOG_PAGE_TEXT } from 'constants/constants';
+import { CATALOG_PAGE_TEXT, PAGE_NUMBER_ONE } from 'constants/constants';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
@@ -9,6 +9,7 @@ function FilterSearch(): JSX.Element {
   const { searchInputValue } = useAppSelector(apiCategoriesProductsSelector);
 
   const handleInputValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    dispatch(apiCategoriesProductsActions.setCurProductsPage(PAGE_NUMBER_ONE));
     dispatch(apiCategoriesProductsActions.setSearchInputValue(e.target.value));
   };
 
