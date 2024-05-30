@@ -1,8 +1,14 @@
-import { CATALOG_PAGE_TEXT, SORT_FILTER } from 'constants/constants';
+import {
+  CATALOG_PAGE_TEXT,
+  PAGE_NUMBER_ONE,
+  SORT_FILTER,
+  SORT_FILTER_PROPS,
+} from 'constants/constants';
 import { SortFilterContentProps } from 'types/types';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
+import toggleBodyNotScrollable from 'utils/common-utils';
 import style from '../style.module.css';
 
 function SortFilterContent({ onClick }: SortFilterContentProps): JSX.Element {
@@ -13,7 +19,10 @@ function SortFilterContent({ onClick }: SortFilterContentProps): JSX.Element {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const curValue = e.target.value;
+    dispatch(apiCategoriesProductsActions.setCurProductsPage(PAGE_NUMBER_ONE));
     dispatch(apiCategoriesProductsActions.setSortFilterValue(curValue));
+    toggleBodyNotScrollable();
+    dispatch(apiCategoriesProductsActions.setProductsFilter(null));
   };
 
   return (
@@ -23,54 +32,20 @@ function SortFilterContent({ onClick }: SortFilterContentProps): JSX.Element {
         <div className={style['filter-close']} onClick={onClick} role="presentation" />
       </div>
       <div className={style['radio-filter']}>
-        <div className={style['radio-line']}>
-          <input
-            type="radio"
-            id="priceUp"
-            name="sortFilter"
-            value="priceUp"
-            className={style['radio-btn']}
-            onChange={handleInputChange}
-            checked={setChecked('priceUp')}
-          />
-          <div className={style['radio-text']}>{SORT_FILTER['priceUp']}</div>
-        </div>
-        <div className={style['radio-line']}>
-          <input
-            type="radio"
-            id="priceDown"
-            name="sortFilter"
-            value="priceDown"
-            className={style['radio-btn']}
-            onChange={handleInputChange}
-            checked={setChecked('priceDown')}
-          />
-          <div className={style['radio-text']}>{SORT_FILTER['priceDown']}</div>
-        </div>
-        <div className={style['radio-line']}>
-          <input
-            type="radio"
-            id="nameUp"
-            name="sortFilter"
-            value="nameUp"
-            className={style['radio-btn']}
-            onChange={handleInputChange}
-            checked={setChecked('nameUp')}
-          />
-          <div className={style['radio-text']}>{SORT_FILTER['nameUp']}</div>
-        </div>
-        <div className={style['radio-line']}>
-          <input
-            type="radio"
-            id="nameDown"
-            name="sortFilter"
-            value="nameDown"
-            className={style['radio-btn']}
-            onChange={handleInputChange}
-            checked={setChecked('nameDown')}
-          />
-          <div className={style['radio-text']}>{SORT_FILTER['nameDown']}</div>
-        </div>
+        {SORT_FILTER_PROPS.map((el) => (
+          <div className={style['radio-line']} key={el.id}>
+            <input
+              type="radio"
+              id={el.value}
+              name="sortFilter"
+              value={el.value}
+              className={style['radio-btn']}
+              onChange={handleInputChange}
+              checked={setChecked(el.value)}
+            />
+            <div className={style['radio-text']}>{SORT_FILTER[el.value]}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { apiCategoriesProductsSelector } from 'redux/selectors';
 import { QueryParamsProductsProjections } from 'types/types';
 import Pagination from 'components/pagination/pagination';
 import { useParams } from 'react-router-dom';
+import { SORT_REQUESTS } from 'constants/constants';
 import {
   CatalogPageCategories,
   CatalogPageFilters,
@@ -15,8 +16,14 @@ import FiltersPopup from './components/FiltersPopup';
 
 function Catalog(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { curProductsPage, productsInPage, curCategory, productsFilter, searchInputValue } =
-    useAppSelector(apiCategoriesProductsSelector);
+  const {
+    curProductsPage,
+    productsInPage,
+    curCategory,
+    productsFilter,
+    searchInputValue,
+    sortFilterValue,
+  } = useAppSelector(apiCategoriesProductsSelector);
   const { category } = useParams();
 
   const setProductsqueryArgs = (): QueryParamsProductsProjections => {
@@ -27,28 +34,25 @@ function Catalog(): JSX.Element {
 
     if (category) {
       queryParams.filter = [`categories.id:"${curCategory?.id}"`];
-      // queryParams.filter.push(`variants.scopedPrice.value.centAmount:range 1 to 200`);
-      // queryParams.filter.push(`variants.attributes.color.label.en asc.max`);
-      // queryParams.filter.push(`variants.attributes.name`);
     }
 
-    // queryParams.staged = true;
-    // queryParams.markMatchingVariants = true;
-    // queryParams.fuzzy = true;
+    const sortQuery = SORT_REQUESTS[sortFilterValue];
+    if (sortQuery) {
+      queryParams.sort = [sortQuery];
+    }
 
     if (searchInputValue) {
       queryParams['text.en'] = searchInputValue;
-      // queryParams['text.EN-US'] = searchInputValue;
     }
 
-    console.log('queryParams: ', queryParams);
+    // console.log('queryParams: ', queryParams);
     return queryParams;
   };
 
   useEffect(() => {
     dispatch(apiCategoriesProductsActions.startCategoriesFetch());
     dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
-  }, [curProductsPage, category, searchInputValue]);
+  }, [curProductsPage, category, searchInputValue, sortFilterValue]);
 
   return (
     <>

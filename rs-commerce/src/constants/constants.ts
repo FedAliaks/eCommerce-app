@@ -95,8 +95,46 @@ export const CATALOG_PAGE_TEXT = {
 };
 
 export const SORT_FILTER: SortFilter = {
-  priceUp: 'Price Up',
-  priceDown: 'Price Down',
-  nameUp: 'Name Up',
-  nameDown: 'Name Down',
+  priceUp: 'Price ↑',
+  priceDown: 'Price ↓',
+  nameUp: 'Name ↑',
+  nameDown: 'Name ↓',
+  authorUp: 'Author ↑',
+  authorDown: 'Author ↓',
+};
+
+export const SORT_FILTER_PROPS = [
+  {
+    id: 1,
+    value: 'priceUp',
+  },
+  {
+    id: 2,
+    value: 'priceDown',
+  },
+  {
+    id: 3,
+    value: 'nameUp',
+  },
+  {
+    id: 4,
+    value: 'nameDown',
+  },
+  {
+    id: 5,
+    value: 'authorUp',
+  },
+  {
+    id: 6,
+    value: 'authorDown',
+  },
+];
+
+export const SORT_REQUESTS: SortFilter = {
+  priceUp: `price asc`,
+  priceDown: `price desc`,
+  nameUp: `name.en asc`,
+  nameDown: `name.en desc`,
+  authorUp: `variants.attributes.author asc`,
+  authorDown: `variants.attributes.author desc`,
 };
