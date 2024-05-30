@@ -1,5 +1,5 @@
 import { ClientResponse } from '@commercetools/importapi-sdk';
-import { CustomerSignInResult, MyCustomerDraft } from '@commercetools/platform-sdk';
+import { CustomerSignInResult, MyCustomerDraft, Product } from '@commercetools/platform-sdk';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
 import apiRootWithPasswordFlow from 'SDK/apiRootWithPasswordFlow';
 import { LoginData } from 'types/types';
@@ -18,6 +18,16 @@ export async function apiSignUp(
 
 export async function apiLogin(data: LoginData): Promise<ClientResponse<CustomerSignInResult>> {
   const response = await apiRootWithPasswordFlow(data).me().login().post({ body: data }).execute();
+
+  return response;
+}
+
+export async function apiGetProductDetails(productId: string): Promise<ClientResponse<Product>> {
+  const response = await apiRootWithAnonymousSessionFlow()
+    .products()
+    .withId({ ID: productId })
+    .get()
+    .execute();
 
   return response;
 }

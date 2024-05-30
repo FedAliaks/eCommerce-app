@@ -56,6 +56,7 @@ export const ROUTE_PATH = {
   changePassword: '/profile/change-password',
   changeName: '/profile/change-name',
   changeAddress: '/profile/change-address',
+  productDetails: '/product-details/:id',
 };
 
 export const LOCAL_STORAGE_TOKEN = 'hurricane_access_token';

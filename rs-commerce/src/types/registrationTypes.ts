@@ -1,3 +1,5 @@
+import { ProductData } from '@commercetools/platform-sdk';
+
 type TypesOfInput = 'email' | 'password' | 'text' | 'date';
 export type TypesOfAddress = 'billing' | 'shipping';
 export type HtmlForType =
@@ -94,3 +96,9 @@ export enum DispatchObj {
   setShippingDefaultAddress = 'setDefaultShippingAddress',
   setBillingDefaultAddress = 'setDefaultBillingAddress',
 }
+
+export type ProductDetailSliceState = {
+  productDetail: ProductData | null;
+  activeSlide: number;
+  modalActiveSlide: number;
+};
