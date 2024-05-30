@@ -4,11 +4,9 @@ export type InputProfileType = {
   isSizeSmall: boolean;
   type: string;
   value?: string;
+  errorMsg: string;
   isDisabled: boolean;
-  handler?: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
-  ) => void;
+  handler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export type ProfileComponentType = {
