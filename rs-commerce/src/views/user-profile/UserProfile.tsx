@@ -107,16 +107,26 @@ export default function UserProfile(): JSX.Element {
     },
   ];
 
+  const moveToChangePersonalInfo = () => {
+    console.log('change personal info');
+  };
+
+  const moveToChangeAddress = () => {
+    console.log('change address');
+  };
+
   const ProfileUsersComponents: ProfileComponentType[] = [
     {
       title: 'Personal information',
       inputArray: inputArrayPersonal,
+      handler: moveToChangePersonalInfo,
     },
     {
       title: 'Address information',
       subtitle: 'Shipping address',
       defaultAddress: true,
       inputArray: inputArrayShippingAddress,
+      handler: moveToChangeAddress,
     },
     {
       subtitle: 'Billing address',

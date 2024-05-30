@@ -10,6 +10,7 @@ export default function ProfileComponent(props: ProfileComponentType): JSX.Eleme
       {title && (
         <div className={classes['profile__title-component']}>
           <h2>{title}</h2>
+
           <div className={classes['profile__edit-image']} />
         </div>
       )}

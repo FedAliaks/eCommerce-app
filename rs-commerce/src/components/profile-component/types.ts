@@ -4,7 +4,7 @@ export type InputProfileType = {
   isSizeSmall: boolean;
   type: string;
   value?: string;
-  errorMsg: string;
+  errorMsg?: string;
   isDisabled: boolean;
   handler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -15,4 +15,5 @@ export type ProfileComponentType = {
   defaultAddress?: boolean;
   inputArray: InputProfileType[];
   flexVertical?: boolean;
+  handler?: () => void;
 };
