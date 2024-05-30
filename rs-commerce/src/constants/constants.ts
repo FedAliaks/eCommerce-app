@@ -1,3 +1,5 @@
+import { SortFilter } from 'types/types';
+
 export const LOGIN_PAGE_TEXT = {
   titleForm: 'Login',
   linkRegistration: "Don't have an account yet? ",
@@ -74,7 +76,7 @@ export const TOASTS_TEXT = {
 
 export const PAGE_NUMBER_ONE = 1;
 
-export const PRODUCTS_IN_PAGE = 12;
+export const PRODUCTS_IN_PAGE = 6;
 
 export const NUMBER_ZERO = 0;
 
@@ -89,5 +91,11 @@ export const CATALOG_PAGE_TEXT = {
   filterSort: 'Sort by',
   filterSearch: 'Search',
   noImageUrl: '../../assets/catalog-page/no-image.jpg',
-  noPriceValue: '-//-',
+};
+
+export const SORT_FILTER: SortFilter = {
+  priceUp: 'Price Up',
+  priceDown: 'Price Down',
+  nameUp: 'Name Up',
+  nameDown: 'Name Down',
 };

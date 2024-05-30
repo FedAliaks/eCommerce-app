@@ -25,7 +25,9 @@ function Catalog(): JSX.Element {
 
     if (curCategory) {
       queryParams.filter = [`categories.id:"${curCategory.id}"`];
-      // queryParams.filter.push(`variants.scopedPrice.value.centAmount:range (${1} to ${200})`);
+      // queryParams.filter.push(`variants.scopedPrice.value.centAmount:range 1 to 200`);
+      // queryParams.filter.push(`variants.attributes.color.label.en asc.max`);
+      // queryParams.filter.push(`variants.attributes.name`);
     }
 
     // queryParams.staged = true;
@@ -34,6 +36,7 @@ function Catalog(): JSX.Element {
 
     if (searchInputValue) {
       queryParams['text.en'] = searchInputValue;
+      // queryParams['text.EN-US'] = searchInputValue;
     }
 
     return queryParams;

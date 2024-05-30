@@ -127,6 +127,7 @@ export type ApiCategoriesProductsSliceState = {
   productsInPage: number;
   searchInputValue: string;
   productsFilter: Nullable<FilterType>;
+  sortFilterValue: string;
 };
 
 export type ProductProjectionItemProps = {
@@ -151,4 +152,8 @@ export enum FilterType {
 
 export type SortFilterContentProps = {
   onClick?: () => void;
+};
+
+export type SortFilter = {
+  [key: string]: string;
 };

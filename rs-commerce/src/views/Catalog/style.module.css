@@ -100,10 +100,10 @@
   font-size: 20px;
   color: #000;
 }
-.filter-input-disabled {
-  width: 188px;
-  height: 100%;
-  cursor: pointer;
+.sort-filter-value {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000000;
 }
 .filter-input {
   width: 370px;

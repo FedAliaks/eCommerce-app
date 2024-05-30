@@ -20,6 +20,7 @@ const initialState: ApiCategoriesProductsSliceState = {
   productsInPage: PRODUCTS_IN_PAGE,
   searchInputValue: '',
   productsFilter: null,
+  sortFilterValue: 'priceUp',
 };
 
 export const apiCategoriesProductsSlice = createSlice({
@@ -59,6 +60,9 @@ export const apiCategoriesProductsSlice = createSlice({
     },
     setProductsFilter(state, action: PayloadAction<Nullable<FilterType>>) {
       state.productsFilter = action.payload;
+    },
+    setSortFilterValue(state, action: PayloadAction<string>) {
+      state.sortFilterValue = action.payload;
     },
   },
 });
