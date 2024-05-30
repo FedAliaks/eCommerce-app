@@ -1,23 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { RegistrationFormSliceState } from 'types/registrationTypes';
 
-const initialState: RegistrationFormSliceState = {
-  dateOfBirth: '',
-  firstName: '',
-  lastName: '',
-  billingCity: '',
-  shippingCity: '',
-  billingStreet: '',
-  shippingStreet: '',
-  email: '',
-  password: '',
-  billingPostCode: '',
-  shippingPostCode: '',
-  billingCountry: '',
-  shippingCountry: '',
-  sameAddressForShippingAndBilling: false,
-  defaultBillingAddress: false,
-  defaultShippingAddress: false,
+export type UpdateProfileSliceState = {
+  newPassword: string;
+  checkNewPassword: boolean;
+};
+
+const initialState: UpdateProfileSliceState = {
+  newPassword: '',
+  checkNewPassword: false,
 };
 
 export const updateProfileSlice = createSlice({
@@ -25,7 +15,10 @@ export const updateProfileSlice = createSlice({
   initialState,
   reducers: {
     setNewPassword(state, action: PayloadAction<string>) {
-      state.password = action.payload;
+      state.newPassword = action.payload;
+    },
+    setCheckNewPassword(state, action: PayloadAction<boolean>) {
+      state.checkNewPassword = action.payload;
     },
   },
 });

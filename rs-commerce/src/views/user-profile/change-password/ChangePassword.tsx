@@ -13,15 +13,16 @@ import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from './ChangePassword.module.css';
 
 export default function ChangePassword() {
-  const [, setCurrentPass] = useState('');
-  const { password } = useAppSelector(updateProfileSelector);
+  const [currentPass, setCurrentPass] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const { newPassword } = useAppSelector(updateProfileSelector);
   const dispatch = useDispatch();
 
   const checkCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
     console.log('check current password');
     const { value } = e.target;
     setCurrentPass(value);
-    console.log(value);
   };
 
   const checkNewPassword = (
@@ -30,6 +31,7 @@ export default function ChangePassword() {
   ): void => {
     console.log('check new password');
     const { value } = e.target;
+    setNewPass(value);
 
     if (!regExpObj.password.test(value)) {
       setErrorMessage(errorMsgObj.password);
@@ -45,13 +47,15 @@ export default function ChangePassword() {
   ): void => {
     console.log('check equaly password');
 
-    if (e.target.value === password) {
-      console.log('yes');
+    const { value } = e.target;
+    setConfirmPass(value);
+
+    if (value === newPassword) {
       setErrorMessage('');
+      dispatch(updateProfileActions.setCheckNewPassword(true));
     } else {
       setErrorMessage(errorMsgObj.checkNewPassword);
-      console.log(e.target.value);
-      console.log('no');
+      dispatch(updateProfileActions.setCheckNewPassword(false));
     }
   };
 
@@ -62,6 +66,7 @@ export default function ChangePassword() {
       isSizeSmall: false,
       type: 'password',
       isDisabled: false,
+      value: currentPass,
       handler: (e: React.ChangeEvent<HTMLInputElement>) => checkCurrentPassword(e),
     },
     {
@@ -70,6 +75,7 @@ export default function ChangePassword() {
       isSizeSmall: false,
       type: 'password',
       isDisabled: false,
+      value: newPass,
       handler: (
         e: React.ChangeEvent<HTMLInputElement>,
         setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
@@ -81,6 +87,7 @@ export default function ChangePassword() {
       isSizeSmall: false,
       type: 'password',
       isDisabled: false,
+      value: confirmPass,
       handler: (
         e: React.ChangeEvent<HTMLInputElement>,
         setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
@@ -88,13 +95,24 @@ export default function ChangePassword() {
     },
   ];
 
+  const saveBtnClick = () => {
+    console.log('change password');
+  };
+
+  const clearFieldsOnPage = () => {
+    console.log('clear fields');
+    setCurrentPass('');
+    setNewPass('');
+    setConfirmPass('');
+  };
+
   return (
     <div className={classes['profile']}>
       <div className={classes['profile__column']}>
         <ProfileComponent inputArray={inputArrayPassword} flexVertical />
         <div className={classes['profile__password-btn-container']}>
-          <ButtonProfile content="Cancel" colored={false} />
-          <ButtonProfile content="Save" colored />
+          <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
+          <ButtonProfile content="Save" colored onClick={saveBtnClick} />
         </div>
       </div>
     </div>
