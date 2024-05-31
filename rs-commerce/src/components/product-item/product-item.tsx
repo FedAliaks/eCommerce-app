@@ -1,5 +1,6 @@
 import { ProductProjectionItemProps } from 'types/types';
-import { NUMBER_ZERO } from 'constants/constants';
+import { NUMBER_ZERO, ROUTE_PATH } from 'constants/constants';
+import { Link } from 'react-router-dom';
 import image from '../../assets/catalog-page/no-image.jpg';
 import style from './style.module.css';
 
@@ -51,12 +52,8 @@ function ProductItem({ product }: ProductProjectionItemProps) {
     itemDiscountedPrice = '';
   }
 
-  const handleProductItemClick = (): void => {
-    console.log('redirect to product page id:', product.id);
-  };
-
   return (
-    <div className={style['product-item']} onClick={handleProductItemClick} role="presentation">
+    <Link to={`${ROUTE_PATH.productDetails}/${product.id}`} className={style['product-item']}>
       <div className={style['item-image-wrapper']}>
         <img alt={product.key} className={style['item-image']} src={itemImgSrc} />
         {curDiscountedPriceFormatted && (
@@ -74,7 +71,7 @@ function ProductItem({ product }: ProductProjectionItemProps) {
           <div className={style['item-price-discounted']}>{itemDiscountedPrice}</div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

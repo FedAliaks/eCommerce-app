@@ -32,7 +32,7 @@ const routes = [
     component: <NotFound />,
   },
   {
-    path: ROUTE_PATH.productDetails,
+    path: ROUTE_PATH.productDetailsId,
     component: <ProductDetails />,
   },
 ];
