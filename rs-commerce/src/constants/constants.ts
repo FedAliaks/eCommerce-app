@@ -142,6 +142,13 @@ export const SORT_REQUESTS: SimpleObject = {
 };
 
 export const MAIN_FILTER_PROPS = {
+  price: {
+    title: 'Price:',
+    line: {
+      from: 'From',
+      to: 'to',
+    },
+  },
   cover: {
     title: 'Cover:',
     name: 'coverFilter',

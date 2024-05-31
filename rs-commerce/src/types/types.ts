@@ -115,6 +115,11 @@ export type QueryParamsProductsProjections = {
   [key: string]: QueryParam;
 };
 
+export type PriceFilterValues = {
+  min: Nullable<number>;
+  max: Nullable<number>;
+};
+
 export type SimpleFiltersValues = {
   Paperback: boolean;
   Hardcover: boolean;
@@ -133,6 +138,7 @@ export type ApiCategoriesProductsSliceState = {
   searchInputValue: string;
   productsFilter: Nullable<FilterType>;
   sortFilterValue: string;
+  priceFilter: PriceFilterValues;
   simpleFilters: SimpleFiltersValues;
 };
 

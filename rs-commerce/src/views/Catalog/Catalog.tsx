@@ -23,6 +23,7 @@ function Catalog(): JSX.Element {
     productsFilter,
     searchInputValue,
     sortFilterValue,
+    priceFilter,
     // simpleFilters,
   } = useAppSelector(apiCategoriesProductsSelector);
   const { category } = useParams();
@@ -43,6 +44,13 @@ function Catalog(): JSX.Element {
     const queryParams: QueryParamsProductsProjections = {
       limit: productsInPage,
       offset: (curProductsPage - 1) * productsInPage,
+      filter: [
+        `variants.price.centAmount:range (${
+          priceFilter.min ? priceFilter.min : 0
+        } to ${priceFilter.max ? priceFilter.max : 10000})`,
+      ],
+      // variants.price.centAmount:range ({from} to {to}), ({from} to {to})
+      // variants.scopedPrice.value.centAmount
     };
 
     if (category) {
@@ -67,7 +75,7 @@ function Catalog(): JSX.Element {
   useEffect(() => {
     dispatch(apiCategoriesProductsActions.startCategoriesFetch());
     dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
-  }, [curProductsPage, category, searchInputValue, sortFilterValue]);
+  }, [curProductsPage, category, searchInputValue, sortFilterValue, priceFilter]);
 
   return (
     <>

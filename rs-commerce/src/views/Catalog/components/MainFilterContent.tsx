@@ -7,7 +7,7 @@ import style from '../style.module.css';
 
 function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const { simpleFilters } = useAppSelector(apiCategoriesProductsSelector);
+  const { priceFilter, simpleFilters } = useAppSelector(apiCategoriesProductsSelector);
 
   const setChecked = (v: string): boolean => {
     let check = false;
@@ -35,11 +35,55 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
       );
   };
 
+  const handleInputPriceChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const curValue = e.target.id;
+    if (curValue === 'min') {
+      const v = +e.target.value ? +e.target.value : null;
+      dispatch(
+        apiCategoriesProductsActions.setPriceFilter({
+          ...priceFilter,
+          [curValue]: v,
+        }),
+      );
+    } else if (curValue === 'max') {
+      const v = +e.target.value ? +e.target.value : null;
+      dispatch(
+        apiCategoriesProductsActions.setPriceFilter({
+          ...priceFilter,
+          [curValue]: v,
+        }),
+      );
+    }
+  };
+
   return (
     <div className={style['filter-content']}>
       <div className={style['filter-title']}>
         <div className={style['filter-name']}>{CATALOG_PAGE_TEXT.filterMain}</div>
         <div className={style['filter-close']} onClick={onClick} role="presentation" />
+      </div>
+      <div className={style['price-filter']}>
+        <div className={style['checkbox-filter-title']}>{MAIN_FILTER_PROPS.price.title}</div>
+        <div className={style['price-line']}>
+          <div>{MAIN_FILTER_PROPS.price.line.from}</div>
+          <input
+            type="number"
+            className={style['input-price']}
+            id="min"
+            placeholder="min"
+            value={`${priceFilter.min}`}
+            onChange={handleInputPriceChange}
+          />
+          <div>{MAIN_FILTER_PROPS.price.line.to}</div>
+          <input
+            type="number"
+            className={style['input-price']}
+            id="max"
+            placeholder="max"
+            value={`${priceFilter.max}`}
+            onChange={handleInputPriceChange}
+          />
+        </div>
       </div>
       <div className={style['checkbox-filter']}>
         <div className={style['checkbox-filter-title']}>{MAIN_FILTER_PROPS.cover.title}</div>

@@ -166,14 +166,16 @@
   cursor: pointer;
 }
 .radio-filter,
-.checkbox-filter {
+.checkbox-filter,
+.price-filter {
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding-top: 16px;
 }
 .radio-line,
-.checkbox-line {
+.checkbox-line,
+.price-line {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -235,6 +237,13 @@
   border: 1px solid #4d165d;
   background: #4d165d;
   color: #ffffff;
+}
+.input-price {
+  border: 1px solid #000;
+  border-radius: 50px;
+  padding: 0 16px;
+  width: 100px;
+  height: 30px;
 }
 @media screen and (max-width: 1355px) {
   .filters-wrapper {
