@@ -4,14 +4,14 @@ import {
   SORT_FILTER,
   SORT_FILTER_PROPS,
 } from 'constants/constants';
-import { SortFilterContentProps } from 'types/types';
+import { MainSortFilterContentProps } from 'types/types';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import toggleBodyNotScrollable from 'utils/common-utils';
 import style from '../style.module.css';
 
-function SortFilterContent({ onClick }: SortFilterContentProps): JSX.Element {
+function SortFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element {
   const dispatch = useAppDispatch();
   const { sortFilterValue } = useAppSelector(apiCategoriesProductsSelector);
 

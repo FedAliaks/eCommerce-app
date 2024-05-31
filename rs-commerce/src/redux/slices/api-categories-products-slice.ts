@@ -6,6 +6,7 @@ import {
   FilterType,
   Nullable,
   QueryParamsProducts,
+  SimpleFiltersValues,
 } from 'types/types';
 
 const initialState: ApiCategoriesProductsSliceState = {
@@ -21,6 +22,10 @@ const initialState: ApiCategoriesProductsSliceState = {
   searchInputValue: '',
   productsFilter: null,
   sortFilterValue: 'priceUp',
+  simpleFilters: {
+    Paperback: false,
+    Hardcover: false,
+  },
 };
 
 export const apiCategoriesProductsSlice = createSlice({
@@ -63,6 +68,9 @@ export const apiCategoriesProductsSlice = createSlice({
     },
     setSortFilterValue(state, action: PayloadAction<string>) {
       state.sortFilterValue = action.payload;
+    },
+    setFilters(state, action: PayloadAction<SimpleFiltersValues>) {
+      state.simpleFilters = action.payload;
     },
   },
 });

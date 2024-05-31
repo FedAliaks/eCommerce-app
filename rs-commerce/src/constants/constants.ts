@@ -1,4 +1,4 @@
-import { SortFilter } from 'types/types';
+import { SimpleObject } from 'types/types';
 
 export const LOGIN_PAGE_TEXT = {
   titleForm: 'Login',
@@ -94,7 +94,7 @@ export const CATALOG_PAGE_TEXT = {
   noImageUrl: '../../assets/catalog-page/no-image.jpg',
 };
 
-export const SORT_FILTER: SortFilter = {
+export const SORT_FILTER: SimpleObject = {
   priceUp: 'Price ↑',
   priceDown: 'Price ↓',
   nameUp: 'Name ↑',
@@ -130,7 +130,40 @@ export const SORT_FILTER_PROPS = [
   },
 ];
 
-export const SORT_REQUESTS: SortFilter = {
+export const SORT_REQUESTS: SimpleObject = {
+  priceUp: `price asc`,
+  priceDown: `price desc`,
+  nameUp: `name.en asc`,
+  nameDown: `name.en desc`,
+  authorUp: `variants.attributes.author asc`,
+  authorDown: `variants.attributes.author desc`,
+};
+
+export const MAIN_FILTER_PROPS = {
+  cover: {
+    title: 'Cover:',
+    name: 'coverFilter',
+    values: [
+      {
+        id: 'paperback',
+        value: 'Paperback',
+      },
+      {
+        id: 'hardcover',
+        value: 'Hardcover',
+      },
+    ],
+  },
+  btnClearAll: 'Clear all',
+  btnApply: 'Apply',
+};
+
+export enum MainFilterValues {
+  Paperback = 'Paperback',
+  Hardcover = 'Hardcover',
+}
+
+export const SIMPLE_FILTERS_REQUESTS: SimpleObject = {
   priceUp: `price asc`,
   priceDown: `price desc`,
   nameUp: `name.en asc`,

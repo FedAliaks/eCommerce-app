@@ -24,7 +24,8 @@ function FiltersPopup(): JSX.Element {
   };
 
   let content: Nullable<JSX.Element> = null;
-  if (productsFilter === FilterType.mainFilter) content = <MainFilterContent />;
+  if (productsFilter === FilterType.mainFilter)
+    content = <MainFilterContent onClick={closePopup} />;
   else if (productsFilter === FilterType.sortFilter)
     content = <SortFilterContent onClick={closePopup} />;
 

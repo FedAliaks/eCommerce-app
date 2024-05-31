@@ -115,6 +115,11 @@ export type QueryParamsProductsProjections = {
   [key: string]: QueryParam;
 };
 
+export type SimpleFiltersValues = {
+  Paperback: boolean;
+  Hardcover: boolean;
+};
+
 export type ApiCategoriesProductsSliceState = {
   isLoadingCategories: boolean;
   categories: Nullable<Category[]>;
@@ -128,6 +133,7 @@ export type ApiCategoriesProductsSliceState = {
   searchInputValue: string;
   productsFilter: Nullable<FilterType>;
   sortFilterValue: string;
+  simpleFilters: SimpleFiltersValues;
 };
 
 export type ProductProjectionItemProps = {
@@ -149,10 +155,10 @@ export enum FilterType {
   sortFilter = 'sortFilter',
 }
 
-export type SortFilterContentProps = {
-  onClick?: () => void;
+export type MainSortFilterContentProps = {
+  onClick: () => void;
 };
 
-export type SortFilter = {
+export type SimpleObject = {
   [key: string]: string;
 };

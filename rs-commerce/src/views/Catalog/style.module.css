@@ -165,14 +165,17 @@
   background: transparent url(../../assets/catalog-page/close-icon.svg) center center no-repeat;
   cursor: pointer;
 }
-.radio-filter {
+.radio-filter,
+.checkbox-filter {
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding-top: 16px;
 }
-.radio-line {
+.radio-line,
+.checkbox-line {
   display: flex;
+  align-items: center;
   gap: 8px;
 }
 .radio-btn {
@@ -186,6 +189,52 @@
   font-weight: 500;
   font-size: 16px;
   color: #000;
+}
+.checkbox-filter-title {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  color: #000;
+}
+.checkbox-btn {
+  border: 1px solid #4d165d;
+  border-radius: 5px;
+  width: 26px;
+  height: 25px;
+  background: #fff;
+}
+.checkbox-text {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  color: #000;
+}
+.main-filter-btns {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 26px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #d9d9d9;
+}
+.filter-btn {
+  border: 1px solid #000;
+  width: 120px;
+  height: 48px;
+  background: #fff;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  color: #000;
+  cursor: pointer;
+  transition: var(--transition-time);
+}
+.filter-btn:hover {
+  border: 1px solid #4d165d;
+  background: #4d165d;
+  color: #ffffff;
 }
 @media screen and (max-width: 1355px) {
   .filters-wrapper {

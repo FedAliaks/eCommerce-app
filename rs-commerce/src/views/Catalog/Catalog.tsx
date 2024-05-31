@@ -23,8 +23,21 @@ function Catalog(): JSX.Element {
     productsFilter,
     searchInputValue,
     sortFilterValue,
+    // simpleFilters,
   } = useAppSelector(apiCategoriesProductsSelector);
   const { category } = useParams();
+
+  // const setSimpleFilters = (queryParams: QueryParamsProductsProjections): void => {
+  //   if (simpleFilters.Paperback) {
+  //     if (Array.isArray(queryParams.filter)) {
+  //       queryParams.filter.push(`variants.attributes.cover.key:"paperback"`);
+  //     } else {
+  //       queryParams.filter = [`variants.attributes.cover.key:"paperback"`];
+  //     }
+  //   }
+
+  //   console.log('queryParams: ', queryParams);
+  // };
 
   const setProductsqueryArgs = (): QueryParamsProductsProjections => {
     const queryParams: QueryParamsProductsProjections = {
@@ -35,6 +48,8 @@ function Catalog(): JSX.Element {
     if (category) {
       queryParams.filter = [`categories.id:"${curCategory?.id}"`];
     }
+
+    // setSimpleFilters(queryParams);
 
     const sortQuery = SORT_REQUESTS[sortFilterValue];
     if (sortQuery) {
