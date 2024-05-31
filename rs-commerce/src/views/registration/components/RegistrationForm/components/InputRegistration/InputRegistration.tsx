@@ -26,12 +26,6 @@ function InputRegistration(props: InputProps): JSX.Element {
 
   const [errorContent, setErrorContent] = useState('');
 
-  /*   function clearField(e: React.FocusEvent<HTMLInputElement, Element>) {
-    e.target.value = '';
-    setErrorContent('');
-    dispatch(registrationFormActions[DispatchObj[htmlFor]](''));
-  } */
-
   const addDisabled = (): boolean =>
     sameAddressForShippingAndBilling && htmlFor.startsWith('billing');
 
@@ -69,7 +63,6 @@ function InputRegistration(props: InputProps): JSX.Element {
             disabled={addDisabled()}
             placeholder={placeholder}
             onChange={(e) => checkValue(e)}
-            /*             onFocus={(e) => clearField(e)} */
           />
         </div>
       </label>

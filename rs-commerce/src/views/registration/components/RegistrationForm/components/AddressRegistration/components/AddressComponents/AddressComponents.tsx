@@ -4,8 +4,6 @@ import InputRegistration from '../../../InputRegistration/InputRegistration';
 import AddressTitleComponent from './components/AddresTitleComponent/AddresTitleComponent';
 import classes from './style.module.css';
 
-/* let typeComponent: 'billing' | 'shipping' = 'billing'; */
-
 const inputFieldsArray: InputType[] = [
   {
     htmlFor: `PostCode` as HtmlForType,

@@ -54,6 +54,7 @@ export const ROUTE_PATH = {
   main: '/',
   login: '/login',
   registration: '/registration',
+  productDetails: '/product-details/:id',
   catalog: '/catalog',
   catalogCategory: '/catalog/:category',
 };

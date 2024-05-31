@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 
 import { render, screen } from '@testing-library/react';
+import App from 'App';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { store } from 'redux/configure-store';
@@ -67,5 +68,15 @@ describe('Routing', () => {
     expect(
       screen.getByText('Oops! The page you are looking for does not exist!'),
     ).toBeInTheDocument();
+  });
+
+  it('should render App component', () => {
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+    );
+
+    expect(screen.getByText('Explore the fascinating world of books')).toBeInTheDocument();
   });
 });

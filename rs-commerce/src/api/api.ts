@@ -4,6 +4,7 @@ import {
   CategoryPagedQueryResponse,
   CustomerSignInResult,
   MyCustomerDraft,
+  Product,
   ProductPagedQueryResponse,
   ProductProjection,
   ProductProjectionPagedQueryResponse,
@@ -91,6 +92,16 @@ export async function getProductById(id: string): Promise<ClientResponse<Product
   }
 
   const response = await apiRoot.productProjections().withId({ ID: id }).get().execute();
+
+  return response;
+}
+
+export async function apiGetProductDetails(productId: string): Promise<ClientResponse<Product>> {
+  const response = await apiRootWithAnonymousSessionFlow()
+    .products()
+    .withId({ ID: productId })
+    .get()
+    .execute();
 
   return response;
 }

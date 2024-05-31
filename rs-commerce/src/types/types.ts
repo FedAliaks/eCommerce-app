@@ -162,3 +162,5 @@ export type MainSortFilterContentProps = {
 export type SimpleObject = {
   [key: string]: string;
 };
+
+export type ProductImageItem = { url: string; label: string; dimensions: { w: number; h: number } };
