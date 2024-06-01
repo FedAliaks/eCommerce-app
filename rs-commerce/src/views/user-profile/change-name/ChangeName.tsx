@@ -112,7 +112,7 @@ export default function ChangeName(): JSX.Element {
         <ProfileComponent inputArray={inputArrayAddress} flexVertical />
         <div className={classes['profile__password-btn-container']}>
           <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
-          <ButtonProfile content="Save" colored onClick={saveBtnClick} />
+          <ButtonProfile page="name" content="Save" colored onClick={saveBtnClick} />
         </div>
       </div>
     </div>

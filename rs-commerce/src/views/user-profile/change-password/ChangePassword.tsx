@@ -32,6 +32,7 @@ export default function ChangePassword() {
     } else if (newPass === confirmPass && regExpObj.password.test(newPass)) {
       dispatch(updateProfileActions.setCheckNewPassword(true));
     }
+    setCurrentPassError('');
   };
 
   const checkNewPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -108,7 +109,7 @@ export default function ChangePassword() {
           },
         })
         .execute()
-        .then()
+        .then(() => setCurrentPassError('You have changed successfully your password'))
         .catch(() => setCurrentPassError('Check your current password'));
     }
   };
@@ -119,6 +120,7 @@ export default function ChangePassword() {
     setConfirmPass('');
     setNewPassError('');
     setConfirmPassError('');
+    setCurrentPassError('');
     dispatch(updateProfileActions.setCheckNewPassword(false));
   };
 
@@ -128,7 +130,7 @@ export default function ChangePassword() {
         <ProfileComponent inputArray={inputArrayPassword} flexVertical />
         <div className={classes['profile__password-btn-container']}>
           <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
-          <ButtonProfile content="Save" colored onClick={saveBtnClick} />
+          <ButtonProfile page="password" content="Save" colored onClick={saveBtnClick} />
         </div>
       </div>
     </div>
