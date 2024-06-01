@@ -9,6 +9,7 @@ import {
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import { useDispatch } from 'react-redux';
 import { updateProfileActions } from 'redux/slices/update-profile-slice';
+import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from './changeName.module.css';
 
@@ -22,7 +23,6 @@ export default function ChangeName(): JSX.Element {
   const [lastNameError, setLastNameError] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(customer?.dateOfBirth || '2000-01-01');
   const [dateOfBirthError, setDateOfBirthError] = useState('');
-
   const [email, setEmail] = useState(customer?.email || 'example@mail.com');
   const [emailError, setEmailError] = useState('');
 
@@ -116,10 +116,40 @@ export default function ChangeName(): JSX.Element {
     setLastName('');
     setDateOfBirth('');
     setEmail('');
+    dispatch(updateProfileActions.setCheckNewName(false));
   };
 
   const saveBtnClick = (): void => {
     console.log('save parameters');
+    if (userData) {
+      apiRootWithExistingTokenFlow()
+        .customers()
+        .withId({ ID: userData.customer.id })
+        .post({
+          body: {
+            version: userData.customer.version,
+            actions: [
+              {
+                action: 'setFirstName',
+                firstName,
+              },
+              {
+                action: 'setLastName',
+                lastName,
+              },
+              {
+                action: 'setDateOfBirth',
+                dateOfBirth,
+              },
+              {
+                action: 'changeEmail',
+                email,
+              },
+            ],
+          },
+        })
+        .execute();
+    }
   };
 
   return (
