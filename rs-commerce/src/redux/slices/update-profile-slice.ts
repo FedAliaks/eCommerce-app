@@ -3,11 +3,13 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 export type UpdateProfileSliceState = {
   newPassword: string;
   checkNewPassword: boolean;
+  checkNewName: boolean;
 };
 
 const initialState: UpdateProfileSliceState = {
   newPassword: '',
   checkNewPassword: false,
+  checkNewName: true,
 };
 
 export const updateProfileSlice = createSlice({
@@ -19,6 +21,9 @@ export const updateProfileSlice = createSlice({
     },
     setCheckNewPassword(state, action: PayloadAction<boolean>) {
       state.checkNewPassword = action.payload;
+    },
+    setCheckNewName(state, action: PayloadAction<boolean>) {
+      state.checkNewName = action.payload;
     },
   },
 });

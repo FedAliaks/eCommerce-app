@@ -12,18 +12,24 @@ export type BtnProfilePropsType = {
 export default function ButtonProfile(props: BtnProfilePropsType): JSX.Element {
   const { content, colored, onClick, page } = props;
 
-  const { checkNewPassword } = useAppSelector(updateProfileSelector);
+  const { checkNewPassword, checkNewName } = useAppSelector(updateProfileSelector);
 
   return (
     <button
       type="button"
       className={
-        colored && checkNewPassword
+        colored && (checkNewPassword || checkNewName)
           ? `${classes['profile__button']} ${classes['profile__button_colored']}`
           : `${classes['profile__button']}`
       }
       onClick={onClick}
-      disabled={page === 'password' ? !!(content === 'Save' && !checkNewPassword) : false}>
+      disabled={
+        page === 'password'
+          ? !!(content === 'Save' && !checkNewPassword)
+          : page === 'name'
+            ? !!(content === 'Save' && !checkNewName)
+            : false
+      }>
       {content}
     </button>
   );
