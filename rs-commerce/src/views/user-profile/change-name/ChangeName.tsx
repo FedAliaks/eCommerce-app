@@ -2,12 +2,17 @@ import { InputProfileType } from 'components/profile-component/types';
 import ProfileComponent from 'components/profile-component/profileComponent';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSelector } from 'redux/selectors';
+import { useState } from 'react';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from './changeName.module.css';
 
 export default function ChangeName(): JSX.Element {
   const { userData } = useAppSelector(apiAuthSelector);
   const customer = userData?.customer;
+  const [firstName, setFirstName] = useState(customer?.firstName || 'first-name');
+  const [lastName, setLastName] = useState(customer?.lastName || 'last-name');
+  const [dateOfBirth, setDateOfBirth] = useState(customer?.dateOfBirth || '2000-01-01');
+  const [email, setEmail] = useState(customer?.email);
 
   const checkField = () => {
     console.log('check');
@@ -21,7 +26,7 @@ export default function ChangeName(): JSX.Element {
       type: 'text',
       isDisabled: false,
       errorMsg: 'error',
-      value: customer?.firstName,
+      value: firstName,
       handler: checkField,
     },
     {
@@ -31,7 +36,7 @@ export default function ChangeName(): JSX.Element {
       type: 'text',
       isDisabled: false,
       errorMsg: 'error',
-      value: customer?.lastName,
+      value: lastName,
       handler: checkField,
     },
     {
@@ -40,7 +45,7 @@ export default function ChangeName(): JSX.Element {
       isSizeSmall: false,
       type: 'data',
       isDisabled: false,
-      value: customer?.dateOfBirth,
+      value: dateOfBirth,
       errorMsg: 'error',
       handler: checkField,
     },
@@ -50,14 +55,17 @@ export default function ChangeName(): JSX.Element {
       isSizeSmall: false,
       type: 'email',
       isDisabled: false,
-      value: customer?.email,
+      value: email,
       errorMsg: 'error',
       handler: checkField,
     },
   ];
 
   const clearFieldsOnPage = (): void => {
-    console.log('clear');
+    setFirstName('');
+    setLastName('');
+    setDateOfBirth('');
+    setEmail('');
   };
 
   const saveBtnClick = (): void => {
