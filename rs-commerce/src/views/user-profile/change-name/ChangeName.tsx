@@ -32,9 +32,14 @@ export default function ChangeName(): JSX.Element {
   ) => {
     const { value } = e.target;
     setState(value);
-    if (regExp.test(value)) {
-      setError('');
-    } else setError(errorMsg);
+    if (errorMsg !== errorMsgObj.dateOfBirth) {
+      setError(regExp.test(value) ? ' ' : errorMsg);
+    } else {
+      const limitData = new Date();
+      limitData.setFullYear(limitData.getFullYear() - 13);
+      const birthdayData = new Date(value);
+      setError(birthdayData <= limitData ? '' : errorMsg);
+    }
   };
 
   const inputArrayAddress: InputProfileType[] = [
@@ -64,7 +69,7 @@ export default function ChangeName(): JSX.Element {
       title: 'Date of birth',
       id: 'date-of-birth',
       isSizeSmall: false,
-      type: 'data',
+      type: 'date',
       isDisabled: false,
       value: dateOfBirth,
       errorMsg: dateOfBirthError,
