@@ -7,11 +7,14 @@ import {
   errorMsgObj,
   regExpObj,
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
+import { useDispatch } from 'react-redux';
+import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from './changeName.module.css';
 
 export default function ChangeName(): JSX.Element {
   const { userData } = useAppSelector(apiAuthSelector);
+  const dispatch = useDispatch();
   const customer = userData?.customer;
   const [firstName, setFirstName] = useState(customer?.firstName || 'first-name');
   const [firstNameError, setFirstNameError] = useState('');
@@ -33,12 +36,26 @@ export default function ChangeName(): JSX.Element {
     const { value } = e.target;
     setState(value);
     if (errorMsg !== errorMsgObj.dateOfBirth) {
-      setError(regExp.test(value) ? ' ' : errorMsg);
+      if (regExp.test(value)) {
+        setError('');
+        if (!firstNameError && !lastNameError && !emailError && !dateOfBirthError)
+          dispatch(updateProfileActions.setCheckNewName(true));
+      } else {
+        setError(errorMsg);
+        dispatch(updateProfileActions.setCheckNewName(false));
+      }
     } else {
       const limitData = new Date();
       limitData.setFullYear(limitData.getFullYear() - 13);
       const birthdayData = new Date(value);
-      setError(birthdayData <= limitData ? '' : errorMsg);
+      if (birthdayData <= limitData) {
+        setError('');
+        if (!firstNameError && !lastNameError && !emailError && !dateOfBirthError)
+          dispatch(updateProfileActions.setCheckNewName(true));
+      } else {
+        setError(errorMsg);
+        dispatch(updateProfileActions.setCheckNewName(false));
+      }
     }
   };
 
