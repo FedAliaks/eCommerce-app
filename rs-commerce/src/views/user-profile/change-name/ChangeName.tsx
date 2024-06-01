@@ -3,6 +3,10 @@ import ProfileComponent from 'components/profile-component/profileComponent';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSelector } from 'redux/selectors';
 import { useState } from 'react';
+import {
+  errorMsgObj,
+  regExpObj,
+} from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from './changeName.module.css';
 
@@ -10,12 +14,27 @@ export default function ChangeName(): JSX.Element {
   const { userData } = useAppSelector(apiAuthSelector);
   const customer = userData?.customer;
   const [firstName, setFirstName] = useState(customer?.firstName || 'first-name');
+  const [firstNameError, setFirstNameError] = useState('');
   const [lastName, setLastName] = useState(customer?.lastName || 'last-name');
+  const [lastNameError, setLastNameError] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(customer?.dateOfBirth || '2000-01-01');
-  const [email, setEmail] = useState(customer?.email);
+  const [dateOfBirthError, setDateOfBirthError] = useState('');
 
-  const checkField = () => {
-    console.log('check');
+  const [email, setEmail] = useState(customer?.email || 'example@mail.com');
+  const [emailError, setEmailError] = useState('');
+
+  const checkField = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>,
+    setError: React.Dispatch<React.SetStateAction<string>>,
+    regExp: RegExp,
+    errorMsg: string,
+  ) => {
+    const { value } = e.target;
+    setState(value);
+    if (regExp.test(value)) {
+      setError('');
+    } else setError(errorMsg);
   };
 
   const inputArrayAddress: InputProfileType[] = [
@@ -25,9 +44,10 @@ export default function ChangeName(): JSX.Element {
       isSizeSmall: false,
       type: 'text',
       isDisabled: false,
-      errorMsg: 'error',
+      errorMsg: firstNameError,
       value: firstName,
-      handler: checkField,
+      handler: (e) =>
+        checkField(e, setFirstName, setFirstNameError, regExpObj.firstName, errorMsgObj.firstName),
     },
     {
       title: 'Last name',
@@ -35,9 +55,10 @@ export default function ChangeName(): JSX.Element {
       isSizeSmall: false,
       type: 'text',
       isDisabled: false,
-      errorMsg: 'error',
+      errorMsg: lastNameError,
       value: lastName,
-      handler: checkField,
+      handler: (e) =>
+        checkField(e, setLastName, setLastNameError, regExpObj.lastName, errorMsgObj.lastName),
     },
     {
       title: 'Date of birth',
@@ -46,8 +67,15 @@ export default function ChangeName(): JSX.Element {
       type: 'data',
       isDisabled: false,
       value: dateOfBirth,
-      errorMsg: 'error',
-      handler: checkField,
+      errorMsg: dateOfBirthError,
+      handler: (e) =>
+        checkField(
+          e,
+          setDateOfBirth,
+          setDateOfBirthError,
+          regExpObj.lastName,
+          errorMsgObj.dateOfBirth,
+        ),
     },
     {
       title: 'Email',
@@ -56,8 +84,8 @@ export default function ChangeName(): JSX.Element {
       type: 'email',
       isDisabled: false,
       value: email,
-      errorMsg: 'error',
-      handler: checkField,
+      errorMsg: emailError,
+      handler: (e) => checkField(e, setEmail, setEmailError, regExpObj.email, errorMsgObj.email),
     },
   ];
 
