@@ -7,7 +7,7 @@ const breadcrumbsLinks = [
   },
   {
     name: 'Catalog',
-    path: '/',
+    path: ROUTE_PATH.catalog,
   },
 ];
 
