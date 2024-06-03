@@ -2,12 +2,15 @@ import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSelector } from 'redux/selectors';
 import ProfileComponent from 'components/profile-component/profileComponent';
 import { InputProfileType } from 'components/profile-component/types';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from 'constants/constants';
 import classes from '../UserProfile.module.css';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 
 export default function ChangeAddress() {
   const { userData } = useAppSelector(apiAuthSelector);
+  const navigate = useNavigate();
 
   const btnClick = () => {
     console.log('click');
@@ -65,6 +68,10 @@ export default function ChangeAddress() {
     } else billingAddressArray.push(array);
   });
 
+  const addNewAddress = () => {
+    navigate(ROUTE_PATH.addNewAddress);
+  };
+
   return (
     <div>
       <UserProfileHeader title="Change Address" subtitle="Main > Profile > Edit address" />
@@ -88,7 +95,7 @@ export default function ChangeAddress() {
       <div className={classes['profile__password-btn-container']}>
         <ButtonProfile content="Cancel" colored={false} onClick={btnClick} />
         <ButtonProfile content="Save" colored={false} onClick={btnClick} />
-        <ButtonProfile content="Add address" colored onClick={btnClick} />
+        <ButtonProfile content="Add address" colored onClick={addNewAddress} />
       </div>
     </div>
   );
