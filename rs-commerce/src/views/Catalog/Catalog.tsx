@@ -27,15 +27,22 @@ function Catalog(): JSX.Element {
 
   const setSimpleFilters = (queryParams: QueryParamsProductsProjections): void => {
     Object.entries(simpleFilters).forEach((el) => {
-      const nameFilter = el[0];
+      const curNameFilter = el[0];
       const curFilterValues = Object.entries(el[1]);
+      const curFiltersForRequest: string[] = [];
+      let stringForResponse = '';
       curFilterValues.forEach((elm) => {
         if (elm[1]) {
-          if (Array.isArray(queryParams.filter)) {
-            queryParams.filter.push(`variants.attributes.${nameFilter}:"${elm[0]}"`);
-          }
+          curFiltersForRequest.push(`"${elm[0]}"`);
         }
       });
+      if (curFiltersForRequest.length) stringForResponse = curFiltersForRequest.join(',');
+
+      if (stringForResponse) {
+        if (Array.isArray(queryParams.filter)) {
+          queryParams.filter.push(`variants.attributes.${curNameFilter}:${stringForResponse}`);
+        }
+      }
     });
   };
 

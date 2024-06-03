@@ -1,4 +1,4 @@
-import { SimpleObject } from 'types/types';
+import { SimpleFiltersValues, SimpleObject } from 'types/types';
 
 export const LOGIN_PAGE_TEXT = {
   titleForm: 'Login',
@@ -224,7 +224,7 @@ export const MAIN_FILTER_PROPS = {
   btnApply: 'Apply',
 };
 
-export const INITIAL_SIMPLE_FILTER_VALUES = {
+export const INITIAL_SIMPLE_FILTER_VALUES: SimpleFiltersValues = {
   cover: {
     Paperback: false,
     Hardcover: false,
