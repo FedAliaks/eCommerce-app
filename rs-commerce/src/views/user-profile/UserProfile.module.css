@@ -9,3 +9,8 @@
   max-width: 570px;
   width: 100%;
 }
+
+.profile__password-btn-container {
+  display: flex;
+  justify-content: space-around;
+}

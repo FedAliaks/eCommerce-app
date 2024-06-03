@@ -2,7 +2,7 @@ import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSelector } from 'redux/selectors';
 import ProfileComponent from 'components/profile-component/profileComponent';
 import { InputProfileType } from 'components/profile-component/types';
-import classes from './changeAddress.module.css';
+import classes from '../UserProfile.module.css';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 
@@ -68,7 +68,7 @@ export default function ChangeAddress() {
   return (
     <div>
       <div className={classes['profile']}>
-        <UserProfileHeader title="Change Address" subtitle="Main > Profile > Edit profile" />
+        <UserProfileHeader title="Change Address" subtitle="Main > Profile > Edit address" />
         <div className={classes['profile__column']}>
           <h1>Address information</h1>
           <h2>Shipping addresses</h2>

@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import ButtonProfile from '../button-profile/ButtonProfile';
-import classes from './changeName.module.css';
+import classes from '../UserProfile.module.css';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 
 export default function ChangeName(): JSX.Element {
@@ -155,7 +155,7 @@ export default function ChangeName(): JSX.Element {
 
   return (
     <div>
-      <UserProfileHeader title="Change name" subtitle="Main > Profile" />
+      <UserProfileHeader title="Change name" subtitle="Main > Profile > Edit name" />
 
       <div className={classes['profile']}>
         <div className={classes['profile__column']}>

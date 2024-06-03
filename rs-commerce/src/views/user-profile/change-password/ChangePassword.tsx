@@ -11,7 +11,7 @@ import {
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import ButtonProfile from '../button-profile/ButtonProfile';
-import classes from './ChangePassword.module.css';
+import classes from '../UserProfile.module.css';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 
 export default function ChangePassword() {
@@ -127,7 +127,7 @@ export default function ChangePassword() {
 
   return (
     <div>
-      <UserProfileHeader title="Change password" subtitle="Main > Profile > Edit profile" />
+      <UserProfileHeader title="Change password" subtitle="Main > Profile > Edit password" />
 
       <div className={classes['profile']}>
         <div className={classes['profile__column']}>
