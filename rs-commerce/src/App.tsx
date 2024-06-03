@@ -3,16 +3,22 @@ import './App.css';
 import routes from 'utils/routes';
 import Layout from 'components/layout/Layout';
 import { LOCAL_STORAGE_AUTH, LOCAL_STORAGE_TOKEN } from 'constants/constants';
-import { useAppDispatch } from 'hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
+import { useEffect } from 'react';
+import { apiAuthSelector } from 'redux/selectors';
 
-function App() {
+function App() { 
   const dispatch = useAppDispatch();
-  if (JSON.parse(localStorage.getItem(LOCAL_STORAGE_AUTH)!)) {
-    dispatch(apiAuthActions.setIsAuth(true));
-  } else {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN);
-  }
+  const { userData } = useAppSelector(apiAuthSelector);
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem(LOCAL_STORAGE_AUTH)!) && userData) {
+      dispatch(apiAuthActions.setIsAuth(true));
+    } else {
+      localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+    }
+  }, [userData]);
 
   return (
     <BrowserRouter>
