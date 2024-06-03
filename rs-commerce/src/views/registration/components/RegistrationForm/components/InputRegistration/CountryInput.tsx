@@ -5,7 +5,7 @@ import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { registrationFormSelector } from 'redux/selectors';
 import classes from './styles.module.css';
 
-const countryArr = ['US', 'BY'];
+export const countryArr = ['US', 'BY'];
 
 function CountryInput(props: AddressType): JSX.Element {
   const { sameAddressForShippingAndBilling } = useAppSelector(registrationFormSelector);

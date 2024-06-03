@@ -4,6 +4,12 @@ import { apiAuthReducer } from './slices/api-auth-slice';
 import { loginFormReducer } from './slices/login-form-slice';
 import { apiCategoriesProductsReducer } from './slices/api-categories-products-slice';
 import { registrationFormReducer } from './slices/registration-slice';
+
+import { apiRegistrationReducer } from './slices/api-registration-slice';
+
+import { updateProfileReducer } from './slices/update-profile-slice';
+
+
 import { productDetailReducer } from './slices/product-detail-slice';
 import rootSaga from './sagas/sagas';
 
@@ -14,6 +20,11 @@ export const store = configureStore({
     apiAuth: apiAuthReducer,
     loginForm: loginFormReducer,
     registrationFrom: registrationFormReducer,
+
+    apiRegistration: apiRegistrationReducer,
+
+    updateProfile: updateProfileReducer,
+
     productDetail: productDetailReducer,
     apiCategoriesProducts: apiCategoriesProductsReducer,
   },

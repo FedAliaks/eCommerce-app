@@ -1,0 +1,32 @@
+.profile__header {
+  background-image: url('../../../assets/images/background-edit.jpeg');
+  background-position: 0 50%;
+  height: 300px;
+  width: 100%;
+}
+
+.profile__header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  height: 100%;
+}
+
+.profile__header-title {
+  font-size: 48px;
+  font-weight: 500;
+  color: var(--dark);
+  line-height: 72px;
+}
+
+.profile__header-subtitle {
+  font-size: 16px;
+  color: var(--dark);
+  line-height: 24px;
+}
+
+.profile__header-svg {
+  background-image: url(../../assets/images/logo.png);
+}

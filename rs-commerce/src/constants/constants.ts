@@ -54,10 +54,17 @@ export const ROUTE_PATH = {
   main: '/',
   login: '/login',
   registration: '/registration',
+
+  profile: '/profile',
+  changePassword: '/profile/change-password',
+  changeName: '/profile/change-name',
+  changeAddress: '/profile/change-address',
+  addNewAddress: '/profile/add-address',
   productDetails: '/product-details',
   productDetailsId: '/product-details/:id',
   catalog: '/catalog',
   catalogCategory: '/catalog/:category',
+
 };
 
 export const LOCAL_STORAGE_TOKEN = 'hurricane_access_token';

@@ -5,6 +5,11 @@ import Main from 'views/main/Main';
 import NotFound from 'views/notFound/NotFound';
 import ProductDetails from 'views/productDetails/ProductDetails';
 import Registration from 'views/registration/Registration';
+import UserProfile from 'views/user-profile/UserProfile';
+import AddNewAddress from 'views/user-profile/add-new-address/AddNewAddress';
+import ChangeAddress from 'views/user-profile/change-address/ChangeAddress';
+import ChangeName from 'views/user-profile/change-name/ChangeName';
+import ChangePassword from 'views/user-profile/change-password/ChangePassword';
 
 const routes = [
   {
@@ -20,12 +25,34 @@ const routes = [
     component: <Registration />,
   },
   {
+
+    path: ROUTE_PATH.profile,
+    component: <UserProfile />,
+  },
+  {
+    path: ROUTE_PATH.changePassword,
+    component: <ChangePassword />,
+  },
+  {
+    path: ROUTE_PATH.changeName,
+    component: <ChangeName />,
+  },
+  {
+    path: ROUTE_PATH.addNewAddress,
+    component: <AddNewAddress />,
+  },
+  {
+    path: ROUTE_PATH.changeAddress,
+    component: <ChangeAddress />,
+   },
+   {
     path: ROUTE_PATH.catalog,
     component: <Catalog />,
   },
   {
     path: ROUTE_PATH.catalogCategory,
     component: <Catalog />,
+
   },
   {
     path: '*',

@@ -1,0 +1,23 @@
+.profile {
+  display: flex;
+  justify-content: space-around;
+}
+
+.profile__column {
+  margin: 5px;
+  padding: 10px;
+  max-width: 570px;
+  width: 100%;
+}
+
+.profile__password-btn-container {
+  margin: 5px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.custom-message {
+  margin: 5px;
+  height: 20px;
+  text-align: center;
+}

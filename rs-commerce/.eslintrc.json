@@ -24,7 +24,8 @@
     "react/react-in-jsx-scope": "off",
     "no-param-reassign": "off",
     "react/require-default-props": "off",
-    "jsx-a11y/label-has-associated-control": "off"
+    "jsx-a11y/label-has-associated-control": "off",
+    "no-nested-ternary": "off"
   },
   "settings": {
     "import/resolver": {

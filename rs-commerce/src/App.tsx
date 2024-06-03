@@ -10,6 +10,11 @@ import { apiAuthSelector } from 'redux/selectors';
 
 function App() { 
   const dispatch = useAppDispatch();
+
+  alert(
+    'Приветствую. Если есть возможность, то проверь нас в четверг. Заранее благодарны. Успехов в завершении курса. Осталось немного',
+  );
+
   const { userData } = useAppSelector(apiAuthSelector);
 
   useEffect(() => {
@@ -19,6 +24,7 @@ function App() {
       localStorage.removeItem(LOCAL_STORAGE_TOKEN);
     }
   }, [userData]);
+
 
   return (
     <BrowserRouter>

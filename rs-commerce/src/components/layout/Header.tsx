@@ -44,6 +44,12 @@ function Header() {
       className: style['underline'],
       withAuth: false,
     },
+    {
+      path: ROUTE_PATH.profile,
+      title: 'Profile',
+      className: style['underline'],
+      withAuth: true,
+    },
   ];
 
   const toggleBurgerMenu = () => setIsBurgerMenuOpen(!isBurgerMenuOpen);
@@ -88,7 +94,7 @@ function Header() {
         </ul>
         <ul className={style['nav-right']}>
           {rightList
-            .filter((item) => (isAuth ? item.withAuth : true))
+            .filter((item) => (isAuth ? item.withAuth === true : item.withAuth === false))
             .map((item) => (
               <li key={item.path}>
                 <Link to={item.path} className={item.className} aria-label={item.title}>
@@ -96,6 +102,7 @@ function Header() {
                 </Link>
               </li>
             ))}
+
           {isAuth && (
             <li>
               <button
