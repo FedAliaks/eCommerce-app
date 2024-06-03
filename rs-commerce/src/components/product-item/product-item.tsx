@@ -32,10 +32,10 @@ function ProductItem({ product }: ProductProjectionItemProps) {
 
     if (currencyCode) curCurrencyCode = currencyCode;
     if (price) curPriceFormatted = (price / 100).toFixed(2);
-    if (priceDiscount) curDiscountedPriceFormatted = ((priceDiscount as number) / 100).toFixed(2);
+    if (priceDiscount) curDiscountedPriceFormatted = ((priceDiscount as number) / 100).toFixed(0);
     if (price && priceDiscount) {
       curDiscountedPercentFormatted = `-${(100 - ((priceDiscount as number) / price) * 100).toFixed(
-        2,
+        0,
       )}%`;
     }
   }
