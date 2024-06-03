@@ -18,4 +18,5 @@ export type ProfileComponentType = {
   flexVertical?: boolean;
   handler?: () => void;
   linkTo?: string;
+  addressId?: string;
 };

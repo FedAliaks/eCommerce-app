@@ -4,12 +4,14 @@ export type UpdateProfileSliceState = {
   newPassword: string;
   checkNewPassword: boolean;
   checkNewName: boolean;
+  addressIdForChange: string;
 };
 
 const initialState: UpdateProfileSliceState = {
   newPassword: '',
   checkNewPassword: false,
   checkNewName: true,
+  addressIdForChange: '',
 };
 
 export const updateProfileSlice = createSlice({
@@ -24,6 +26,9 @@ export const updateProfileSlice = createSlice({
     },
     setCheckNewName(state, action: PayloadAction<boolean>) {
       state.checkNewName = action.payload;
+    },
+    setAddressIdForChange(state, action: PayloadAction<string>) {
+      state.addressIdForChange = action.payload;
     },
   },
 });

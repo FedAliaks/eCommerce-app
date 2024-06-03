@@ -95,6 +95,7 @@ export default function UserProfile(): JSX.Element {
           (item.id || '') === customer?.defaultBillingAddressId ||
           (item.id || '') === customer?.defaultShippingAddressId,
         inputArray: address,
+        addressId: item.id,
 
         linkTo: ROUTE_PATH.changeAddress,
       });
@@ -112,8 +113,9 @@ export default function UserProfile(): JSX.Element {
               subtitle={item.subtitle}
               inputArray={item.inputArray}
               defaultAddress={item.defaultAddress}
-              key={item.title || item.subtitle || `address${index}`}
+              key={`address${index}` || item.title || item.subtitle}
               linkTo={item.linkTo}
+              addressId={item.addressId}
             />
           ))}
         </div>

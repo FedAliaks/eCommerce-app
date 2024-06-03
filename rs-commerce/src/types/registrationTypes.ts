@@ -32,6 +32,7 @@ export type InputProps = {
 
 export type AddressType = {
   typeComponent: TypesOfAddress;
+  defaultValue?: string;
 };
 
 export type HtmlForCheckboxType =
