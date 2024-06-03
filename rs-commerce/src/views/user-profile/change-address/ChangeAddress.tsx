@@ -25,14 +25,16 @@ export default function ChangeAddress() {
   const location = useLocation();
   const typeComponent = 'shipping';
   const [resultRequest] = useState('result request');
-  const [street, setStreet] = useState('street');
+
   const [streetErr, setStreetErr] = useState('');
-  const [city, setCity] = useState('city');
   const [cityErr, setCityErr] = useState('');
-  const [postCode, setPostCode] = useState('postCode');
   const [postCodeErr, setPostCodeErr] = useState('');
-  const [country, setCountry] = useState(countryArr[0]);
   const [countryErr, setCountryErr] = useState('');
+
+  const [street, setStreet] = useState('street');
+  const [city, setCity] = useState('city');
+  const [postCode, setPostCode] = useState('postCode');
+  const [country, setCountry] = useState(countryArr[0]);
 
   console.log(location.state.addressId);
 
