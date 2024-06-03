@@ -14,6 +14,7 @@ function FiltersPopup(): JSX.Element {
   const closePopup = (): void => {
     toggleBodyNotScrollable();
     dispatch(apiCategoriesProductsActions.setProductsFilter(null));
+    dispatch(apiCategoriesProductsActions.setCanUseMainFilters(true));
   };
 
   const handlePopupClick = (e: React.MouseEvent<HTMLDivElement>): void => {

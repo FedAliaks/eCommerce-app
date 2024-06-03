@@ -5,6 +5,7 @@
   text-transform: uppercase;
   color: #000;
   cursor: pointer;
+  text-decoration: none;
 }
 .category-item:hover {
   font-weight: 600;

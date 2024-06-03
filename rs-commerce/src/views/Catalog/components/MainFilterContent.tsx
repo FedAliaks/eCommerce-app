@@ -1,5 +1,11 @@
+import { useEffect } from 'react';
 import { MainSortFilterContentProps } from 'types/types';
-import { CATALOG_PAGE_TEXT, MAIN_FILTER_PROPS, MainFilterValues } from 'constants/constants';
+import {
+  CATALOG_PAGE_TEXT,
+  INITIAL_PRICE_FILTER_VALUE,
+  INITIAL_SIMPLE_FILTER_VALUES,
+  MAIN_FILTER_PROPS,
+} from 'constants/constants';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
@@ -9,30 +15,27 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
   const dispatch = useAppDispatch();
   const { priceFilter, simpleFilters } = useAppSelector(apiCategoriesProductsSelector);
 
-  const setChecked = (v: string): boolean => {
-    let check = false;
-    if (v === MainFilterValues.Paperback) check = simpleFilters.Paperback;
-    else if (v === MainFilterValues.Hardcover) check = simpleFilters.Hardcover;
+  useEffect(() => {
+    dispatch(apiCategoriesProductsActions.setCanUseMainFilters(false));
+  }, []);
 
-    return check;
-  };
+  const setChecked = (name: string, value: string): boolean =>
+    !!(simpleFilters[name]?.[value] ? simpleFilters[name]?.[value] : false);
 
   const handleInputCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const curName = e.target.name;
     const curValue = e.target.value;
-    if (curValue === MainFilterValues.Paperback)
-      dispatch(
-        apiCategoriesProductsActions.setFilters({
-          ...simpleFilters,
-          [curValue]: !simpleFilters[curValue],
-        }),
-      );
-    else if (curValue === MainFilterValues.Hardcover)
-      dispatch(
-        apiCategoriesProductsActions.setFilters({
-          ...simpleFilters,
-          [curValue]: !simpleFilters[curValue],
-        }),
-      );
+    const curChecked = e.target.checked;
+
+    dispatch(
+      apiCategoriesProductsActions.setSimpleFilters({
+        ...simpleFilters,
+        [curName]: {
+          ...simpleFilters[curName],
+          [curValue]: curChecked,
+        },
+      }),
+    );
   };
 
   const handleInputPriceChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -54,6 +57,15 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
         }),
       );
     }
+  };
+
+  const handleBtnClearAll = (): void => {
+    dispatch(apiCategoriesProductsActions.setPriceFilter(INITIAL_PRICE_FILTER_VALUE));
+    dispatch(apiCategoriesProductsActions.setSimpleFilters(INITIAL_SIMPLE_FILTER_VALUES));
+  };
+
+  const handleBtnApply = (): void => {
+    onClick();
   };
 
   return (
@@ -96,17 +108,59 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
               value={el.value}
               className={style['checkbox-btn']}
               onChange={handleInputCheckboxChange}
-              checked={setChecked(el.value)}
+              checked={setChecked(MAIN_FILTER_PROPS.cover.name, el.value)}
             />
-            <div className={style['checkbox-text']}>{el.value}</div>
+            <label className={style['checkbox-text']} htmlFor={el.id}>
+              {el.value}
+            </label>
           </div>
         ))}
       </div>
+      <div className={style['checkbox-filter']}>
+        <div className={style['checkbox-filter-title']}>{MAIN_FILTER_PROPS.format.title}</div>
+        {MAIN_FILTER_PROPS.format.values.map((el) => (
+          <div className={style['checkbox-line']} key={el.id}>
+            <input
+              type="checkbox"
+              id={el.id}
+              name={MAIN_FILTER_PROPS.format.name}
+              value={el.value}
+              className={style['checkbox-btn']}
+              onChange={handleInputCheckboxChange}
+              checked={setChecked(MAIN_FILTER_PROPS.format.name, el.value)}
+            />
+            <label className={style['checkbox-text']} htmlFor={el.id}>
+              {el.value}
+            </label>
+          </div>
+        ))}
+      </div>
+      <div className={style['checkbox-filter']}>
+        <div className={style['checkbox-filter-title']}>{MAIN_FILTER_PROPS.rating.title}</div>
+        <div className={style['checkbox-lines']}>
+          {MAIN_FILTER_PROPS.rating.values.map((el) => (
+            <div className={style['checkbox-line']} key={el.id}>
+              <input
+                type="checkbox"
+                id={el.id}
+                name={MAIN_FILTER_PROPS.rating.name}
+                value={el.value}
+                className={style['checkbox-btn']}
+                onChange={handleInputCheckboxChange}
+                checked={setChecked(MAIN_FILTER_PROPS.rating.name, el.value)}
+              />
+              <label className={style['checkbox-text']} htmlFor={el.id}>
+                {el.value}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
       <div className={style['main-filter-btns']}>
-        <button type="button" className={style['filter-btn']}>
+        <button type="button" className={style['filter-btn']} onClick={handleBtnClearAll}>
           {MAIN_FILTER_PROPS.btnClearAll}
         </button>
-        <button type="button" className={style['filter-btn']}>
+        <button type="button" className={style['filter-btn']} onClick={handleBtnApply}>
           {MAIN_FILTER_PROPS.btnApply}
         </button>
       </div>

@@ -12,9 +12,12 @@ function CatalogPageCategories(): JSX.Element {
       <div className={`container ${style['category']}`}>
         {categories && <CategoryItem data={null} />}
         {categories &&
-          categories.map((category: Category) => (
-            <CategoryItem key={category.id} data={category} />
-          ))}
+          categories.map((category: Category) => {
+            if (category.ancestors.length !== 0) {
+              return <CategoryItem key={category.id} data={category} />;
+            }
+            return null;
+          })}
       </div>
     </div>
   );

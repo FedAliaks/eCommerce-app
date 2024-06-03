@@ -20,21 +20,24 @@ function Catalog(): JSX.Element {
     searchInputValue,
     sortFilterValue,
     priceFilter,
-    // simpleFilters,
+    simpleFilters,
+    canUseMainFilters,
   } = useAppSelector(apiCategoriesProductsSelector);
   const { category } = useParams();
 
-  // const setSimpleFilters = (queryParams: QueryParamsProductsProjections): void => {
-  //   if (simpleFilters.Paperback) {
-  //     if (Array.isArray(queryParams.filter)) {
-  //       queryParams.filter.push(`variants.attributes.cover.key:"paperback"`);
-  //     } else {
-  //       queryParams.filter = [`variants.attributes.cover.key:"paperback"`];
-  //     }
-  //   }
-
-  //   console.log('queryParams: ', queryParams);
-  // };
+  const setSimpleFilters = (queryParams: QueryParamsProductsProjections): void => {
+    Object.entries(simpleFilters).forEach((el) => {
+      const nameFilter = el[0];
+      const curFilterValues = Object.entries(el[1]);
+      curFilterValues.forEach((elm) => {
+        if (elm[1]) {
+          if (Array.isArray(queryParams.filter)) {
+            queryParams.filter.push(`variants.attributes.${nameFilter}:"${elm[0]}"`);
+          }
+        }
+      });
+    });
+  };
 
   const setProductsqueryArgs = (): QueryParamsProductsProjections => {
     const queryParams: QueryParamsProductsProjections = {
@@ -42,18 +45,17 @@ function Catalog(): JSX.Element {
       offset: (curProductsPage - 1) * productsInPage,
       filter: [
         `variants.price.centAmount:range (${
-          priceFilter.min ? priceFilter.min : 0
-        } to ${priceFilter.max ? priceFilter.max : 10000})`,
+          priceFilter.min ? priceFilter.min * 100 : 0
+        } to ${priceFilter.max ? priceFilter.max * 100 : 10000})`,
       ],
-      // variants.price.centAmount:range ({from} to {to}), ({from} to {to})
-      // variants.scopedPrice.value.centAmount
     };
 
     if (category) {
-      queryParams.filter = [`categories.id:"${curCategory?.id}"`];
+      if (Array.isArray(queryParams.filter))
+        queryParams.filter.push(`categories.id:"${curCategory?.id}"`);
     }
 
-    // setSimpleFilters(queryParams);
+    setSimpleFilters(queryParams);
 
     const sortQuery = SORT_REQUESTS[sortFilterValue];
     if (sortQuery) {
@@ -64,7 +66,6 @@ function Catalog(): JSX.Element {
       queryParams['text.en'] = searchInputValue;
     }
 
-    // console.log('queryParams: ', queryParams);
     return queryParams;
   };
 
@@ -73,8 +74,17 @@ function Catalog(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
-  }, [curProductsPage, category, searchInputValue, sortFilterValue, priceFilter]);
+    if (canUseMainFilters) {
+      dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
+    }
+  }, [
+    curProductsPage,
+    category,
+    searchInputValue,
+    sortFilterValue,
+    priceFilter,
+    canUseMainFilters,
+  ]);
 
   useEffect(() => {
     if (!category) {

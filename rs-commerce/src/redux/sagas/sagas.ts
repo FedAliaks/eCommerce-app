@@ -3,7 +3,6 @@ import {
   ClientResponse,
   CustomerSignInResult,
   ErrorResponse,
-  // ProductPagedQueryResponse,
   ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
 import { PayloadAction } from '@reduxjs/toolkit';

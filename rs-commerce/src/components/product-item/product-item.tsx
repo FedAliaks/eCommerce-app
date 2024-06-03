@@ -18,6 +18,7 @@ function ProductItem({ product }: ProductProjectionItemProps) {
   const itemAuthorYear = attributes ? `${attributes[0]?.value}, ${attributes[4]?.value}` : '';
   const itemDescription = attributes ? attributes[2]?.value : '';
   const itemCover = attributes ? `Cover: ${attributes[3]?.value}` : '';
+  const itemFormat = attributes ? `Format: ${attributes[6]?.value}` : '';
 
   const { prices } = product.masterVariant;
   let curCurrencyCode = '';
@@ -31,10 +32,10 @@ function ProductItem({ product }: ProductProjectionItemProps) {
 
     if (currencyCode) curCurrencyCode = currencyCode;
     if (price) curPriceFormatted = (price / 100).toFixed(2);
-    if (priceDiscount) curDiscountedPriceFormatted = ((priceDiscount as number) / 100).toFixed(2);
+    if (priceDiscount) curDiscountedPriceFormatted = ((priceDiscount as number) / 100).toFixed(0);
     if (price && priceDiscount) {
       curDiscountedPercentFormatted = `-${(100 - ((priceDiscount as number) / price) * 100).toFixed(
-        2,
+        0,
       )}%`;
     }
   }
@@ -66,6 +67,7 @@ function ProductItem({ product }: ProductProjectionItemProps) {
         <div className={style['item-author-year']}>{itemAuthorYear}</div>
         <div className={style['item-description']}>{itemDescription}</div>
         <div className={style['item-cover']}>{itemCover}</div>
+        <div className={style['item-format']}>{itemFormat}</div>
         <div className={style['item-prices-wrapper']}>
           <div className={itemPriceStyle}>{itemPrice}</div>
           <div className={style['item-price-discounted']}>{itemDiscountedPrice}</div>
