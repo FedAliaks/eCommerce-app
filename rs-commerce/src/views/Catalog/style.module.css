@@ -173,6 +173,13 @@
   gap: 8px;
   padding-top: 16px;
 }
+.checkbox-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 95px;
+  overflow: auto;
+}
 .radio-line,
 .checkbox-line,
 .price-line {

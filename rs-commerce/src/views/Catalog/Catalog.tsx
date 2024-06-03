@@ -29,14 +29,18 @@ function Catalog(): JSX.Element {
   const { category } = useParams();
 
   // const setSimpleFilters = (queryParams: QueryParamsProductsProjections): void => {
-  //   if (simpleFilters.Paperback) {
-  //     if (Array.isArray(queryParams.filter)) {
-  //       queryParams.filter.push(`variants.attributes.cover.key:"paperback"`);
-  //     } else {
-  //       queryParams.filter = [`variants.attributes.cover.key:"paperback"`];
-  //     }
-  //   }
-
+  //   console.log('setSimpleFilters', simpleFilters);
+  //   // console.log('setSimpleFilters', Object.entries(simpleFilters));
+  //   // if (Object.entries(simpleFilters).length) {
+  //   //   console.log('simpleFilters: ', simpleFilters);
+  //   //   // if (Array.isArray(queryParams.filter)) {
+  //   //   //   // queryParams.filter.push(`variants.attributes.cover.key:"paperback"`);
+  //   //   //   queryParams.filter.push(`variants.attributes.cover:"Paperback"`);
+  //   //   // } else {
+  //   //   //   queryParams.filter = [`variants.attributes.cover:"Paperback"`];
+  //   //   // }
+  //   // }
+  //   // queryParams.filter.push(`variants.attributes.format:"A5"`); работает
   //   console.log('queryParams: ', queryParams);
   // };
 
@@ -46,15 +50,14 @@ function Catalog(): JSX.Element {
       offset: (curProductsPage - 1) * productsInPage,
       filter: [
         `variants.price.centAmount:range (${
-          priceFilter.min ? priceFilter.min : 0
-        } to ${priceFilter.max ? priceFilter.max : 10000})`,
+          priceFilter.min ? priceFilter.min * 100 : 0
+        } to ${priceFilter.max ? priceFilter.max * 100 : 10000})`,
       ],
-      // variants.price.centAmount:range ({from} to {to}), ({from} to {to})
-      // variants.scopedPrice.value.centAmount
     };
 
     if (category) {
-      queryParams.filter = [`categories.id:"${curCategory?.id}"`];
+      if (Array.isArray(queryParams.filter))
+        queryParams.filter.push(`categories.id:"${curCategory?.id}"`);
     }
 
     // setSimpleFilters(queryParams);
@@ -68,7 +71,7 @@ function Catalog(): JSX.Element {
       queryParams['text.en'] = searchInputValue;
     }
 
-    // console.log('queryParams: ', queryParams);
+    console.log('queryParams: ', queryParams);
     return queryParams;
   };
 

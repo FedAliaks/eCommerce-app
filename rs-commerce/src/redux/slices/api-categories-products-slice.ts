@@ -1,6 +1,6 @@
 import { Category, ProductProjection } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { PAGE_NUMBER_ONE, PRODUCTS_IN_PAGE } from 'constants/constants';
+import { MAIN_FILTER_VALUES, PAGE_NUMBER_ONE, PRODUCTS_IN_PAGE } from 'constants/constants';
 import {
   ApiCategoriesProductsSliceState,
   FilterType,
@@ -27,10 +27,7 @@ const initialState: ApiCategoriesProductsSliceState = {
     min: null,
     max: null,
   },
-  simpleFilters: {
-    Paperback: false,
-    Hardcover: false,
-  },
+  simpleFilters: MAIN_FILTER_VALUES,
 };
 
 export const apiCategoriesProductsSlice = createSlice({

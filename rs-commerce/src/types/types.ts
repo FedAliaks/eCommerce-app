@@ -121,8 +121,7 @@ export type PriceFilterValues = {
 };
 
 export type SimpleFiltersValues = {
-  Paperback: boolean;
-  Hardcover: boolean;
+  [key: string]: boolean;
 };
 
 export type ApiCategoriesProductsSliceState = {
