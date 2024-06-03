@@ -8,6 +8,7 @@ import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { registrationFormActions } from 'redux/slices/registration-slice';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classesLocal from './add-new-address.module.css';
 import classes from '../UserProfile.module.css';
@@ -53,8 +54,8 @@ export default function AddNewAddress(): JSX.Element {
     billingPostCode,
     shippingCountry,
     shippingPostCode,
-    defaultBillingAddress,
-    defaultShippingAddress,
+    /*     defaultBillingAddress,
+    defaultShippingAddress, */
   } = useAppSelector(registrationFormSelector);
 
   const clearFieldsOnPage = () => {
@@ -69,12 +70,16 @@ export default function AddNewAddress(): JSX.Element {
       postCode: typeComponent === 'shipping' ? shippingPostCode : billingPostCode,
       street: typeComponent === 'shipping' ? shippingStreet : billingStreet,
       city: typeComponent === 'shipping' ? shippingCity : billingCity,
-      isDefaultAddress:
-        typeComponent === 'shipping' ? defaultShippingAddress : defaultBillingAddress,
+      /*       isDefaultAddress:
+        typeComponent === 'shipping' ? defaultShippingAddress : defaultBillingAddress, */
     };
 
     console.log(request);
-    if (userData) {
+
+    if (!Object.values(request).every((item) => Boolean(item) === true)) {
+      setResultRequest('Fill all fields');
+      setTimeout(() => setResultRequest(''), 2000);
+    } else if (userData) {
       apiRootWithExistingTokenFlow()
         .customers()
         .withId({ ID: userData?.customer.id })
@@ -106,8 +111,39 @@ export default function AddNewAddress(): JSX.Element {
               dispatch(apiAuthActions.setUserData({ customer: response.body }));
               setResultRequest('You have added address');
               setTimeout(() => setResultRequest(''), 5000);
+
+              apiRootWithExistingTokenFlow()
+                .customers()
+                .withId({ ID: userData.customer.id })
+                .post({
+                  body: {
+                    version: userData.customer.version + 1,
+                    actions: [
+                      {
+                        action:
+                          typeComponent === 'shipping'
+                            ? 'addShippingAddressId'
+                            : 'addBillingAddressId',
+                        addressId: response.body.addresses[response.body.addresses.length - 1]?.id,
+                      },
+                    ],
+                  },
+                })
+                .execute()
+                .then((responseNew) =>
+                  dispatch(apiAuthActions.setUserData({ customer: responseNew.body })),
+                );
             });
         });
+
+      dispatch(registrationFormActions.setBillingCity(''));
+      dispatch(registrationFormActions.setBillingCountry(''));
+      dispatch(registrationFormActions.setBillingPostCode(''));
+      dispatch(registrationFormActions.setBillingStreet(''));
+      dispatch(registrationFormActions.setShippingCity(''));
+      dispatch(registrationFormActions.setShippingCountry(''));
+      dispatch(registrationFormActions.setShippingPostCode(''));
+      dispatch(registrationFormActions.setShippingStreet(''));
     }
   };
 
