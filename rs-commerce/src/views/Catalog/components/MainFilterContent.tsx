@@ -1,5 +1,11 @@
+import { useEffect } from 'react';
 import { MainSortFilterContentProps } from 'types/types';
-import { CATALOG_PAGE_TEXT, MAIN_FILTER_PROPS } from 'constants/constants';
+import {
+  CATALOG_PAGE_TEXT,
+  INITIAL_PRICE_FILTER_VALUE,
+  INITIAL_SIMPLE_FILTER_VALUES,
+  MAIN_FILTER_PROPS,
+} from 'constants/constants';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
@@ -9,22 +15,25 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
   const dispatch = useAppDispatch();
   const { priceFilter, simpleFilters } = useAppSelector(apiCategoriesProductsSelector);
 
-  const setChecked = (v: string): boolean => !!(simpleFilters[v] ? simpleFilters[v] : false);
+  useEffect(() => {
+    dispatch(apiCategoriesProductsActions.setCanUseMainFilters(false));
+  }, []);
+
+  const setChecked = (name: string, value: string): boolean =>
+    !!(simpleFilters[name]?.[value] ? simpleFilters[name]?.[value] : false);
 
   const handleInputCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const curName = e.target.name;
     const curValue = e.target.value;
-    // console.log(
-    //   'curValue: ',
-    //   curValue,
-    //   '[curValue]: ',
-    //   simpleFilters[curValue],
-    //   '!simpleFilters[curValue]: ',
-    //   !simpleFilters[curValue],
-    // );
+    const curChecked = e.target.checked;
+
     dispatch(
-      apiCategoriesProductsActions.setFilters({
+      apiCategoriesProductsActions.setSimpleFilters({
         ...simpleFilters,
-        [curValue]: e.target.checked,
+        [curName]: {
+          ...simpleFilters[curName],
+          [curValue]: curChecked,
+        },
       }),
     );
   };
@@ -48,6 +57,15 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
         }),
       );
     }
+  };
+
+  const handleBtnClearAll = (): void => {
+    dispatch(apiCategoriesProductsActions.setPriceFilter(INITIAL_PRICE_FILTER_VALUE));
+    dispatch(apiCategoriesProductsActions.setSimpleFilters(INITIAL_SIMPLE_FILTER_VALUES));
+  };
+
+  const handleBtnApply = (): void => {
+    onClick();
   };
 
   return (
@@ -90,7 +108,7 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
               value={el.value}
               className={style['checkbox-btn']}
               onChange={handleInputCheckboxChange}
-              checked={setChecked(el.value)}
+              checked={setChecked(MAIN_FILTER_PROPS.cover.name, el.value)}
             />
             <label className={style['checkbox-text']} htmlFor={el.id}>
               {el.value}
@@ -109,7 +127,7 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
               value={el.value}
               className={style['checkbox-btn']}
               onChange={handleInputCheckboxChange}
-              checked={setChecked(el.value)}
+              checked={setChecked(MAIN_FILTER_PROPS.format.name, el.value)}
             />
             <label className={style['checkbox-text']} htmlFor={el.id}>
               {el.value}
@@ -129,7 +147,7 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
                 value={el.value}
                 className={style['checkbox-btn']}
                 onChange={handleInputCheckboxChange}
-                checked={setChecked(el.value)}
+                checked={setChecked(MAIN_FILTER_PROPS.rating.name, el.value)}
               />
               <label className={style['checkbox-text']} htmlFor={el.id}>
                 {el.value}
@@ -139,10 +157,10 @@ function MainFilterContent({ onClick }: MainSortFilterContentProps): JSX.Element
         </div>
       </div>
       <div className={style['main-filter-btns']}>
-        <button type="button" className={style['filter-btn']}>
+        <button type="button" className={style['filter-btn']} onClick={handleBtnClearAll}>
           {MAIN_FILTER_PROPS.btnClearAll}
         </button>
-        <button type="button" className={style['filter-btn']}>
+        <button type="button" className={style['filter-btn']} onClick={handleBtnApply}>
           {MAIN_FILTER_PROPS.btnApply}
         </button>
       </div>

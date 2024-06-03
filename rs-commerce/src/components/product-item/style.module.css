@@ -77,7 +77,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.item-cover {
+.item-cover,
+.item-format {
   width: 100%;
   border-bottom: 1px solid #000000;
 }

@@ -121,7 +121,9 @@ export type PriceFilterValues = {
 };
 
 export type SimpleFiltersValues = {
-  [key: string]: boolean;
+  [key: string]: {
+    [key: string]: boolean;
+  };
 };
 
 export type ApiCategoriesProductsSliceState = {
@@ -139,6 +141,7 @@ export type ApiCategoriesProductsSliceState = {
   sortFilterValue: string;
   priceFilter: PriceFilterValues;
   simpleFilters: SimpleFiltersValues;
+  canUseMainFilters: boolean;
 };
 
 export type ProductProjectionItemProps = {

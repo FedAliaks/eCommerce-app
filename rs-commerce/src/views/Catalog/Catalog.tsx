@@ -24,25 +24,24 @@ function Catalog(): JSX.Element {
     searchInputValue,
     sortFilterValue,
     priceFilter,
-    // simpleFilters,
+    simpleFilters,
+    canUseMainFilters,
   } = useAppSelector(apiCategoriesProductsSelector);
   const { category } = useParams();
 
-  // const setSimpleFilters = (queryParams: QueryParamsProductsProjections): void => {
-  //   console.log('setSimpleFilters', simpleFilters);
-  //   // console.log('setSimpleFilters', Object.entries(simpleFilters));
-  //   // if (Object.entries(simpleFilters).length) {
-  //   //   console.log('simpleFilters: ', simpleFilters);
-  //   //   // if (Array.isArray(queryParams.filter)) {
-  //   //   //   // queryParams.filter.push(`variants.attributes.cover.key:"paperback"`);
-  //   //   //   queryParams.filter.push(`variants.attributes.cover:"Paperback"`);
-  //   //   // } else {
-  //   //   //   queryParams.filter = [`variants.attributes.cover:"Paperback"`];
-  //   //   // }
-  //   // }
-  //   // queryParams.filter.push(`variants.attributes.format:"A5"`); работает
-  //   console.log('queryParams: ', queryParams);
-  // };
+  const setSimpleFilters = (queryParams: QueryParamsProductsProjections): void => {
+    Object.entries(simpleFilters).forEach((el) => {
+      const nameFilter = el[0];
+      const curFilterValues = Object.entries(el[1]);
+      curFilterValues.forEach((elm) => {
+        if (elm[1]) {
+          if (Array.isArray(queryParams.filter)) {
+            queryParams.filter.push(`variants.attributes.${nameFilter}:"${elm[0]}"`);
+          }
+        }
+      });
+    });
+  };
 
   const setProductsqueryArgs = (): QueryParamsProductsProjections => {
     const queryParams: QueryParamsProductsProjections = {
@@ -60,7 +59,7 @@ function Catalog(): JSX.Element {
         queryParams.filter.push(`categories.id:"${curCategory?.id}"`);
     }
 
-    // setSimpleFilters(queryParams);
+    setSimpleFilters(queryParams);
 
     const sortQuery = SORT_REQUESTS[sortFilterValue];
     if (sortQuery) {
@@ -71,14 +70,22 @@ function Catalog(): JSX.Element {
       queryParams['text.en'] = searchInputValue;
     }
 
-    console.log('queryParams: ', queryParams);
     return queryParams;
   };
 
   useEffect(() => {
-    dispatch(apiCategoriesProductsActions.startCategoriesFetch());
-    dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
-  }, [curProductsPage, category, searchInputValue, sortFilterValue, priceFilter]);
+    if (canUseMainFilters) {
+      dispatch(apiCategoriesProductsActions.startCategoriesFetch());
+      dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
+    }
+  }, [
+    curProductsPage,
+    category,
+    searchInputValue,
+    sortFilterValue,
+    priceFilter,
+    canUseMainFilters,
+  ]);
 
   return (
     <>

@@ -1,6 +1,12 @@
 import { Category, ProductProjection } from '@commercetools/platform-sdk';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { MAIN_FILTER_VALUES, PAGE_NUMBER_ONE, PRODUCTS_IN_PAGE } from 'constants/constants';
+import {
+  INITIAL_PRICE_FILTER_VALUE,
+  INITIAL_SIMPLE_FILTER_VALUES,
+  INITIAL_SORT_FILTER_VALUE,
+  PAGE_NUMBER_ONE,
+  PRODUCTS_IN_PAGE,
+} from 'constants/constants';
 import {
   ApiCategoriesProductsSliceState,
   FilterType,
@@ -22,12 +28,10 @@ const initialState: ApiCategoriesProductsSliceState = {
   productsInPage: PRODUCTS_IN_PAGE,
   searchInputValue: '',
   productsFilter: null,
-  sortFilterValue: 'priceUp',
-  priceFilter: {
-    min: null,
-    max: null,
-  },
-  simpleFilters: MAIN_FILTER_VALUES,
+  sortFilterValue: INITIAL_SORT_FILTER_VALUE,
+  priceFilter: INITIAL_PRICE_FILTER_VALUE,
+  simpleFilters: INITIAL_SIMPLE_FILTER_VALUES,
+  canUseMainFilters: true,
 };
 
 export const apiCategoriesProductsSlice = createSlice({
@@ -71,11 +75,14 @@ export const apiCategoriesProductsSlice = createSlice({
     setSortFilterValue(state, action: PayloadAction<string>) {
       state.sortFilterValue = action.payload;
     },
-    setFilters(state, action: PayloadAction<SimpleFiltersValues>) {
+    setSimpleFilters(state, action: PayloadAction<SimpleFiltersValues>) {
       state.simpleFilters = action.payload;
     },
     setPriceFilter(state, action: PayloadAction<PriceFilterValues>) {
       state.priceFilter = action.payload;
+    },
+    setCanUseMainFilters(state, action: PayloadAction<boolean>) {
+      state.canUseMainFilters = action.payload;
     },
   },
 });
