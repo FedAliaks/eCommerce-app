@@ -18,7 +18,7 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { isAuth, userData } = useAppSelector(apiAuthSelector);
+  const { isAuth } = useAppSelector(apiAuthSelector);
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
@@ -34,6 +34,12 @@ function Header() {
       title: 'Registration',
       className: style['underline'],
       withAuth: false,
+    },
+    {
+      path: ROUTE_PATH.profile,
+      title: 'Profile',
+      className: style['underline'],
+      withAuth: true,
     },
   ];
 
@@ -70,7 +76,7 @@ function Header() {
       <nav className={`${style['nav']} ${isBurgerMenuOpen ? style['nav-open'] : ''}`}>
         <ul className={style['nav-right']}>
           {rightList
-            .filter((item) => (isAuth ? item.withAuth : true))
+            .filter((item) => (isAuth ? item.withAuth === true : item.withAuth === false))
             .map((item) => (
               <li key={item.path}>
                 <Link to={item.path} className={item.className} aria-label={item.title}>
@@ -78,13 +84,7 @@ function Header() {
                 </Link>
               </li>
             ))}
-          {userData && (
-            <li>
-              <Link aria-label="Profile" to={ROUTE_PATH.profile} className={style['logout']}>
-                Profile
-              </Link>
-            </li>
-          )}
+
           {isAuth && (
             <li>
               <button
