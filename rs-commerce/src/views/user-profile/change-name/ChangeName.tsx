@@ -29,7 +29,6 @@ export default function ChangeName(): JSX.Element {
   const [customMsg, setCustomMsg] = useState('');
 
   const getNameFromServer = () => {
-    console.log('updated');
     if (userData) {
       apiRootWithExistingTokenFlow()
         .customers()
@@ -140,7 +139,6 @@ export default function ChangeName(): JSX.Element {
   };
 
   const saveBtnClick = (): void => {
-    console.log('save parameters');
     if (userData) {
       apiRootWithExistingTokenFlow()
         .customers()

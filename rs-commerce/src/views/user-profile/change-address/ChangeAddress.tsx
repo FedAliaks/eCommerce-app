@@ -67,32 +67,29 @@ export default function ChangeAddress() {
 
   return (
     <div>
+      <UserProfileHeader title="Change Address" subtitle="Main > Profile > Edit address" />
+      <h1>Address information</h1>
+
       <div className={classes['profile']}>
-        <UserProfileHeader title="Change Address" subtitle="Main > Profile > Edit address" />
         <div className={classes['profile__column']}>
-          <h1>Address information</h1>
           <h2>Shipping addresses</h2>
 
           {shippingAddressArray.map((item) => (
             <ProfileComponent inputArray={item} />
           ))}
-
-          <div className={classes['profile__password-btn-container']}>
-            <ButtonProfile content="Add new" colored={false} onClick={btnClick} />
-          </div>
         </div>
         <div className={classes['profile__column']}>
           <h2>Billing addresses</h2>
           {billingAddressArray.map((item) => (
             <ProfileComponent inputArray={item} />
           ))}
-          <div className={classes['profile__password-btn-container']}>
-            <ButtonProfile content="Add new" colored={false} onClick={btnClick} />
-          </div>
         </div>
       </div>
-      <ButtonProfile content="Cancel" colored={false} onClick={btnClick} />
-      <ButtonProfile content="Save" colored={false} onClick={btnClick} />
+      <div className={classes['profile__password-btn-container']}>
+        <ButtonProfile content="Cancel" colored={false} onClick={btnClick} />
+        <ButtonProfile content="Save" colored={false} onClick={btnClick} />
+        <ButtonProfile content="Add address" colored onClick={btnClick} />
+      </div>
     </div>
   );
 }
