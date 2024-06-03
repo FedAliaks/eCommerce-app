@@ -1,3 +1,8 @@
+.add__address-container {
+  width: 60%;
+  margin: 10px auto;
+}
+
 .address {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -6,6 +11,11 @@
 }
 .error {
   max-width: 240px;
+}
+
+.response {
+  text-align: center;
+  height: 20px;
 }
 
 @media screen and (max-width: 1024px) {
