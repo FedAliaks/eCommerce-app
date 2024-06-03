@@ -217,6 +217,12 @@
   width: 100px;
   height: 30px;
 }
+.empty-response {
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: red;
+}
 @media screen and (max-width: 1355px) {
   .filters-wrapper {
     grid-template-areas: 'a b' 'c d';

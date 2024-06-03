@@ -304,3 +304,5 @@ export const INITIAL_PRICE_FILTER_VALUE = {
   min: null,
   max: null,
 };
+
+export const EMPTY_RESPONSE = `There are no products matching your request. \nChange the conditions in the filter.`;

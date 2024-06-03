@@ -2,6 +2,7 @@ import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import ProductItem from 'components/product-item/product-item';
+import { EMPTY_RESPONSE } from 'constants/constants';
 import style from '../style.module.css';
 
 function CatalogPageProducts(): JSX.Element {
@@ -10,10 +11,13 @@ function CatalogPageProducts(): JSX.Element {
   return (
     <div className={`container ${style['products']}`}>
       <div className={style['products-items']}>
-        {products &&
+        {products?.length ? (
           products.map((product: ProductProjection) => (
             <ProductItem key={product.id} product={product} />
-          ))}
+          ))
+        ) : (
+          <div className={style['empty-response']}>{EMPTY_RESPONSE}</div>
+        )}
       </div>
     </div>
   );
