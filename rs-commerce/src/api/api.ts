@@ -1,6 +1,7 @@
 import { ClientResponse } from '@commercetools/importapi-sdk';
 import {
   ByProjectKeyRequestBuilder,
+  Category,
   CategoryPagedQueryResponse,
   CustomerSignInResult,
   MyCustomerDraft,
@@ -102,6 +103,19 @@ export async function apiGetProductDetails(productId: string): Promise<ClientRes
     .withId({ ID: productId })
     .get()
     .execute();
+
+  return response;
+}
+
+export async function apiGetOneCategory(categoryKey: string): Promise<ClientResponse<Category>> {
+  let apiRoot: ByProjectKeyRequestBuilder;
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    apiRoot = apiRootWithExistingTokenFlow();
+  } else {
+    apiRoot = apiRootWithAnonymousSessionFlow();
+  }
+
+  const response = await apiRoot.categories().withKey({ key: categoryKey }).get().execute();
 
   return response;
 }
