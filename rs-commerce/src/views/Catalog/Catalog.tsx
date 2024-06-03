@@ -7,6 +7,9 @@ import Pagination from 'components/pagination/pagination';
 import { useParams } from 'react-router-dom';
 import { CATALOG_PAGE_TEXT, PAGE_NUMBER_ONE, ROUTE_PATH, SORT_REQUESTS } from 'constants/constants';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
+import { apiGetOneCategory } from 'api/api';
+import toast from 'react-hot-toast';
+import { ErrorResponse } from '@commercetools/importapi-sdk';
 import { CatalogPageCategories, CatalogPageFilters, CatalogPageProducts } from './components';
 import FiltersPopup from './components/FiltersPopup';
 
@@ -24,6 +27,26 @@ function Catalog(): JSX.Element {
     canUseMainFilters,
   } = useAppSelector(apiCategoriesProductsSelector);
   const { category } = useParams();
+
+  const getCurrentCategoryData = async (categorySlug: string) => {
+    try {
+      const categoryData = await apiGetOneCategory(categorySlug);
+
+      dispatch(apiCategoriesProductsActions.setCurCategory(categoryData.body));
+    } catch (e) {
+      const error = e as ErrorResponse;
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (category) {
+      getCurrentCategoryData(category);
+    } else {
+      dispatch(apiCategoriesProductsActions.setCurCategory(null));
+    }
+    dispatch(apiCategoriesProductsActions.setCurProductsPage(PAGE_NUMBER_ONE));
+  }, [category]);
 
   const setSimpleFilters = (queryParams: QueryParamsProductsProjections): void => {
     Object.entries(simpleFilters).forEach((el) => {
@@ -57,7 +80,7 @@ function Catalog(): JSX.Element {
       ],
     };
 
-    if (category) {
+    if (curCategory) {
       if (Array.isArray(queryParams.filter))
         queryParams.filter.push(`categories.id:"${curCategory?.id}"`);
     }
@@ -86,19 +109,12 @@ function Catalog(): JSX.Element {
     }
   }, [
     curProductsPage,
-    category,
+    curCategory,
     searchInputValue,
     sortFilterValue,
     priceFilter,
     canUseMainFilters,
   ]);
-
-  useEffect(() => {
-    if (!category) {
-      dispatch(apiCategoriesProductsActions.setCurProductsPage(PAGE_NUMBER_ONE));
-      dispatch(apiCategoriesProductsActions.setCurCategory(null));
-    }
-  }, [category]);
 
   const pageName = curCategory?.name['en'] ? curCategory.name['en'] : CATALOG_PAGE_TEXT.headerTitle;
 
