@@ -8,6 +8,10 @@ function Footer() {
       path: ROUTE_PATH.main,
       title: 'Main',
     },
+    {
+      path: ROUTE_PATH.catalog,
+      title: 'Catalog',
+    },
   ];
   return (
     <footer className={style['footer']}>

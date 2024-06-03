@@ -1,17 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiCategoriesProductsActions } from 'redux/slices/api-categories-products-slice';
 import { apiCategoriesProductsSelector } from 'redux/selectors';
 import { QueryParamsProductsProjections } from 'types/types';
 import Pagination from 'components/pagination/pagination';
 import { useParams } from 'react-router-dom';
-import { SORT_REQUESTS } from 'constants/constants';
-import {
-  CatalogPageCategories,
-  CatalogPageFilters,
-  CatalogPageHeader,
-  CatalogPageProducts,
-} from './components';
+import { CATALOG_PAGE_TEXT, PAGE_NUMBER_ONE, ROUTE_PATH, SORT_REQUESTS } from 'constants/constants';
+import Breadcrumb from 'components/breadcrumb/Breadcrumb';
+import { CatalogPageCategories, CatalogPageFilters, CatalogPageProducts } from './components';
 import FiltersPopup from './components/FiltersPopup';
 
 function Catalog(): JSX.Element {
@@ -74,8 +70,11 @@ function Catalog(): JSX.Element {
   };
 
   useEffect(() => {
+    dispatch(apiCategoriesProductsActions.startCategoriesFetch());
+  }, []);
+
+  useEffect(() => {
     if (canUseMainFilters) {
-      dispatch(apiCategoriesProductsActions.startCategoriesFetch());
       dispatch(apiCategoriesProductsActions.startProductsFetch({ data: setProductsqueryArgs() }));
     }
   }, [
@@ -87,9 +86,34 @@ function Catalog(): JSX.Element {
     canUseMainFilters,
   ]);
 
+  useEffect(() => {
+    if (!category) {
+      dispatch(apiCategoriesProductsActions.setCurProductsPage(PAGE_NUMBER_ONE));
+      dispatch(apiCategoriesProductsActions.setCurCategory(null));
+    }
+  }, [category]);
+
+  const pageName = curCategory?.name['en'] ? curCategory.name['en'] : CATALOG_PAGE_TEXT.headerTitle;
+
+  const breadcrumbList = useMemo(() => {
+    const items = [
+      { name: 'Main', link: ROUTE_PATH.main },
+      {
+        name: CATALOG_PAGE_TEXT.headerTitle,
+        link: curCategory ? ROUTE_PATH.catalog : null,
+      },
+    ];
+
+    if (curCategory) {
+      items.push({ name: pageName, link: null });
+    }
+
+    return items;
+  }, [curCategory, pageName]);
+
   return (
     <>
-      <CatalogPageHeader />
+      <Breadcrumb linksList={breadcrumbList} currentPageName={pageName} />
       <CatalogPageFilters />
       <CatalogPageCategories />
       <CatalogPageProducts />
