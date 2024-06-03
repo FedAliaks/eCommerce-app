@@ -14,3 +14,9 @@
   display: flex;
   justify-content: space-around;
 }
+
+.custom-message {
+  margin: 5px;
+  height: 20px;
+  text-align: center;
+}

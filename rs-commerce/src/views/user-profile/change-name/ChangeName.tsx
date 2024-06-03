@@ -26,6 +26,24 @@ export default function ChangeName(): JSX.Element {
   const [dateOfBirthError, setDateOfBirthError] = useState('');
   const [email, setEmail] = useState(customer?.email || 'example@mail.com');
   const [emailError, setEmailError] = useState('');
+  const [customMsg, setCustomMsg] = useState('');
+
+  const getNameFromServer = () => {
+    console.log('updated');
+    if (userData) {
+      apiRootWithExistingTokenFlow()
+        .customers()
+        .withId({ ID: userData.customer.id })
+        .get()
+        .execute()
+        .then((res) => {
+          setFirstName(res.body.firstName || 'name');
+          setLastName(res.body.lastName || 'last - name');
+          setDateOfBirth(res.body.dateOfBirth || '2000-01-01');
+          setEmail(res.body.email || 'example@mail.com');
+        });
+    }
+  };
 
   const checkField = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -34,6 +52,7 @@ export default function ChangeName(): JSX.Element {
     regExp: RegExp,
     errorMsg: string,
   ) => {
+    setCustomMsg('');
     const { value } = e.target;
     setState(value);
     if (errorMsg !== errorMsgObj.dateOfBirth) {
@@ -149,7 +168,11 @@ export default function ChangeName(): JSX.Element {
             ],
           },
         })
-        .execute();
+        .execute()
+        .then(() => {
+          getNameFromServer();
+          setCustomMsg('Your date have updated');
+        });
     }
   };
 
@@ -161,6 +184,7 @@ export default function ChangeName(): JSX.Element {
         <div className={classes['profile__column']}>
           <h1>Personal information</h1>
           <ProfileComponent inputArray={inputArrayAddress} flexVertical />
+          <p className={classes['custom-message']}>{customMsg}</p>
           <div className={classes['profile__password-btn-container']}>
             <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
             <ButtonProfile page="name" content="Save" colored onClick={saveBtnClick} />

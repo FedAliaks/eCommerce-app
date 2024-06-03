@@ -18,7 +18,7 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { isAuth } = useAppSelector(apiAuthSelector);
+  const { isAuth, userData } = useAppSelector(apiAuthSelector);
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
@@ -78,15 +78,11 @@ function Header() {
                 </Link>
               </li>
             ))}
-          {isAuth && (
+          {userData && (
             <li>
-              <button
-                aria-label="Profile"
-                onClick={() => navigate(ROUTE_PATH.profile)}
-                className={style['logout']}
-                type="button">
+              <Link aria-label="Profile" to={ROUTE_PATH.profile} className={style['logout']}>
                 Profile
-              </button>
+              </Link>
             </li>
           )}
           {isAuth && (
