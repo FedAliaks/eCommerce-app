@@ -1,4 +1,5 @@
 import { ROUTE_PATH } from 'constants/constants';
+import Catalog from 'views/Catalog/Catalog';
 import Login from 'views/login/Login';
 import Main from 'views/main/Main';
 import NotFound from 'views/notFound/NotFound';
@@ -19,11 +20,19 @@ const routes = [
     component: <Registration />,
   },
   {
+    path: ROUTE_PATH.catalog,
+    component: <Catalog />,
+  },
+  {
+    path: ROUTE_PATH.catalogCategory,
+    component: <Catalog />,
+  },
+  {
     path: '*',
     component: <NotFound />,
   },
   {
-    path: ROUTE_PATH.productDetails,
+    path: ROUTE_PATH.productDetailsId,
     component: <ProductDetails />,
   },
 ];

@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { apiAuthReducer } from './slices/api-auth-slice';
 import { loginFormReducer } from './slices/login-form-slice';
-import rootSaga from './sagas/sagas';
+import { apiCategoriesProductsReducer } from './slices/api-categories-products-slice';
 import { registrationFormReducer } from './slices/registration-slice';
-import { apiRegistrationReducer } from './slices/api-registration-slice';
 import { productDetailReducer } from './slices/product-detail-slice';
+import rootSaga from './sagas/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,8 +14,8 @@ export const store = configureStore({
     apiAuth: apiAuthReducer,
     loginForm: loginFormReducer,
     registrationFrom: registrationFormReducer,
-    apiRegistration: apiRegistrationReducer,
     productDetail: productDetailReducer,
+    apiCategoriesProducts: apiCategoriesProductsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

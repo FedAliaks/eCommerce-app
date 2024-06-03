@@ -5,3 +5,4 @@ export const apiAuthSelector = (state: RootState) => state.apiAuth;
 export const registrationFormSelector = (state: RootState) => state.registrationFrom;
 export const apiRegistrationSelector = (state: RootState) => state.apiRegistration;
 export const productDetailsSelector = (state: RootState) => state.productDetail;
+export const apiCategoriesProductsSelector = (state: RootState) => state.apiCategoriesProducts;
