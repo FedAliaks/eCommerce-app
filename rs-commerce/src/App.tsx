@@ -8,7 +8,7 @@ import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import { useEffect } from 'react';
 import { apiAuthSelector } from 'redux/selectors';
 
-function App() { 
+function App() {
   const dispatch = useAppDispatch();
 
   alert(
@@ -24,7 +24,6 @@ function App() {
       localStorage.removeItem(LOCAL_STORAGE_TOKEN);
     }
   }, [userData]);
-
 
   return (
     <BrowserRouter>
