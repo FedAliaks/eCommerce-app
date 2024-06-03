@@ -3,7 +3,6 @@ import { apiAuthSelector } from 'redux/selectors';
 import { InputProfileType } from 'components/profile-component/types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from 'constants/constants';
-import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { countryArr } from 'views/registration/components/RegistrationForm/components/InputRegistration/CountryInput';
 import AddressTitleComponent from 'views/registration/components/RegistrationForm/components/AddressRegistration/components/AddressComponents/components/AddresTitleComponent/AddresTitleComponent';
 import { useState } from 'react';
@@ -23,40 +22,26 @@ export default function ChangeAddress() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const addressID = location.state.addressId;
   const typeComponent = 'shipping';
-  const [resultRequest] = useState('result request');
+  const [resultRequest, setResultRequest] = useState('result request');
+
+  const address = userData?.customer.addresses.filter((item) => item.id === addressID);
 
   const [streetErr, setStreetErr] = useState('');
   const [cityErr, setCityErr] = useState('');
   const [postCodeErr, setPostCodeErr] = useState('');
   const [countryErr, setCountryErr] = useState('');
 
-  const [street, setStreet] = useState('street');
-  const [city, setCity] = useState('city');
-  const [postCode, setPostCode] = useState('postCode');
-  const [country, setCountry] = useState(countryArr[0]);
-
-  console.log(location.state.addressId);
-
-  const addressID = location.state.addressId;
-
-  if (userData)
-    apiRootWithExistingTokenFlow()
-      .customers()
-      .withId({ ID: userData.customer.id })
-      .get()
-      .execute()
-      .then((res) => {
-        const address = res.body.addresses.filter((item) => item.id === addressID);
-        console.log(address);
-        setStreet(address[0]?.streetName || '');
-        setPostCode(address[0]?.postalCode || '');
-        setCountry(address[0]?.country);
-        setCity(address[0]?.city || '');
-      });
+  const [street, setStreet] = useState(address ? address[0]?.streetName : '');
+  const [city, setCity] = useState(address ? address[0]?.city : '');
+  const [postCode, setPostCode] = useState(address ? address[0]?.postalCode : '');
+  const [country, setCountry] = useState(address ? address[0]?.country : countryArr[0]);
 
   const postRequest = () => {
-    console.log('click');
+    if (streetErr || cityErr || postCodeErr || countryErr) {
+      setResultRequest('Fill all fields correct');
+    }
   };
 
   const checkStreet = (value: string) => {

@@ -20,6 +20,7 @@ export default function ChangePassword() {
   const [confirmPass, setConfirmPass] = useState('');
   const [currentPassError, setCurrentPassError] = useState('');
   const [newPassError, setNewPassError] = useState('');
+  const [customMsg, setCustomMsg] = useState('');
   const [confirmPassError, setConfirmPassError] = useState('');
   const { newPassword } = useAppSelector(updateProfileSelector);
   const { userData } = useAppSelector(apiAuthSelector);
@@ -110,7 +111,7 @@ export default function ChangePassword() {
           },
         })
         .execute()
-        .then(() => setCurrentPassError('You have changed successfully your password'))
+        .then(() => setCustomMsg('You have changed successfully your password'))
         .catch(() => setCurrentPassError('Check your current password'));
     }
   };
@@ -132,6 +133,7 @@ export default function ChangePassword() {
       <div className={classes['profile']}>
         <div className={classes['profile__column']}>
           <ProfileComponent inputArray={inputArrayPassword} flexVertical />
+          <p className={classes['custom-message']}>{customMsg}</p>
           <div className={classes['profile__password-btn-container']}>
             <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
             <ButtonProfile page="password" content="Save" colored onClick={saveBtnClick} />

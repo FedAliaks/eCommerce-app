@@ -8,6 +8,9 @@ import { apiAuthActions } from 'redux/slices/api-auth-slice';
 
 function App() {
   const dispatch = useAppDispatch();
+  alert(
+    'Приветствую. Если есть возможность, то проверь нас в четверг. Заранее благодарны. Успехов в завершении курса. Осталось немного',
+  );
   if (JSON.parse(localStorage.getItem(LOCAL_STORAGE_AUTH)!))
     dispatch(apiAuthActions.setIsAuth(true));
 

@@ -2,8 +2,10 @@ import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { updateProfileSelector } from 'redux/selectors';
 import classes from './buttonProfile.module.css';
 
+type BtnProfileContent = 'Save' | 'Cancel' | 'Add address';
+
 export type BtnProfilePropsType = {
-  content: string;
+  content: BtnProfileContent;
   colored: boolean;
   onClick: () => void;
   page?: 'password' | 'name';
