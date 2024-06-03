@@ -25,7 +25,6 @@ const routes = [
     component: <Registration />,
   },
   {
-
     path: ROUTE_PATH.profile,
     component: <UserProfile />,
   },
@@ -44,15 +43,14 @@ const routes = [
   {
     path: ROUTE_PATH.changeAddress,
     component: <ChangeAddress />,
-   },
-   {
+  },
+  {
     path: ROUTE_PATH.catalog,
     component: <Catalog />,
   },
   {
     path: ROUTE_PATH.catalogCategory,
     component: <Catalog />,
-
   },
   {
     path: '*',
