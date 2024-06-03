@@ -38,76 +38,6 @@ export default function UserProfile(): JSX.Element {
     },
   ];
 
-  const inputArrayShippingAddress: InputProfileType[] = [
-    {
-      title: 'Country',
-      id: 'country-ship',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.addresses[0]?.country || '',
-      isDisabled: true,
-    },
-    {
-      title: 'Post code',
-      id: 'post-code-ship',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.addresses[0]?.postalCode || '000000',
-      isDisabled: true,
-    },
-    {
-      title: 'City',
-      id: 'city-ship',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.addresses[0]?.city || 'city',
-      isDisabled: true,
-    },
-    {
-      title: 'Street',
-      id: 'street-ship',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.addresses[0]?.streetName || 'street',
-      isDisabled: true,
-    },
-  ];
-
-  const inputArrayBillingAddress: InputProfileType[] = [
-    {
-      title: 'Country',
-      id: 'country-billing',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.addresses[1]?.country || '',
-      isDisabled: true,
-    },
-    {
-      title: 'Post code',
-      id: 'post-code-billing',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.addresses[1]?.postalCode || '000000',
-      isDisabled: true,
-    },
-    {
-      title: 'City',
-      id: 'city-billing',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.addresses[1]?.city || 'city',
-      isDisabled: true,
-    },
-    {
-      title: 'Street',
-      id: 'street-billing',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.addresses[1]?.streetName || 'street',
-      isDisabled: true,
-    },
-  ];
-
   const ProfileUsersComponents: ProfileComponentType[] = [
     {
       title: 'Personal information',
@@ -115,20 +45,60 @@ export default function UserProfile(): JSX.Element {
 
       linkTo: ROUTE_PATH.changeName,
     },
-    {
-      title: 'Address information',
-      subtitle: 'Shipping address',
-      defaultAddress: true,
-      inputArray: inputArrayShippingAddress,
-
-      linkTo: ROUTE_PATH.changeAddress,
-    },
-    {
-      subtitle: 'Billing address',
-      defaultAddress: false,
-      inputArray: inputArrayBillingAddress,
-    },
   ];
+
+  const arrayAddresses = userData?.customer.addresses;
+
+  if (arrayAddresses)
+    arrayAddresses.forEach((item) => {
+      const address: InputProfileType[] = [
+        {
+          title: 'Country',
+          id: 'country-billing',
+          isSizeSmall: true,
+          type: 'text',
+          value: item.country || '',
+          isDisabled: true,
+        },
+        {
+          title: 'Post code',
+          id: 'post-code-billing',
+          isSizeSmall: true,
+          type: 'text',
+          value: item.postalCode || '000000',
+          isDisabled: true,
+        },
+        {
+          title: 'City',
+          id: 'city-billing',
+          isSizeSmall: true,
+          type: 'text',
+          value: item.city || 'city',
+          isDisabled: true,
+        },
+        {
+          title: 'Street',
+          id: 'street-billing',
+          isSizeSmall: true,
+          type: 'text',
+          value: item.streetName || 'street',
+          isDisabled: true,
+        },
+      ];
+
+      ProfileUsersComponents.push({
+        title: 'Address information',
+        subtitle: customer?.shippingAddressIds?.includes(item?.id || '')
+          ? 'Shipping address'
+          : 'Billing address',
+        defaultAddress:
+          (item.id || '') === customer?.defaultBillingAddressId ||
+          (item.id || '') === customer?.defaultShippingAddressId,
+        inputArray: address,
+
+        linkTo: ROUTE_PATH.changeAddress,
+      });
+    });
 
   return (
     <div className={classes['container']}>

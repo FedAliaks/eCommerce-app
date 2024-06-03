@@ -74,8 +74,6 @@ export default function AddNewAddress(): JSX.Element {
         typeComponent === 'shipping' ? defaultShippingAddress : defaultBillingAddress, */
     };
 
-    console.log(request);
-
     if (!Object.values(request).every((item) => Boolean(item) === true)) {
       setResultRequest('Fill all fields');
       setTimeout(() => setResultRequest(''), 2000);
