@@ -1,5 +1,6 @@
 .profile__component {
-  padding: 10px 0;
+  padding: 10px;
+  border: 2px solid var(--dark);
 }
 
 .profile__title-component {

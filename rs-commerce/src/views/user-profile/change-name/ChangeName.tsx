@@ -12,6 +12,7 @@ import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from './changeName.module.css';
+import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 
 export default function ChangeName(): JSX.Element {
   const { userData } = useAppSelector(apiAuthSelector);
@@ -153,13 +154,17 @@ export default function ChangeName(): JSX.Element {
   };
 
   return (
-    <div className={classes['profile']}>
-      <div className={classes['profile__column']}>
-        <h1>Personal information</h1>
-        <ProfileComponent inputArray={inputArrayAddress} flexVertical />
-        <div className={classes['profile__password-btn-container']}>
-          <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
-          <ButtonProfile page="name" content="Save" colored onClick={saveBtnClick} />
+    <div>
+      <UserProfileHeader title="Change name" subtitle="Main > Profile" />
+
+      <div className={classes['profile']}>
+        <div className={classes['profile__column']}>
+          <h1>Personal information</h1>
+          <ProfileComponent inputArray={inputArrayAddress} flexVertical />
+          <div className={classes['profile__password-btn-container']}>
+            <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
+            <ButtonProfile page="name" content="Save" colored onClick={saveBtnClick} />
+          </div>
         </div>
       </div>
     </div>

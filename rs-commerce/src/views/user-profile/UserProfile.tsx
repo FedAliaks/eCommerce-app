@@ -5,6 +5,7 @@ import { InputProfileType, ProfileComponentType } from 'components/profile-compo
 import CustomLink from 'components/custom-link/custom-link';
 import { ROUTE_PATH } from 'constants/constants';
 import classes from './UserProfile.module.css';
+import UserProfileHeader from './user-profile-header/UserProfileHeader';
 
 export default function UserProfile(): JSX.Element {
   const { userData } = useAppSelector(apiAuthSelector);
@@ -130,21 +131,25 @@ export default function UserProfile(): JSX.Element {
   ];
 
   return (
-    <div className={classes['profile']}>
-      <div className={classes['profile__column']}>
-        {ProfileUsersComponents.map((item, index) => (
-          <ProfileComponent
-            title={item.title}
-            subtitle={item.subtitle}
-            inputArray={item.inputArray}
-            defaultAddress={item.defaultAddress}
-            key={item.title || item.subtitle || `address${index}`}
-            linkTo={item.linkTo}
-          />
-        ))}
-      </div>
-      <div className={classes['profile__column']}>
-        <CustomLink to={ROUTE_PATH.changePassword} text="Change password" elStyle="link" />
+    <div className={classes['container']}>
+      <UserProfileHeader title="Profile" subtitle="Main > Profile" />
+
+      <div className={classes['profile']}>
+        <div className={classes['profile__column']}>
+          {ProfileUsersComponents.map((item, index) => (
+            <ProfileComponent
+              title={item.title}
+              subtitle={item.subtitle}
+              inputArray={item.inputArray}
+              defaultAddress={item.defaultAddress}
+              key={item.title || item.subtitle || `address${index}`}
+              linkTo={item.linkTo}
+            />
+          ))}
+        </div>
+        <div className={classes['profile__column']}>
+          <CustomLink to={ROUTE_PATH.changePassword} text="Change password" elStyle="link" />
+        </div>
       </div>
     </div>
   );

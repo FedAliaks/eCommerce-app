@@ -1,3 +1,98 @@
+import { useAppSelector } from 'hooks/typed-react-redux-hooks';
+import { apiAuthSelector } from 'redux/selectors';
+import ProfileComponent from 'components/profile-component/profileComponent';
+import { InputProfileType } from 'components/profile-component/types';
+import classes from './changeAddress.module.css';
+import ButtonProfile from '../button-profile/ButtonProfile';
+import UserProfileHeader from '../user-profile-header/UserProfileHeader';
+
 export default function ChangeAddress() {
-  return <div>Change address</div>;
+  const { userData } = useAppSelector(apiAuthSelector);
+
+  const btnClick = () => {
+    console.log('click');
+  };
+
+  const shippingAddressArray: InputProfileType[][] = [];
+  const billingAddressArray: InputProfileType[][] = [];
+  const addressesArray = userData?.customer.addresses;
+
+  addressesArray?.forEach((item) => {
+    const array: InputProfileType[] = [
+      {
+        title: 'Street',
+        id: `street-${item.id}`,
+        isSizeSmall: true,
+        type: 'text',
+        isDisabled: false,
+        errorMsg: 'error',
+        value: item.streetName,
+        handler: btnClick,
+      },
+      {
+        title: 'Post code',
+        id: `postCode-${item.id}`,
+        isSizeSmall: true,
+        type: 'text',
+        isDisabled: false,
+        errorMsg: 'error',
+        value: item.postalCode,
+        handler: btnClick,
+      },
+      {
+        title: 'City',
+        id: `city-${item.id}`,
+        isSizeSmall: true,
+        type: 'text',
+        isDisabled: false,
+        errorMsg: 'error',
+        value: item.city,
+        handler: btnClick,
+      },
+      {
+        title: 'Country',
+        id: `country-${item.id}`,
+        isSizeSmall: true,
+        type: 'text',
+        isDisabled: false,
+        errorMsg: 'error',
+        value: item.country,
+        handler: btnClick,
+      },
+    ];
+    if (item.externalId === 'shipping') {
+      shippingAddressArray.push(array);
+    } else billingAddressArray.push(array);
+  });
+
+  return (
+    <div>
+      <div className={classes['profile']}>
+        <UserProfileHeader title="Change Address" subtitle="Main > Profile > Edit profile" />
+        <div className={classes['profile__column']}>
+          <h1>Address information</h1>
+          <h2>Shipping addresses</h2>
+
+          {shippingAddressArray.map((item) => (
+            <ProfileComponent inputArray={item} />
+          ))}
+
+          <div className={classes['profile__password-btn-container']}>
+            <ButtonProfile content="Add new" colored={false} onClick={btnClick} />
+          </div>
+        </div>
+        <div className={classes['profile__column']}>
+          <h2>Billing addresses</h2>
+          {billingAddressArray.map((item) => (
+            <ProfileComponent inputArray={item} />
+          ))}
+          <div className={classes['profile__password-btn-container']}>
+            <ButtonProfile content="Add new" colored={false} onClick={btnClick} />
+          </div>
+        </div>
+      </div>
+      <ButtonProfile content="Cancel" colored={false} onClick={btnClick} />
+      <ButtonProfile content="Save" colored={false} onClick={btnClick} />
+    </div>
+  );
 }

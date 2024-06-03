@@ -4,8 +4,13 @@
 }
 
 .profile__column {
-  margin: 5px;
   padding: 10px;
+  margin: 5px;
   max-width: 570px;
   width: 100%;
+}
+
+.profile__password-btn-container {
+  display: flex;
+  justify-content: space-around;
 }

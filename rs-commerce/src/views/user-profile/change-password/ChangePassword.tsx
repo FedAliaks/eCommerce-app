@@ -12,6 +12,7 @@ import {
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from './ChangePassword.module.css';
+import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 
 export default function ChangePassword() {
   const [currentPass, setCurrentPass] = useState('');
@@ -125,12 +126,16 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className={classes['profile']}>
-      <div className={classes['profile__column']}>
-        <ProfileComponent inputArray={inputArrayPassword} flexVertical />
-        <div className={classes['profile__password-btn-container']}>
-          <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
-          <ButtonProfile page="password" content="Save" colored onClick={saveBtnClick} />
+    <div>
+      <UserProfileHeader title="Change password" subtitle="Main > Profile > Edit profile" />
+
+      <div className={classes['profile']}>
+        <div className={classes['profile__column']}>
+          <ProfileComponent inputArray={inputArrayPassword} flexVertical />
+          <div className={classes['profile__password-btn-container']}>
+            <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
+            <ButtonProfile page="password" content="Save" colored onClick={saveBtnClick} />
+          </div>
         </div>
       </div>
     </div>
