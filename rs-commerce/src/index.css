@@ -23,6 +23,8 @@
   --font-montserrat: 'Montserrat', sans-serif;
   --primary: #631c7a;
   --transition-time: 0.2s;
+  --font-family: 'Poppins', sans-serif;
+  --second-family: 'Montserrat', sans-serif;
 }
 
 html {
@@ -38,6 +40,11 @@ body {
 
 #root {
   min-height: 100vh;
+}
+
+.no-scroll {
+  overflow: hidden;
+  margin-right: 20px;
 }
 
 @media screen and (max-width: 1024px) {

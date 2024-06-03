@@ -22,6 +22,15 @@ function Header() {
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
+  const leftList = [
+    {
+      path: ROUTE_PATH.catalog,
+      title: 'Catalog',
+      className: '',
+      // className: style['underline'],
+    },
+  ];
+
   const rightList = [
     {
       path: ROUTE_PATH.login,
@@ -74,6 +83,15 @@ function Header() {
       </button>
 
       <nav className={`${style['nav']} ${isBurgerMenuOpen ? style['nav-open'] : ''}`}>
+        <ul className={style['nav-left']}>
+          {leftList.map((item) => (
+            <li key={item.path}>
+              <Link to={item.path} className={item.className} aria-label={item.title}>
+                {item.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
         <ul className={style['nav-right']}>
           {rightList
             .filter((item) => (isAuth ? item.withAuth === true : item.withAuth === false))
