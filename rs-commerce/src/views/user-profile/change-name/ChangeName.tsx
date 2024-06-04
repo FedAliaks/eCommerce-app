@@ -1,8 +1,6 @@
 import { InputProfileType } from 'components/profile-component/types';
 import ProfileComponent from 'components/profile-component/profileComponent';
-import { useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { apiAuthSelector } from 'redux/selectors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   errorMsgObj,
   regExpObj,
@@ -16,34 +14,42 @@ import classes from '../UserProfile.module.css';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 
 export default function ChangeName(): JSX.Element {
-  const { userData } = useAppSelector(apiAuthSelector);
   const dispatch = useDispatch();
-  const customer = userData?.customer;
-  const [firstName, setFirstName] = useState(customer?.firstName || 'first-name');
+
+  const [firstName, setFirstName] = useState('first-name');
   const [firstNameError, setFirstNameError] = useState('');
-  const [lastName, setLastName] = useState(customer?.lastName || 'last-name');
+  const [lastName, setLastName] = useState('last-name');
   const [lastNameError, setLastNameError] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState(customer?.dateOfBirth || '2000-01-01');
+  const [dateOfBirth, setDateOfBirth] = useState('2000-01-01');
   const [dateOfBirthError, setDateOfBirthError] = useState('');
-  const [email, setEmail] = useState(customer?.email || 'example@mail.com');
+  const [email, setEmail] = useState('example@mail.com');
   const [emailError, setEmailError] = useState('');
   const [customMsg, setCustomMsg] = useState('');
 
   const getNameFromServer = () => {
-    if (userData) {
-      apiRootWithExistingTokenFlow()
-        .customers()
-        .withId({ ID: userData.customer.id })
-        .get()
-        .execute()
-        .then((res) => {
-          setFirstName(res.body.firstName || 'name');
-          setLastName(res.body.lastName || 'last - name');
-          setDateOfBirth(res.body.dateOfBirth || '2000-01-01');
-          setEmail(res.body.email || 'example@mail.com');
-        });
-    }
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .customers()
+          .withId({ ID: res.body.id })
+          .get()
+          .execute()
+          .then((res1) => {
+            setFirstName(res1.body.firstName || 'name');
+            setLastName(res1.body.lastName || 'last - name');
+            setDateOfBirth(res1.body.dateOfBirth || '2000-01-01');
+            setEmail(res1.body.email || 'example@mail.com');
+          });
+      });
   };
+
+  useEffect(() => {
+    getNameFromServer();
+    console.log('use Effect');
+  }, []);
 
   const checkField = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -140,47 +146,51 @@ export default function ChangeName(): JSX.Element {
   };
 
   const saveBtnClick = (): void => {
-    if (userData) {
-      apiRootWithExistingTokenFlow()
-        .customers()
-        .withId({ ID: userData.customer.id })
-        .post({
-          body: {
-            version: userData.customer.version,
-            actions: [
-              {
-                action: 'setFirstName',
-                firstName,
-              },
-              {
-                action: 'setLastName',
-                lastName,
-              },
-              {
-                action: 'setDateOfBirth',
-                dateOfBirth,
-              },
-              {
-                action: 'changeEmail',
-                email,
-              },
-            ],
-          },
-        })
-        .execute()
-        .then(() => {
-          getNameFromServer();
-          apiRootWithExistingTokenFlow()
-            .customers()
-            .withId({ ID: userData.customer.id })
-            .get()
-            .execute()
-            .then((response) => {
-              dispatch(apiAuthActions.setUserData({ customer: response.body }));
-            });
-          setCustomMsg('Your date have updated');
-        });
-    }
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .customers()
+          .withId({ ID: res.body.id })
+          .post({
+            body: {
+              version: res.body.version,
+              actions: [
+                {
+                  action: 'setFirstName',
+                  firstName,
+                },
+                {
+                  action: 'setLastName',
+                  lastName,
+                },
+                {
+                  action: 'setDateOfBirth',
+                  dateOfBirth,
+                },
+                {
+                  action: 'changeEmail',
+                  email,
+                },
+              ],
+            },
+          })
+          .execute()
+          .then(() => {
+            getNameFromServer();
+            apiRootWithExistingTokenFlow()
+              .customers()
+              .withId({ ID: res.body.id })
+              .get()
+              .execute()
+              .then((response) => {
+                dispatch(apiAuthActions.setUserData({ customer: response.body }));
+              });
+            setCustomMsg('Your date have updated');
+          });
+      });
   };
 
   return (
