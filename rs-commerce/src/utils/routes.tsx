@@ -53,12 +53,63 @@ const routes = [
     component: <Catalog />,
   },
   {
+    path: ROUTE_PATH.productDetailsId,
+    component: <ProductDetails />,
+  },
+  {
     path: '*',
     component: <NotFound />,
+  },
+];
+
+export const publicRoutes = [
+  {
+    path: ROUTE_PATH.main,
+    component: <Main />,
+  },
+  {
+    path: ROUTE_PATH.login,
+    component: <Login />,
+  },
+  {
+    path: ROUTE_PATH.registration,
+    component: <Registration />,
+  },
+  {
+    path: ROUTE_PATH.profile,
+    component: <Login />,
+  },
+  {
+    path: ROUTE_PATH.changePassword,
+    component: <Login />,
+  },
+  {
+    path: ROUTE_PATH.changeName,
+    component: <Login />,
+  },
+  {
+    path: ROUTE_PATH.addNewAddress,
+    component: <Login />,
+  },
+  {
+    path: ROUTE_PATH.changeAddress,
+    component: <Login />,
+  },
+  {
+    path: ROUTE_PATH.catalog,
+    component: <Catalog />,
+  },
+  {
+    path: ROUTE_PATH.catalogCategory,
+    component: <Catalog />,
   },
   {
     path: ROUTE_PATH.productDetailsId,
     component: <ProductDetails />,
+  },
+  {
+    path: '*',
+    component: <NotFound />,
   },
 ];
 
