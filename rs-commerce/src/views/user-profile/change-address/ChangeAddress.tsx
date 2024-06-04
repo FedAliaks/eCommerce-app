@@ -1,9 +1,6 @@
-import { useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { apiAuthSelector } from 'redux/selectors';
 import { InputProfileType } from 'components/profile-component/types';
 import { useLocation } from 'react-router-dom';
-import { countryArr } from 'views/registration/components/RegistrationForm/components/InputRegistration/CountryInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   errorMsgObj,
   regExpObj,
@@ -18,15 +15,12 @@ import classes from '../UserProfile.module.css';
 import classesLocal from './change-address.module.css';
 
 export default function ChangeAddress() {
-  const { userData } = useAppSelector(apiAuthSelector);
   const errCountryDefault = 'You can use only "BY" and "US"';
 
   const location = useLocation();
   const addressID = location.state.addressId;
-  const [resultRequest, setResultRequest] = useState('result request');
+  const [resultRequest, setResultRequest] = useState('');
   const [isActiveSaveBtn, setIsActiveSaveBtn] = useState(true);
-
-  const address = userData?.customer.addresses.filter((item) => item.id === addressID);
 
   const [streetErr, setStreetErr] = useState('');
   const [cityErr, setCityErr] = useState('');
@@ -34,10 +28,24 @@ export default function ChangeAddress() {
   const [countryErr, setCountryErr] = useState('');
   const [isDefaultAddress, setIsDefaultAddress] = useState(true);
 
-  const [street, setStreet] = useState(address ? address[0]?.streetName : '');
-  const [city, setCity] = useState(address ? address[0]?.city : '');
-  const [postCode, setPostCode] = useState(address ? address[0]?.postalCode : '');
-  const [country, setCountry] = useState(address ? address[0]?.country : countryArr[0]);
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [postCode, setPostCode] = useState('');
+  const [country, setCountry] = useState('BY');
+
+  useEffect(() => {
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        const address = res.body.addresses.filter((item) => item.id === addressID);
+        setStreet(address[0]?.streetName || '');
+        setCity(address[0]?.city || '');
+        setPostCode(address[0]?.postalCode || '');
+        setCountry(address[0]?.country || 'US');
+      });
+  }, []);
 
   const checkActiveSaveBtn = () => {
     if (streetErr || cityErr || countryErr || postCodeErr) {
@@ -46,33 +54,37 @@ export default function ChangeAddress() {
   };
 
   const postRequest = () => {
-    console.log('sent request');
-    if (userData)
-      apiRootWithExistingTokenFlow()
-        .customers()
-        .withId({ ID: userData.customer.id })
-        .post({
-          body: {
-            version: userData?.customer.version,
-            actions: [
-              {
-                action: 'changeAddress',
-                addressId: addressID,
-                address: {
-                  city,
-                  country: country || 'US',
-                  streetName: street,
-                  postalCode: postCode,
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .customers()
+          .withId({ ID: res.body.id })
+          .post({
+            body: {
+              version: res.body.version,
+              actions: [
+                {
+                  action: 'changeAddress',
+                  addressId: addressID,
+                  address: {
+                    city,
+                    country: country || 'US',
+                    streetName: street,
+                    postalCode: postCode,
+                  },
                 },
-              },
-            ],
-          },
-        })
-        .execute()
-        .then(() => {
-          setResultRequest('Your address has already updated');
-          setTimeout(() => setResultRequest(''), 3000);
-        });
+              ],
+            },
+          })
+          .execute()
+          .then(() => {
+            setResultRequest('Your address has already updated');
+            setTimeout(() => setResultRequest(''), 3000);
+          });
+      });
   };
 
   const checkStreet = (value: string) => {
