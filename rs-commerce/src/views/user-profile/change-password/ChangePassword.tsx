@@ -2,7 +2,7 @@ import ProfileComponent from 'components/profile-component/profileComponent';
 import { InputProfileType } from 'components/profile-component/types';
 import { useState } from 'react';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { updateProfileSelector, apiAuthSelector } from 'redux/selectors';
+import { updateProfileSelector } from 'redux/selectors';
 import { useDispatch } from 'react-redux';
 import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import {
@@ -23,7 +23,6 @@ export default function ChangePassword() {
   const [customMsg, setCustomMsg] = useState('');
   const [confirmPassError, setConfirmPassError] = useState('');
   const { newPassword } = useAppSelector(updateProfileSelector);
-  const { userData } = useAppSelector(apiAuthSelector);
   const dispatch = useDispatch();
 
   const checkCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -98,22 +97,26 @@ export default function ChangePassword() {
   ];
 
   const saveBtnClick = () => {
-    if (userData) {
-      apiRootWithExistingTokenFlow()
-        .customers()
-        .password()
-        .post({
-          body: {
-            id: userData?.customer?.id,
-            version: userData.customer.version,
-            currentPassword: currentPass,
-            newPassword: newPass,
-          },
-        })
-        .execute()
-        .then(() => setCustomMsg('You have changed successfully your password'))
-        .catch(() => setCurrentPassError('Check your current password'));
-    }
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .customers()
+          .password()
+          .post({
+            body: {
+              id: res.body.id,
+              version: res.body.version,
+              currentPassword: currentPass,
+              newPassword: newPass,
+            },
+          })
+          .execute()
+          .then(() => setCustomMsg('You have changed successfully your password'))
+          .catch(() => setCurrentPassError('Check your current password'));
+      });
   };
 
   const clearFieldsOnPage = () => {
