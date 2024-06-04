@@ -12,7 +12,7 @@ import CheckboxDefault from 'components/checkbox-defaut/CheckboxDefault';
 import RadioButtonDefault, {
   RadioButtonDefaultType,
 } from 'components/radio-button-default/RadioButtonDefault';
-import ButtonProfile from '../button-profile/ButtonProfile';
+import ButtonDefault from 'components/button-default/ButtonDefault';
 import classesLocal from './add-new-address.module.css';
 import classes from '../UserProfile.module.css';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
@@ -43,13 +43,16 @@ const inputFieldsArray: InputType[] = [
   },
 ];
 
+type TypeOfAddressType = 'shipping' | 'billing';
+
 export default function AddNewAddress(): JSX.Element {
   const { userData } = useAppSelector(apiAuthSelector);
   const [resultRequest, setResultRequest] = useState('');
   const [typeOfAddress, setTypeOfAddress] = useState('shipping');
   const [IsDefaultAddress, setIsDefaultAddress] = useState(false);
+  const [isActiveSaveBtn] = useState(false);
   const dispatch = useDispatch();
-  const typeComponent = 'shipping';
+  const typeComponent = typeOfAddress as TypeOfAddressType;
   const {
     billingCity,
     shippingCity,
@@ -147,7 +150,7 @@ export default function AddNewAddress(): JSX.Element {
   };
 
   const chooseTypeOfAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTypeOfAddress(e.target.value);
+    setTypeOfAddress(e.target.value as TypeOfAddressType);
     console.log(e.target.value);
   };
 
@@ -224,8 +227,8 @@ export default function AddNewAddress(): JSX.Element {
         </div>
         <p className={classesLocal['response']}>{resultRequest}</p>
         <div className={classes['profile__password-btn-container']}>
-          <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
-          <ButtonProfile page="name" content="Save" colored onClick={saveBtnClick} />
+          <ButtonDefault content="Cancel" onClick={clearFieldsOnPage} isActive colored={false} />
+          <ButtonDefault content="Save" onClick={saveBtnClick} isActive={isActiveSaveBtn} colored />
         </div>
       </div>
     </div>
