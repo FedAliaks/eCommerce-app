@@ -1,5 +1,5 @@
 import CountryInput from 'views/registration/components/RegistrationForm/components/InputRegistration/CountryInput';
-import { apiAuthSelector, registrationFormSelector } from 'redux/selectors';
+import { registrationFormSelector } from 'redux/selectors';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
@@ -32,7 +32,7 @@ export default function AddNewAddress(): JSX.Element {
   const [typeOfAddress, setTypeOfAddress] = useState('shipping');
   const [IsDefaultAddress, setIsDefaultAddress] = useState(true);
   const [resultRequest, setResultRequest] = useState('');
-  const { userData } = useAppSelector(apiAuthSelector);
+
   const dispatch = useDispatch();
   const typeComponent = typeOfAddress as TypeOfAddressType;
   const { billingCountry, shippingCountry } = useAppSelector(registrationFormSelector);
@@ -113,85 +113,111 @@ export default function AddNewAddress(): JSX.Element {
   };
 
   const saveBtnClick = () => {
-    if (userData)
-      apiRootWithExistingTokenFlow()
-        .customers()
-        .withId({ ID: userData?.customer.id })
-        .post({
-          body: {
-            version: userData.customer.version,
-            actions: [
-              {
-                action: 'addAddress',
-                address: {
-                  country: shippingCountry || billingCountry || 'US',
-                  postalCode: postCode,
-                  streetName: street,
-                  city,
-                },
-              },
-            ],
-          },
-        })
-        .execute()
-        .then(() => {
-          apiRootWithExistingTokenFlow()
-            .customers()
-            .withId({ ID: userData.customer.id })
-            .get()
-            .execute()
-            .then((response) => {
-              dispatch(apiAuthActions.setUserData({ customer: response.body }));
-              setResultRequest('You have added address');
-              setTimeout(() => setResultRequest(''), 5000);
-
-              apiRootWithExistingTokenFlow()
-                .customers()
-                .withId({ ID: userData.customer.id })
-                .post({
-                  body: {
-                    version: userData.customer.version + 1,
-                    actions: [
-                      {
-                        action:
-                          typeOfAddress === 'shipping'
-                            ? 'addShippingAddressId'
-                            : 'addBillingAddressId',
-                        addressId: response.body.addresses[response.body.addresses.length - 1]?.id,
-                      },
-                    ],
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((resOuter) => {
+        apiRootWithExistingTokenFlow()
+          .customers()
+          .withId({ ID: resOuter.body.id })
+          .post({
+            body: {
+              version: resOuter.body.version,
+              actions: [
+                {
+                  action: 'addAddress',
+                  address: {
+                    country: shippingCountry || billingCountry || 'US',
+                    postalCode: postCode,
+                    streetName: street,
+                    city,
                   },
-                })
-                .execute()
-                .then((responseNew) => {
-                  dispatch(apiAuthActions.setUserData({ customer: responseNew.body }));
+                },
+              ],
+            },
+          })
+          .execute()
+          .then(() => {
+            apiRootWithExistingTokenFlow()
+              .me()
+              .get()
+              .execute()
+              .then((resInner) => {
+                apiRootWithExistingTokenFlow()
+                  .customers()
+                  .withId({ ID: resInner.body.id })
+                  .get()
+                  .execute()
+                  .then((response) => {
+                    dispatch(apiAuthActions.setUserData({ customer: response.body }));
+                    setResultRequest('You have added address');
+                    setTimeout(() => setResultRequest(''), 5000);
 
-                  if (!IsDefaultAddress) {
                     apiRootWithExistingTokenFlow()
-                      .customers()
-                      .withId({ ID: userData.customer.id })
-                      .post({
-                        body: {
-                          version: userData.customer.version + 2,
-                          actions: [
-                            {
-                              action:
-                                typeOfAddress === 'shipping'
-                                  ? 'setDefaultShippingAddress'
-                                  : 'setDefaultBillingAddress',
-                              addressId:
-                                response.body.addresses[response.body.addresses.length - 1]?.id,
-                            },
-                          ],
-                        },
-                      })
+                      .me()
+                      .get()
                       .execute()
-                      .then(console.log)
-                      .catch(console.log);
-                  }
-                });
-            });
-        });
+                      .then((res1) => {
+                        apiRootWithExistingTokenFlow()
+                          .customers()
+                          .withId({ ID: res1.body.id })
+                          .post({
+                            body: {
+                              version: res1.body.version,
+                              actions: [
+                                {
+                                  action:
+                                    typeOfAddress === 'shipping'
+                                      ? 'addShippingAddressId'
+                                      : 'addBillingAddressId',
+                                  addressId:
+                                    response.body.addresses[response.body.addresses.length - 1]?.id,
+                                },
+                              ],
+                            },
+                          })
+                          .execute()
+                          .then((responseNew) => {
+                            dispatch(apiAuthActions.setUserData({ customer: responseNew.body }));
+
+                            if (!IsDefaultAddress) {
+                              apiRootWithExistingTokenFlow()
+                                .me()
+                                .get()
+                                .execute()
+                                .then((res) => {
+                                  apiRootWithExistingTokenFlow()
+                                    .customers()
+                                    .withId({ ID: res.body.id })
+                                    .post({
+                                      body: {
+                                        version: res.body.version,
+                                        actions: [
+                                          {
+                                            action:
+                                              typeOfAddress === 'shipping'
+                                                ? 'setDefaultShippingAddress'
+                                                : 'setDefaultBillingAddress',
+                                            addressId:
+                                              response.body.addresses[
+                                                response.body.addresses.length - 1
+                                              ]?.id,
+                                          },
+                                        ],
+                                      },
+                                    })
+                                    .execute()
+                                    .then(console.log)
+                                    .catch(console.log);
+                                });
+                            }
+                          });
+                      });
+                  });
+              });
+          });
+      });
   };
 
   const chooseTypeOfAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
