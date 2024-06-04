@@ -8,6 +8,7 @@ import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { registrationFormActions } from 'redux/slices/registration-slice';
+import CheckboxDefault from 'components/checkbox-defaut/CheckboxDefault';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classesLocal from './add-new-address.module.css';
 import classes from '../UserProfile.module.css';
@@ -43,7 +44,7 @@ export default function AddNewAddress(): JSX.Element {
   const { userData } = useAppSelector(apiAuthSelector);
   const [resultRequest, setResultRequest] = useState('');
   const [typeOfAddress, setTypeOfAddress] = useState('shipping');
-  const [, setIsDefaultAddress] = useState(false);
+  const [IsDefaultAddress, setIsDefaultAddress] = useState(false);
   const dispatch = useDispatch();
   const typeComponent = 'shipping';
   const {
@@ -148,6 +149,7 @@ export default function AddNewAddress(): JSX.Element {
 
   const toggleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsDefaultAddress(e.target.checked);
+    console.log(IsDefaultAddress);
   };
 
   return (
@@ -185,7 +187,13 @@ export default function AddNewAddress(): JSX.Element {
               </label>
             </div>
 
-            <input
+            <CheckboxDefault
+              content="Set as default address"
+              idCheckbox="default-address"
+              onChange={toggleCheckbox}
+            />
+
+            {/*             <input
               className={classes['input_checkbox']}
               onChange={(e) => toggleCheckbox(e)}
               type="checkbox"
@@ -194,7 +202,7 @@ export default function AddNewAddress(): JSX.Element {
 
             <label className={classes['input__label']} htmlFor="default-address">
               Set as default address
-            </label>
+            </label> */}
           </div>
 
           {/* <AddressTitleComponent typeComponent={typeComponent} /> */}
