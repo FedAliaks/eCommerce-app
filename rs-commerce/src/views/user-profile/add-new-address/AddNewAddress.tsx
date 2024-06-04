@@ -9,6 +9,9 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { registrationFormActions } from 'redux/slices/registration-slice';
 import CheckboxDefault from 'components/checkbox-defaut/CheckboxDefault';
+import RadioButtonDefault, {
+  RadioButtonDefaultType,
+} from 'components/radio-button-default/RadioButtonDefault';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classesLocal from './add-new-address.module.css';
 import classes from '../UserProfile.module.css';
@@ -145,12 +148,32 @@ export default function AddNewAddress(): JSX.Element {
 
   const chooseTypeOfAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTypeOfAddress(e.target.value);
+    console.log(e.target.value);
   };
 
   const toggleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsDefaultAddress(e.target.checked);
+    setIsDefaultAddress(!e.target.checked);
     console.log(IsDefaultAddress);
   };
+
+  const radioButtonsArray: RadioButtonDefaultType[] = [
+    {
+      name: 'address',
+      id: 'shipping',
+      onChange: chooseTypeOfAddress,
+      value: 'shipping',
+      valueForCheck: typeOfAddress,
+      content: 'Shipping address',
+    },
+    {
+      name: 'address',
+      id: 'billing',
+      onChange: chooseTypeOfAddress,
+      value: 'billing',
+      valueForCheck: typeOfAddress,
+      content: 'Billing address',
+    },
+  ];
 
   return (
     <div>
@@ -159,32 +182,19 @@ export default function AddNewAddress(): JSX.Element {
         <div className={classesLocal['add__address-container']}>
           <div>
             <h3>Select Type of Address</h3>
-            <div>
-              <input
-                className={classesLocal['radio-style']}
-                type="radio"
-                name="topping"
-                value="shipping"
-                id="shipping"
-                checked={typeOfAddress === 'shipping'}
-                onChange={chooseTypeOfAddress}
-              />
-              <label htmlFor="shipping" className={classesLocal['radio-item']}>
-                Shipping address
-              </label>
 
-              <input
-                className={classesLocal['radio-style']}
-                type="radio"
-                name="topping"
-                value="billing"
-                id="billing"
-                checked={typeOfAddress === 'billing'}
-                onChange={chooseTypeOfAddress}
-              />
-              <label htmlFor="billing" className={classesLocal['radio-item']}>
-                Billing address
-              </label>
+            <div className={classesLocal['radio-button__container']}>
+              {radioButtonsArray.map((item) => (
+                <RadioButtonDefault
+                  id={item.id}
+                  onChange={item.onChange}
+                  name={item.name}
+                  value={item.value}
+                  valueForCheck={item.valueForCheck}
+                  content={item.content}
+                  key={item.value}
+                />
+              ))}
             </div>
 
             <CheckboxDefault
@@ -192,20 +202,7 @@ export default function AddNewAddress(): JSX.Element {
               idCheckbox="default-address"
               onChange={toggleCheckbox}
             />
-
-            {/*             <input
-              className={classes['input_checkbox']}
-              onChange={(e) => toggleCheckbox(e)}
-              type="checkbox"
-              id="default-address"
-            />
-
-            <label className={classes['input__label']} htmlFor="default-address">
-              Set as default address
-            </label> */}
           </div>
-
-          {/* <AddressTitleComponent typeComponent={typeComponent} /> */}
 
           <div className={classes['address']}>
             <CountryInput typeComponent={typeComponent} />
