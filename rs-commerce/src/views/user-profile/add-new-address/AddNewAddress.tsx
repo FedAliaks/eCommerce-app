@@ -1,7 +1,6 @@
 import { HtmlForType, InputType } from 'types/registrationTypes';
 import InputRegistration from 'views/registration/components/RegistrationForm/components/InputRegistration/InputRegistration';
 import CountryInput from 'views/registration/components/RegistrationForm/components/InputRegistration/CountryInput';
-import AddressTitleComponent from 'views/registration/components/RegistrationForm/components/AddressRegistration/components/AddressComponents/components/AddresTitleComponent/AddresTitleComponent';
 import { apiAuthSelector, registrationFormSelector } from 'redux/selectors';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
@@ -43,6 +42,8 @@ const inputFieldsArray: InputType[] = [
 export default function AddNewAddress(): JSX.Element {
   const { userData } = useAppSelector(apiAuthSelector);
   const [resultRequest, setResultRequest] = useState('');
+  const [typeOfAddress, setTypeOfAddress] = useState('shipping');
+  const [, setIsDefaultAddress] = useState(false);
   const dispatch = useDispatch();
   const typeComponent = 'shipping';
   const {
@@ -54,8 +55,6 @@ export default function AddNewAddress(): JSX.Element {
     billingPostCode,
     shippingCountry,
     shippingPostCode,
-    /*     defaultBillingAddress,
-    defaultShippingAddress, */
   } = useAppSelector(registrationFormSelector);
 
   const clearFieldsOnPage = () => {
@@ -70,8 +69,6 @@ export default function AddNewAddress(): JSX.Element {
       postCode: typeComponent === 'shipping' ? shippingPostCode : billingPostCode,
       street: typeComponent === 'shipping' ? shippingStreet : billingStreet,
       city: typeComponent === 'shipping' ? shippingCity : billingCity,
-      /*       isDefaultAddress:
-        typeComponent === 'shipping' ? defaultShippingAddress : defaultBillingAddress, */
     };
 
     if (!Object.values(request).every((item) => Boolean(item) === true)) {
@@ -145,12 +142,62 @@ export default function AddNewAddress(): JSX.Element {
     }
   };
 
+  const chooseTypeOfAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTypeOfAddress(e.target.value);
+  };
+
+  const toggleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsDefaultAddress(e.target.checked);
+  };
+
   return (
     <div>
       <UserProfileHeader title="Add new address" subtitle="Main > Profile > Add address" />
       <div>
         <div className={classesLocal['add__address-container']}>
-          <AddressTitleComponent typeComponent={typeComponent} />
+          <div>
+            <h3>Select Type of Address</h3>
+            <div>
+              <input
+                className={classesLocal['radio-style']}
+                type="radio"
+                name="topping"
+                value="shipping"
+                id="shipping"
+                checked={typeOfAddress === 'shipping'}
+                onChange={chooseTypeOfAddress}
+              />
+              <label htmlFor="shipping" className={classesLocal['radio-item']}>
+                Shipping address
+              </label>
+
+              <input
+                className={classesLocal['radio-style']}
+                type="radio"
+                name="topping"
+                value="billing"
+                id="billing"
+                checked={typeOfAddress === 'billing'}
+                onChange={chooseTypeOfAddress}
+              />
+              <label htmlFor="billing" className={classesLocal['radio-item']}>
+                Billing address
+              </label>
+            </div>
+
+            <input
+              className={classes['input_checkbox']}
+              onChange={(e) => toggleCheckbox(e)}
+              type="checkbox"
+              id="default-address"
+            />
+
+            <label className={classes['input__label']} htmlFor="default-address">
+              Set as default address
+            </label>
+          </div>
+
+          {/* <AddressTitleComponent typeComponent={typeComponent} /> */}
 
           <div className={classes['address']}>
             <CountryInput typeComponent={typeComponent} />
