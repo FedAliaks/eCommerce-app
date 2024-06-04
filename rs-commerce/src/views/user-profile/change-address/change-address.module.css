@@ -1,3 +1,12 @@
+.add-address__container {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.response {
+  text-align: center;
+}
+
 .registration__input {
   max-width: 400px;
   width: 100%;

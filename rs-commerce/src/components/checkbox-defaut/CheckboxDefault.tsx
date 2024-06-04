@@ -2,7 +2,7 @@ import classes from './checkboxDefault.module.css';
 
 type CheckboxDefaultType = {
   content: string;
-  idCheckbox: string;
+  idCheckbox?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
