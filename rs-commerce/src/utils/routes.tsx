@@ -77,23 +77,23 @@ export const publicRoutes = [
   },
   {
     path: ROUTE_PATH.profile,
-    component: <Login />,
+    redirect: true,
   },
   {
     path: ROUTE_PATH.changePassword,
-    component: <Login />,
+    redirect: true,
   },
   {
     path: ROUTE_PATH.changeName,
-    component: <Login />,
+    redirect: true,
   },
   {
     path: ROUTE_PATH.addNewAddress,
-    component: <Login />,
+    redirect: true,
   },
   {
     path: ROUTE_PATH.changeAddress,
-    component: <Login />,
+    redirect: true,
   },
   {
     path: ROUTE_PATH.catalog,

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import routes, { publicRoutes } from 'utils/routes';
 import Layout from 'components/layout/Layout';
@@ -39,7 +39,9 @@ function App() {
             <Route
               key={route.path}
               path={route.path}
-              element={<Layout>{route.component}</Layout>}
+              element={
+                route.redirect ? <Navigate to="/login" /> : <Layout>{route.component}</Layout>
+              }
             />
           ))}
         </Routes>
