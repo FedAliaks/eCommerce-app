@@ -121,6 +121,9 @@ export default function UserProfile(): JSX.Element {
         </div>
         <div className={classes['profile__column']}>
           <CustomLink to={ROUTE_PATH.changePassword} text="Change password" elStyle="link" />
+          <div>
+            <CustomLink to={ROUTE_PATH.addNewAddress} text="Add new address" elStyle="link" />
+          </div>
         </div>
       </div>
     </div>

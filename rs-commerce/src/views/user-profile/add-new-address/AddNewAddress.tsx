@@ -1,5 +1,3 @@
-import { HtmlForType, InputType } from 'types/registrationTypes';
-import InputRegistration from 'views/registration/components/RegistrationForm/components/InputRegistration/InputRegistration';
 import CountryInput from 'views/registration/components/RegistrationForm/components/InputRegistration/CountryInput';
 import { apiAuthSelector, registrationFormSelector } from 'redux/selectors';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
@@ -7,81 +5,115 @@ import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { registrationFormActions } from 'redux/slices/registration-slice';
 import CheckboxDefault from 'components/checkbox-defaut/CheckboxDefault';
 import RadioButtonDefault, {
   RadioButtonDefaultType,
 } from 'components/radio-button-default/RadioButtonDefault';
 import ButtonDefault from 'components/button-default/ButtonDefault';
+import {
+  errorMsgObj,
+  regExpObj,
+} from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
+import InputDefault, { InputDefaultType } from 'components/input-default/InputDefault';
 import classesLocal from './add-new-address.module.css';
 import classes from '../UserProfile.module.css';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 
-const inputFieldsArray: InputType[] = [
-  {
-    htmlFor: `PostCode` as HtmlForType,
-    title: 'Post code',
-    type: 'text',
-    placeholder: 'your post code',
-    smallSize: true,
-  },
-
-  {
-    htmlFor: `City` as HtmlForType,
-    title: 'City',
-    type: 'text',
-    placeholder: 'your city',
-    smallSize: true,
-  },
-
-  {
-    htmlFor: `Street` as HtmlForType,
-    title: 'Street',
-    type: 'text',
-    placeholder: 'your street',
-    smallSize: true,
-  },
-];
-
 type TypeOfAddressType = 'shipping' | 'billing';
 
 export default function AddNewAddress(): JSX.Element {
-  const { userData } = useAppSelector(apiAuthSelector);
-  const [resultRequest, setResultRequest] = useState('');
+  const [street, setStreet] = useState('');
+  const [streetErr, setStreetErr] = useState(' ');
+  const [postCode, setPostCode] = useState('');
+  const [postCodeErr, setPostCodeErr] = useState(' ');
+  const [city, setCity] = useState('');
+  const [cityErr, setCityErr] = useState(' ');
+  const [isActiveSaveBtn, setIsActiveSaveBtn] = useState(false);
   const [typeOfAddress, setTypeOfAddress] = useState('shipping');
-  const [IsDefaultAddress, setIsDefaultAddress] = useState(false);
-  const [isActiveSaveBtn] = useState(false);
+  const [IsDefaultAddress, setIsDefaultAddress] = useState(true);
+  const [resultRequest, setResultRequest] = useState('');
+  const { userData } = useAppSelector(apiAuthSelector);
   const dispatch = useDispatch();
   const typeComponent = typeOfAddress as TypeOfAddressType;
-  const {
-    billingCity,
-    shippingCity,
-    billingStreet,
-    shippingStreet,
-    billingCountry,
-    billingPostCode,
-    shippingCountry,
-    shippingPostCode,
-  } = useAppSelector(registrationFormSelector);
+  const { billingCountry, shippingCountry } = useAppSelector(registrationFormSelector);
+
+  const checkActiveSaveBtn = () => {
+    setIsActiveSaveBtn(!(streetErr || postCodeErr || cityErr));
+  };
+
+  const checkPostCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (regExpObj.billingPostCode.test(e.target.value)) {
+      setPostCodeErr('');
+      setPostCode(e.target.value);
+    } else {
+      setPostCodeErr(errorMsgObj.billingPostCode);
+    }
+    checkActiveSaveBtn();
+  };
+
+  const checkCity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (regExpObj.billingCity.test(e.target.value)) {
+      setCityErr('');
+      setCity(e.target.value);
+    } else {
+      setCityErr(errorMsgObj.billingCity);
+    }
+    checkActiveSaveBtn();
+  };
+
+  const checkStreet = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (regExpObj.billingStreet.test(e.target.value)) {
+      setStreetErr('');
+      setStreet(e.target.value);
+    } else {
+      setStreetErr(errorMsgObj.shippingStreet);
+    }
+    checkActiveSaveBtn();
+  };
+
+  const inputFieldsArray: InputDefaultType[] = [
+    {
+      title: 'Post code',
+      errorContent: postCodeErr,
+      htmlFor: 'post-code',
+      type: 'text',
+      smallSize: false,
+      isActive: true,
+      placeholder: 'enter your post code',
+      handler: checkPostCode,
+    },
+
+    {
+      title: 'City',
+      errorContent: cityErr,
+      htmlFor: 'city',
+      type: 'text',
+      smallSize: false,
+      isActive: true,
+      placeholder: 'enter your city',
+      handler: checkCity,
+    },
+
+    {
+      title: 'Street',
+      errorContent: streetErr,
+      htmlFor: 'street',
+      type: 'text',
+      smallSize: false,
+      isActive: true,
+      placeholder: 'enter your street',
+      handler: checkStreet,
+    },
+  ];
 
   const clearFieldsOnPage = () => {
-    console.log('clear');
+    setCity('');
+    setStreet('');
+    setPostCode('');
   };
 
   const saveBtnClick = () => {
-    console.log('save');
-
-    const request = {
-      country: typeComponent === 'shipping' ? shippingCountry : billingCountry,
-      postCode: typeComponent === 'shipping' ? shippingPostCode : billingPostCode,
-      street: typeComponent === 'shipping' ? shippingStreet : billingStreet,
-      city: typeComponent === 'shipping' ? shippingCity : billingCity,
-    };
-
-    if (!Object.values(request).every((item) => Boolean(item) === true)) {
-      setResultRequest('Fill all fields');
-      setTimeout(() => setResultRequest(''), 2000);
-    } else if (userData) {
+    if (userData)
       apiRootWithExistingTokenFlow()
         .customers()
         .withId({ ID: userData?.customer.id })
@@ -91,12 +123,11 @@ export default function AddNewAddress(): JSX.Element {
             actions: [
               {
                 action: 'addAddress',
-
                 address: {
-                  country: typeComponent === 'shipping' ? shippingCountry : billingCountry,
-                  postalCode: typeComponent === 'shipping' ? shippingPostCode : billingPostCode,
-                  streetName: typeComponent === 'shipping' ? shippingStreet : billingStreet,
-                  city: typeComponent === 'shipping' ? shippingCity : billingCity,
+                  country: shippingCountry || billingCountry || 'US',
+                  postalCode: postCode,
+                  streetName: street,
+                  city,
                 },
               },
             ],
@@ -123,7 +154,7 @@ export default function AddNewAddress(): JSX.Element {
                     actions: [
                       {
                         action:
-                          typeComponent === 'shipping'
+                          typeOfAddress === 'shipping'
                             ? 'addShippingAddressId'
                             : 'addBillingAddressId',
                         addressId: response.body.addresses[response.body.addresses.length - 1]?.id,
@@ -132,31 +163,43 @@ export default function AddNewAddress(): JSX.Element {
                   },
                 })
                 .execute()
-                .then((responseNew) =>
-                  dispatch(apiAuthActions.setUserData({ customer: responseNew.body })),
-                );
+                .then((responseNew) => {
+                  dispatch(apiAuthActions.setUserData({ customer: responseNew.body }));
+
+                  if (!IsDefaultAddress) {
+                    apiRootWithExistingTokenFlow()
+                      .customers()
+                      .withId({ ID: userData.customer.id })
+                      .post({
+                        body: {
+                          version: userData.customer.version + 2,
+                          actions: [
+                            {
+                              action:
+                                typeOfAddress === 'shipping'
+                                  ? 'setDefaultShippingAddress'
+                                  : 'setDefaultBillingAddress',
+                              addressId:
+                                response.body.addresses[response.body.addresses.length - 1]?.id,
+                            },
+                          ],
+                        },
+                      })
+                      .execute()
+                      .then(console.log)
+                      .catch(console.log);
+                  }
+                });
             });
         });
-
-      dispatch(registrationFormActions.setBillingCity(''));
-      dispatch(registrationFormActions.setBillingCountry(''));
-      dispatch(registrationFormActions.setBillingPostCode(''));
-      dispatch(registrationFormActions.setBillingStreet(''));
-      dispatch(registrationFormActions.setShippingCity(''));
-      dispatch(registrationFormActions.setShippingCountry(''));
-      dispatch(registrationFormActions.setShippingPostCode(''));
-      dispatch(registrationFormActions.setShippingStreet(''));
-    }
   };
 
   const chooseTypeOfAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTypeOfAddress(e.target.value as TypeOfAddressType);
-    console.log(e.target.value);
   };
 
   const toggleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsDefaultAddress(!e.target.checked);
-    console.log(IsDefaultAddress);
   };
 
   const radioButtonsArray: RadioButtonDefaultType[] = [
@@ -210,17 +253,17 @@ export default function AddNewAddress(): JSX.Element {
           <div className={classes['address']}>
             <CountryInput typeComponent={typeComponent} />
 
-            {inputFieldsArray.map((item: InputType) => (
-              <InputRegistration
-                input={{
-                  htmlFor: `${typeComponent}${item.htmlFor}` as HtmlForType,
-                  title: item.title,
-                  type: item.type,
-                  placeholder: item.placeholder,
-                  smallSize: item.smallSize,
-                }}
-                key={`${typeComponent}${item.htmlFor}`}
-                errorClassName={classes['error']}
+            {inputFieldsArray.map((item) => (
+              <InputDefault
+                title={item.title}
+                errorContent={item.errorContent}
+                type={item.type}
+                handler={item.handler}
+                smallSize={item.smallSize}
+                isActive={item.isActive}
+                placeholder={item.placeholder}
+                htmlFor={item.htmlFor}
+                key={item.title}
               />
             ))}
           </div>

@@ -1,6 +1,6 @@
 import classes from './inputDefault.module.css';
 
-type InputDefaultType = {
+export type InputDefaultType = {
   title: string;
   errorContent: string;
   htmlFor: string;
@@ -21,9 +21,7 @@ export default function InputDefault(props: InputDefaultType) {
         <div className={classes['input__block']}>
           <input
             className={
-              smallSize
-                ? `${classes['input__field']} ${classes['input__field_small']}`
-                : classes['input__field']
+              smallSize ? `${classes['input']} ${classes['input__field_small']}` : classes['input']
             }
             id={htmlFor}
             type={type}
