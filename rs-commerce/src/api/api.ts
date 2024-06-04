@@ -107,15 +107,25 @@ export async function apiGetProductDetails(productId: string): Promise<ClientRes
   return response;
 }
 
-export async function apiGetOneCategory(categoryKey: string): Promise<ClientResponse<Category>> {
+export async function apiGetOneCategory({
+  isKey,
+  categoryKey,
+}: {
+  isKey: boolean;
+  categoryKey: string;
+}): Promise<ClientResponse<Category>> {
   let apiRoot: ByProjectKeyRequestBuilder;
   if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
     apiRoot = apiRootWithExistingTokenFlow();
   } else {
     apiRoot = apiRootWithAnonymousSessionFlow();
   }
-
-  const response = await apiRoot.categories().withKey({ key: categoryKey }).get().execute();
+  let response = null;
+  if (isKey) {
+    response = await apiRoot.categories().withKey({ key: categoryKey }).get().execute();
+  } else {
+    response = await apiRoot.categories().withId({ ID: categoryKey }).get().execute();
+  }
 
   return response;
 }

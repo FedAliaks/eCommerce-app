@@ -26,6 +26,7 @@ function DescriptionBlock() {
     'Publication Year': attributes['publicationYear'],
     Publisher: attributes['publisher'],
     Cover: attributes['cover'],
+    Format: attributes['format'],
   };
 
   return (
@@ -39,7 +40,7 @@ function DescriptionBlock() {
             {Array(5)
               .fill('')
               .map(() => (
-                <img src={star} alt="star" />
+                <img src={star} alt="star" key={Math.random()} />
               ))}
           </div>
         </div>
