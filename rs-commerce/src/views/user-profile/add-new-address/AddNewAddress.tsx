@@ -33,12 +33,17 @@ export default function AddNewAddress(): JSX.Element {
   const [isActiveSaveBtn, setIsActiveSaveBtn] = useState(false);
   const [typeOfAddress, setTypeOfAddress] = useState('shipping');
   const [IsDefaultAddress, setIsDefaultAddress] = useState(true);
+  const [customMsg, setCustomMsg] = useState('');
 
   const typeComponent = typeOfAddress as TypeOfAddressType;
   const { billingCountry, shippingCountry } = useAppSelector(registrationFormSelector);
 
   const checkActiveSaveBtn = () => {
     setIsActiveSaveBtn(!(streetErr || postCodeErr || cityErr));
+  };
+
+  const addErrorCustomMsg = () => {
+    setCustomMsg('Something went wrong, try again later');
   };
 
   const checkPostCode = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -203,15 +208,21 @@ export default function AddNewAddress(): JSX.Element {
                                     })
                                     .execute()
                                     .then()
-                                    .catch();
-                                });
+                                    .catch(() => addErrorCustomMsg());
+                                })
+                                .catch(() => addErrorCustomMsg());
                             }
                           });
-                      });
-                  });
-              });
-          });
-      });
+                      })
+                      .catch(() => addErrorCustomMsg());
+                  })
+                  .catch(() => addErrorCustomMsg());
+              })
+              .catch(() => addErrorCustomMsg());
+          })
+          .catch(() => addErrorCustomMsg());
+      })
+      .catch(() => addErrorCustomMsg());
   };
 
   const chooseTypeOfAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -289,7 +300,7 @@ export default function AddNewAddress(): JSX.Element {
             ))}
           </div>
         </div>
-        <p className={classesLocal['response']} />
+        <p className={classes['custom-message']}>{customMsg}</p>
         <div className={classes['profile__password-btn-container']}>
           <ButtonDefault content="Cancel" onClick={clearFieldsOnPage} isActive colored={false} />
           <ButtonDefault content="Save" onClick={saveBtnClick} isActive={isActiveSaveBtn} colored />

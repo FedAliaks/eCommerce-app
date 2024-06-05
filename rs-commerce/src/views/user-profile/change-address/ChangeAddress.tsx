@@ -11,7 +11,7 @@ import ButtonDefault from 'components/button-default/ButtonDefault';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { ROUTE_PATH } from 'constants/constants';
-import UserProfileHeader from '../user-profile-header/UserProfileHeader';
+
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import classesLocal from './change-address.module.css';
@@ -24,6 +24,7 @@ export default function ChangeAddress() {
   const location = useLocation();
   const addressID = location.state.addressId;
   const [isActiveSaveBtn, setIsActiveSaveBtn] = useState(true);
+  const [resultRequest, setResultRequest] = useState('');
 
   const [streetErr, setStreetErr] = useState('');
   const [cityErr, setCityErr] = useState('');
@@ -50,7 +51,12 @@ export default function ChangeAddress() {
       });
   }, []);
 
+  const addErrorMsg = () => {
+    setResultRequest('Something went wrong, try again later');
+  };
+
   const checkActiveSaveBtn = () => {
+    setResultRequest('');
     if (streetErr || cityErr || countryErr || postCodeErr) {
       setIsActiveSaveBtn(false);
     } else setIsActiveSaveBtn(true);
@@ -106,15 +112,20 @@ export default function ChangeAddress() {
                         ],
                       },
                     })
-                    .execute();
-                });
-
+                    .execute()
+                    .then()
+                    .catch(() => addErrorMsg());
+                })
+                .catch(() => addErrorMsg());
             navigate(ROUTE_PATH.profile);
-          });
-      });
+          })
+          .catch(() => addErrorMsg());
+      })
+      .catch(() => addErrorMsg());
   };
 
   const checkStreet = (value: string) => {
+    setResultRequest('');
     setStreet(value);
     if (regExpObj.billingStreet.test(value)) {
       setStreetErr('');
@@ -123,6 +134,7 @@ export default function ChangeAddress() {
   };
 
   const checkPostCode = (value: string) => {
+    setResultRequest('');
     setPostCode(value);
     if (regExpObj.billingPostCode.test(value)) {
       setPostCodeErr('');
@@ -131,6 +143,7 @@ export default function ChangeAddress() {
   };
 
   const checkCity = (value: string) => {
+    setResultRequest('');
     setCity(value);
     if (regExpObj.billingCity.test(value)) {
       setCityErr('');
@@ -140,6 +153,7 @@ export default function ChangeAddress() {
   };
 
   const checkCountry = (value: string) => {
+    setResultRequest('');
     setCountry(value);
     if (value === 'US' || value === 'BY') {
       setCountryErr('');
@@ -197,6 +211,7 @@ export default function ChangeAddress() {
   ];
 
   const toggleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setResultRequest('');
     setIsDefaultAddress(!e.target.checked);
   };
 

@@ -118,7 +118,12 @@ export default function ChangePassword() {
           })
           .execute()
           .then(() => navigate(ROUTE_PATH.profile))
-          .catch(() => setCurrentPassError('Check your current password'));
+          .catch(() => {
+            setCurrentPassError('Check your current password');
+          });
+      })
+      .catch(() => {
+        setCurrentPassError('New and old passwords are equal');
       });
   };
 

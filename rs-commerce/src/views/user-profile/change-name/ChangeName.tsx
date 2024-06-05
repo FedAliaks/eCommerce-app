@@ -29,6 +29,10 @@ export default function ChangeName(): JSX.Element {
   const [emailError, setEmailError] = useState('');
   const [customMsg, setCustomMsg] = useState('');
 
+  const addErrorCustomMsg = () => {
+    setCustomMsg('Something went wrong, try again later');
+  };
+
   const getNameFromServer = () => {
     apiRootWithExistingTokenFlow()
       .me()
@@ -46,7 +50,8 @@ export default function ChangeName(): JSX.Element {
             setDateOfBirth(res1.body.dateOfBirth || '2000-01-01');
             setEmail(res1.body.email || 'example@mail.com');
           });
-      });
+      })
+      .catch(() => addErrorCustomMsg());
   };
 
   useEffect(() => {
@@ -179,8 +184,11 @@ export default function ChangeName(): JSX.Element {
           .then(() => {
             getNameFromServer();
             setCustomMsg('Your date have updated');
-          });
-      });
+            navigate(ROUTE_PATH.profile);
+          })
+          .catch(() => addErrorCustomMsg());
+      })
+      .catch(() => addErrorCustomMsg());
   };
 
   return (
