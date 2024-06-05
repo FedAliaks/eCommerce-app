@@ -13,6 +13,8 @@ import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { ROUTE_PATH } from 'constants/constants';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import { changePasswordBreadcrumbList } from '../constants';
@@ -117,7 +119,11 @@ export default function ChangePassword() {
             },
           })
           .execute()
-          .then(() => navigate(ROUTE_PATH.profile))
+          .then(() => {
+            toast.success('Password has changed. Entry in your profile again');
+            dispatch(apiAuthActions.setIsAuth(false));
+            navigate(ROUTE_PATH.login);
+          })
           .catch(() => {
             setCurrentPassError('Check your current password');
           });

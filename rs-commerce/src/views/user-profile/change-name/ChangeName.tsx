@@ -11,6 +11,7 @@ import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from 'constants/constants';
+import toast from 'react-hot-toast';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import { changeNameBreadcrumbList } from '../constants';
@@ -184,6 +185,7 @@ export default function ChangeName(): JSX.Element {
           .then(() => {
             getNameFromServer();
             setCustomMsg('Your date have updated');
+            toast.success('Your profile has updated successfully');
             navigate(ROUTE_PATH.profile);
           })
           .catch(() => addErrorCustomMsg());

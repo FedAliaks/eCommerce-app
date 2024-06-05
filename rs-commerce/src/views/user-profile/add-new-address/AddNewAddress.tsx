@@ -16,6 +16,7 @@ import InputDefault, { InputDefaultType } from 'components/input-default/InputDe
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from 'constants/constants';
+import toast from 'react-hot-toast';
 import classesLocal from './add-new-address.module.css';
 import classes from '../UserProfile.module.css';
 import { addAddressBreadcrumbList } from '../constants';
@@ -154,6 +155,7 @@ export default function AddNewAddress(): JSX.Element {
                   .execute()
                   .then((response) => {
                     navigate(ROUTE_PATH.profile);
+                    toast.success('Your profile has updated successfully');
 
                     apiRootWithExistingTokenFlow()
                       .me()

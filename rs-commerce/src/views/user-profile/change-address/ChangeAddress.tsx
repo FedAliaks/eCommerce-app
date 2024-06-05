@@ -12,6 +12,7 @@ import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { ROUTE_PATH } from 'constants/constants';
 
+import toast from 'react-hot-toast';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import classesLocal from './change-address.module.css';
@@ -118,6 +119,7 @@ export default function ChangeAddress() {
                 })
                 .catch(() => addErrorMsg());
             navigate(ROUTE_PATH.profile);
+            toast.success('Your profile has updated successfully');
           })
           .catch(() => addErrorMsg());
       })
