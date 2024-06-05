@@ -27,7 +27,7 @@ export default function ChangeAddress() {
   const [cityErr, setCityErr] = useState('');
   const [postCodeErr, setPostCodeErr] = useState('');
   const [countryErr, setCountryErr] = useState('');
-  const [, setIsDefaultAddress] = useState(true);
+  const [IsDefaultAddress, setIsDefaultAddress] = useState(false);
 
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
@@ -82,6 +82,31 @@ export default function ChangeAddress() {
           })
           .execute()
           .then(() => {
+            if (!IsDefaultAddress)
+              apiRootWithExistingTokenFlow()
+                .me()
+                .get()
+                .execute()
+                .then((res1) => {
+                  apiRootWithExistingTokenFlow()
+                    .customers()
+                    .withId({ ID: res1.body.id })
+                    .post({
+                      body: {
+                        version: res1.body.version,
+                        actions: [
+                          {
+                            action: res1.body.shippingAddressIds?.includes(addressID)
+                              ? 'setDefaultShippingAddress'
+                              : 'setDefaultBillingAddress',
+                            addressId: addressID,
+                          },
+                        ],
+                      },
+                    })
+                    .execute();
+                });
+
             navigate(ROUTE_PATH.profile);
           });
       });
