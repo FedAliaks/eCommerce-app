@@ -10,11 +10,12 @@ import {
   regExpObj,
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { ROUTE_PATH } from 'constants/constants';
 import { useNavigate } from 'react-router-dom';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
-import UserProfileHeader from '../user-profile-header/UserProfileHeader';
+import { changePasswordBreadcrumbList } from '../constants';
 
 export default function ChangePassword() {
   const [currentPass, setCurrentPass] = useState('');
@@ -127,9 +128,9 @@ export default function ChangePassword() {
 
   return (
     <div>
-      <UserProfileHeader title="Change password" subtitle="Main > Profile > Edit password" />
+      <Breadcrumb linksList={changePasswordBreadcrumbList} currentPageName="Change password" />
 
-      <div className={classes['profile']}>
+      <div className={`container ${classes['profile']}`}>
         <div className={classes['profile__column']}>
           <ProfileComponent inputArray={inputArrayPassword} flexVertical />
           <div className={classes['profile__password-btn-container']}>

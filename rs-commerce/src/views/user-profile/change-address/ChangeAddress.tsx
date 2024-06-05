@@ -9,11 +9,13 @@ import InputProfile from 'components/profile-component/input-profile/inputProfil
 import CheckboxDefault from 'components/checkbox-defaut/CheckboxDefault';
 import ButtonDefault from 'components/button-default/ButtonDefault';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { ROUTE_PATH } from 'constants/constants';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import classesLocal from './change-address.module.css';
+import { changeAddressBreadcrumbList } from '../constants';
 
 export default function ChangeAddress() {
   const errCountryDefault = 'You can use only "BY" and "US"';
@@ -199,35 +201,37 @@ export default function ChangeAddress() {
   };
 
   return (
-    <div>
-      <UserProfileHeader title="Change Address" subtitle="Main > Profile > Edit address" />
-      <div className={classesLocal['add-address__container']}>
-        <h1>Address</h1>
-        <CheckboxDefault content="Set as default address" onChange={toggleCheckbox} />
+    <>
+      <Breadcrumb linksList={changeAddressBreadcrumbList} currentPageName="Change Address" />
 
-        <div className={classes['address']}>
-          {addressArray.map((item) => (
-            <InputProfile
-              title={item.title}
-              id={item.id}
-              isSizeSmall={item.isSizeSmall}
-              type={item.type}
-              value={item.value}
-              key={item.id}
-              errorMsg={item.errorMsg}
-              isDisabled={item.isDisabled}
-              handler={item.handler}
-            />
-          ))}
+      <div className="container">
+        <div className={`${classesLocal['add-address__container']} ${classes['profile__column']}`}>
+          <h2>Address</h2>
+          <CheckboxDefault content="Set as default address" onChange={toggleCheckbox} />
 
-          <div />
+          <div className={classesLocal['address']}>
+            {addressArray.map((item) => (
+              <InputProfile
+                title={item.title}
+                id={item.id}
+                isSizeSmall={item.isSizeSmall}
+                type={item.type}
+                value={item.value}
+                key={item.id}
+                errorMsg={item.errorMsg}
+                isDisabled={item.isDisabled}
+                handler={item.handler}
+              />
+            ))}
+          </div>
+          <p className={classesLocal['response']}>{resultRequest}</p>
+        </div>
+
+        <div className={`${classes['profile__password-btn-container']}`}>
+          <ButtonProfile content="Cancel" colored={false} onClick={clearBtn} />
+          <ButtonDefault content="Save" colored onClick={postRequest} isActive={isActiveSaveBtn} />
         </div>
       </div>
-
-      <div className={classes['profile__password-btn-container']}>
-        <ButtonProfile content="Cancel" colored={false} onClick={clearBtn} />
-        <ButtonDefault content="Save" colored onClick={postRequest} isActive={isActiveSaveBtn} />
-      </div>
-    </div>
+    </>
   );
 }

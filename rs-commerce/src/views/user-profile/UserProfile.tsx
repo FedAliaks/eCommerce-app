@@ -1,12 +1,12 @@
 import ProfileComponent from 'components/profile-component/profileComponent';
-
 import { InputProfileType, ProfileComponentType } from 'components/profile-component/types';
 import CustomLink from 'components/custom-link/custom-link';
 import { ROUTE_PATH } from 'constants/constants';
 import { useEffect, useState } from 'react';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import classes from './UserProfile.module.css';
-import UserProfileHeader from './user-profile-header/UserProfileHeader';
+import { userProfileBreadcrumbList } from './constants';
 
 export default function UserProfile(): JSX.Element {
   const [state, setState] = useState<JSX.Element[]>();
@@ -127,15 +127,14 @@ export default function UserProfile(): JSX.Element {
 
   return (
     <div className={classes['container']}>
-      <UserProfileHeader title="Profile" subtitle="Main > Profile" />
+      <Breadcrumb linksList={userProfileBreadcrumbList} currentPageName="Profile" />
 
-      <div className={classes['profile']}>
+      <div className={`container ${classes['profile']}`}>
         <div className={classes['profile__column']}>{state}</div>
         <div className={classes['profile__column']}>
           <CustomLink to={ROUTE_PATH.changePassword} text="Change password" elStyle="link" />
-          <div>
-            <CustomLink to={ROUTE_PATH.addNewAddress} text="Add new address" elStyle="link" />
-          </div>
+
+          <CustomLink to={ROUTE_PATH.addNewAddress} text="Add new address" elStyle="link" />
         </div>
       </div>
     </div>

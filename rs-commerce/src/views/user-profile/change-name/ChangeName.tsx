@@ -8,11 +8,12 @@ import {
 import { useDispatch } from 'react-redux';
 import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATH } from 'constants/constants';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
-import UserProfileHeader from '../user-profile-header/UserProfileHeader';
+import { changeNameBreadcrumbList } from '../constants';
 
 export default function ChangeName(): JSX.Element {
   const dispatch = useDispatch();
@@ -184,11 +185,14 @@ export default function ChangeName(): JSX.Element {
 
   return (
     <div>
-      <UserProfileHeader title="Change name" subtitle="Main > Profile > Edit name" />
+      <Breadcrumb
+        linksList={changeNameBreadcrumbList}
+        currentPageName="Change personal information"
+      />
 
-      <div className={classes['profile']}>
+      <div className={`container ${classes['profile']}`}>
         <div className={classes['profile__column']}>
-          <h1>Personal information</h1>
+          <h2>Personal information</h2>
           <ProfileComponent inputArray={inputArrayAddress} flexVertical />
           <p className={classes['custom-message']}>{customMsg}</p>
           <div className={classes['profile__password-btn-container']}>

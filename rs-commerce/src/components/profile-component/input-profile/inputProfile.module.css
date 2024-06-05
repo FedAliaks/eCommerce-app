@@ -1,14 +1,14 @@
 .profile__input {
   max-width: 550px;
   width: 100%;
-  border: 1px solid #9f9f9f;
+  border: 1px solid var(--gray-light);
   border-radius: 10px;
-  height: 35px;
+  height: 65px;
   background: #fff;
   font-family: var(--font-poppins);
   font-weight: 500;
   font-size: 16px;
-  color: #333;
+  color: var(--gray-middle);
   padding: 0 23px;
 }
 .profile__input:disabled {
@@ -23,6 +23,7 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
+  text-align: left;
 }
 
 .input__error {
@@ -44,5 +45,8 @@
   }
   .input__error {
     height: 50px;
+  }
+  .profile__input_small {
+    max-width: 100%;
   }
 }
