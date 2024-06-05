@@ -11,7 +11,7 @@ import {
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
-import { ROUTE_PATH } from 'constants/constants';
+import { LOCAL_STORAGE_TOKEN, ROUTE_PATH } from 'constants/constants';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
@@ -121,6 +121,7 @@ export default function ChangePassword() {
           .execute()
           .then(() => {
             toast.success('Password has changed. Entry in your profile again');
+            localStorage.removeItem(LOCAL_STORAGE_TOKEN);
             dispatch(apiAuthActions.setIsAuth(false));
             navigate(ROUTE_PATH.login);
           })

@@ -11,7 +11,6 @@ import ButtonDefault from 'components/button-default/ButtonDefault';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { ROUTE_PATH } from 'constants/constants';
-
 import toast from 'react-hot-toast';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
@@ -37,6 +36,8 @@ export default function ChangeAddress() {
   const [city, setCity] = useState('');
   const [postCode, setPostCode] = useState('');
   const [country, setCountry] = useState('BY');
+  const [typeOfAddress, setTypeOfAddress] = useState<'Billing' | 'Shipping' | ''>('');
+  const [defaultSavedAddressId, setSavedDefaultAddressId] = useState('');
 
   useEffect(() => {
     apiRootWithExistingTokenFlow()
@@ -45,10 +46,21 @@ export default function ChangeAddress() {
       .execute()
       .then((res) => {
         const address = res.body.addresses.filter((item) => item.id === addressID);
+        if (res.body.billingAddressIds?.find((item) => item === addressID)) {
+          setTypeOfAddress('Billing');
+          setSavedDefaultAddressId(res.body?.defaultBillingAddressId || '');
+        } else if (res.body.shippingAddressIds?.find((item) => item === addressID)) {
+          setTypeOfAddress('Shipping');
+          setSavedDefaultAddressId(res.body?.defaultShippingAddressId || '');
+        }
         setStreet(address[0]?.streetName || '');
         setCity(address[0]?.city || '');
         setPostCode(address[0]?.postalCode || '');
         setCountry(address[0]?.country || 'US');
+        setIsDefaultAddress(
+          res.body.defaultBillingAddressId === addressID ||
+            res.body.defaultShippingAddressId === addressID,
+        );
       });
   }, []);
 
@@ -91,7 +103,7 @@ export default function ChangeAddress() {
           })
           .execute()
           .then(() => {
-            if (!IsDefaultAddress)
+            if (typeOfAddress && defaultSavedAddressId !== addressID)
               apiRootWithExistingTokenFlow()
                 .me()
                 .get()
@@ -105,9 +117,10 @@ export default function ChangeAddress() {
                         version: res1.body.version,
                         actions: [
                           {
-                            action: res1.body.shippingAddressIds?.includes(addressID)
-                              ? 'setDefaultShippingAddress'
-                              : 'setDefaultBillingAddress',
+                            action:
+                              typeOfAddress === 'Shipping'
+                                ? 'setDefaultShippingAddress'
+                                : 'setDefaultBillingAddress',
                             addressId: addressID,
                           },
                         ],
@@ -214,7 +227,37 @@ export default function ChangeAddress() {
 
   const toggleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResultRequest('');
-    setIsDefaultAddress(!e.target.checked);
+    setIsDefaultAddress(!!e.target.checked);
+  };
+
+  const deleteRequest = () => {
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .customers()
+          .withId({ ID: res.body.id })
+          .post({
+            body: {
+              version: res.body.version,
+              actions: [
+                {
+                  action: 'removeAddress',
+                  addressId: addressID,
+                },
+              ],
+            },
+          })
+          .execute()
+          .then(() => {
+            navigate(ROUTE_PATH.profile);
+            toast.success('Address deleted successfully');
+          })
+          .catch(() => addErrorMsg());
+      })
+      .catch(() => addErrorMsg());
   };
 
   return (
@@ -223,8 +266,12 @@ export default function ChangeAddress() {
 
       <div className="container">
         <div className={`${classesLocal['add-address__container']} ${classes['profile__column']}`}>
-          <h2>Address</h2>
-          <CheckboxDefault content="Set as default address" onChange={toggleCheckbox} />
+          <h2>{typeOfAddress} Address</h2>
+          <CheckboxDefault
+            content="Set as default address"
+            onChange={toggleCheckbox}
+            isChecked={IsDefaultAddress}
+          />
 
           <div className={classesLocal['address']}>
             {addressArray.map((item) => (
@@ -247,6 +294,7 @@ export default function ChangeAddress() {
         <div className={`${classes['profile__password-btn-container']}`}>
           <ButtonProfile content="Cancel" colored={false} onClick={clearBtn} />
           <ButtonDefault content="Save" colored onClick={postRequest} isActive={isActiveSaveBtn} />
+          <ButtonDefault content="Delete" colored={false} onClick={deleteRequest} isActive />
         </div>
       </div>
     </>

@@ -33,7 +33,7 @@ export default function AddNewAddress(): JSX.Element {
   const [cityErr, setCityErr] = useState(' ');
   const [isActiveSaveBtn, setIsActiveSaveBtn] = useState(false);
   const [typeOfAddress, setTypeOfAddress] = useState('shipping');
-  const [IsDefaultAddress, setIsDefaultAddress] = useState(true);
+  const [IsDefaultAddress, setIsDefaultAddress] = useState(false);
   const [customMsg, setCustomMsg] = useState('');
 
   const typeComponent = typeOfAddress as TypeOfAddressType;
@@ -142,85 +142,53 @@ export default function AddNewAddress(): JSX.Element {
             },
           })
           .execute()
-          .then(() => {
+          .then((res) => {
             apiRootWithExistingTokenFlow()
-              .me()
-              .get()
-              .execute()
-              .then((resInner) => {
-                apiRootWithExistingTokenFlow()
-                  .customers()
-                  .withId({ ID: resInner.body.id })
-                  .get()
-                  .execute()
-                  .then((response) => {
-                    navigate(ROUTE_PATH.profile);
-                    toast.success('Your profile has updated successfully');
-
-                    apiRootWithExistingTokenFlow()
-                      .me()
-                      .get()
-                      .execute()
-                      .then((res1) => {
-                        apiRootWithExistingTokenFlow()
-                          .customers()
-                          .withId({ ID: res1.body.id })
-                          .post({
-                            body: {
-                              version: res1.body.version,
-                              actions: [
-                                {
-                                  action:
-                                    typeOfAddress === 'shipping'
-                                      ? 'addShippingAddressId'
-                                      : 'addBillingAddressId',
-                                  addressId:
-                                    response.body.addresses[response.body.addresses.length - 1]?.id,
-                                },
-                              ],
-                            },
-                          })
-                          .execute()
-                          .then(() => {
-                            if (!IsDefaultAddress) {
-                              apiRootWithExistingTokenFlow()
-                                .me()
-                                .get()
-                                .execute()
-                                .then((res) => {
-                                  apiRootWithExistingTokenFlow()
-                                    .customers()
-                                    .withId({ ID: res.body.id })
-                                    .post({
-                                      body: {
-                                        version: res.body.version,
-                                        actions: [
-                                          {
-                                            action:
-                                              typeOfAddress === 'shipping'
-                                                ? 'setDefaultShippingAddress'
-                                                : 'setDefaultBillingAddress',
-                                            addressId:
-                                              response.body.addresses[
-                                                response.body.addresses.length - 1
-                                              ]?.id,
-                                          },
-                                        ],
-                                      },
-                                    })
-                                    .execute()
-                                    .then()
-                                    .catch(() => addErrorCustomMsg());
-                                })
-                                .catch(() => addErrorCustomMsg());
-                            }
-                          });
-                      })
-                      .catch(() => addErrorCustomMsg());
-                  })
-                  .catch(() => addErrorCustomMsg());
+              .customers()
+              .withId({ ID: res.body.id })
+              .post({
+                body: {
+                  version: res.body.version,
+                  actions: [
+                    {
+                      action:
+                        typeOfAddress === 'shipping'
+                          ? 'addShippingAddressId'
+                          : 'addBillingAddressId',
+                      addressId: res.body.addresses[res.body.addresses.length - 1]?.id,
+                    },
+                  ],
+                },
               })
-              .catch(() => addErrorCustomMsg());
+              .execute()
+              .then((result) => {
+                if (IsDefaultAddress) {
+                  apiRootWithExistingTokenFlow()
+                    .customers()
+                    .withId({ ID: result.body.id })
+                    .post({
+                      body: {
+                        version: result.body.version,
+                        actions: [
+                          {
+                            action:
+                              typeOfAddress === 'shipping'
+                                ? 'setDefaultShippingAddress'
+                                : 'setDefaultBillingAddress',
+                            addressId: result.body.addresses[result.body.addresses.length - 1]?.id,
+                          },
+                        ],
+                      },
+                    })
+                    .execute()
+                    .then()
+                    .catch(() => addErrorCustomMsg());
+                }
+              })
+              .then(() => {
+                navigate(ROUTE_PATH.profile);
+                toast.success('Your profile has updated successfully');
+              });
           })
           .catch(() => addErrorCustomMsg());
       })
@@ -232,7 +200,7 @@ export default function AddNewAddress(): JSX.Element {
   };
 
   const toggleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsDefaultAddress(!e.target.checked);
+    setIsDefaultAddress(!!e.target.checked);
   };
 
   const radioButtonsArray: RadioButtonDefaultType[] = [
@@ -281,6 +249,7 @@ export default function AddNewAddress(): JSX.Element {
               content="Set as default address"
               idCheckbox="default-address"
               onChange={toggleCheckbox}
+              isChecked={IsDefaultAddress}
             />
           </div>
 
