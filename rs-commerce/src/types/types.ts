@@ -172,3 +172,7 @@ export type SimpleObject = {
 };
 
 export type ProductImageItem = { url: string; label: string; dimensions: { w: number; h: number } };
+
+export type SimpleValue = { id: string; value: string };
+
+export type SimpleBooleanValue = { [key: string]: boolean };
