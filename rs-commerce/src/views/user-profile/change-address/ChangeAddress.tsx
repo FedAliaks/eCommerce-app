@@ -1,5 +1,5 @@
 import { InputProfileType } from 'components/profile-component/types';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {
   errorMsgObj,
@@ -9,6 +9,7 @@ import InputProfile from 'components/profile-component/input-profile/inputProfil
 import CheckboxDefault from 'components/checkbox-defaut/CheckboxDefault';
 import ButtonDefault from 'components/button-default/ButtonDefault';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import { ROUTE_PATH } from 'constants/constants';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
@@ -16,6 +17,7 @@ import classesLocal from './change-address.module.css';
 
 export default function ChangeAddress() {
   const errCountryDefault = 'You can use only "BY" and "US"';
+  const navigate = useNavigate();
 
   const location = useLocation();
   const addressID = location.state.addressId;
@@ -123,14 +125,7 @@ export default function ChangeAddress() {
   };
 
   const clearBtn = () => {
-    setCity('');
-    setCountry('');
-    setPostCode('');
-    setCountry('');
-    checkCity('');
-    checkCountry('');
-    checkPostCode('');
-    checkStreet('');
+    navigate(ROUTE_PATH.profile);
   };
 
   const addressArray: InputProfileType[] = [

@@ -13,6 +13,8 @@ import {
   regExpObj,
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import InputDefault, { InputDefaultType } from 'components/input-default/InputDefault';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from 'constants/constants';
 import classesLocal from './add-new-address.module.css';
 import classes from '../UserProfile.module.css';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
@@ -20,6 +22,7 @@ import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 type TypeOfAddressType = 'shipping' | 'billing';
 
 export default function AddNewAddress(): JSX.Element {
+  const navigate = useNavigate();
   const [street, setStreet] = useState('');
   const [streetErr, setStreetErr] = useState(' ');
   const [postCode, setPostCode] = useState('');
@@ -104,9 +107,7 @@ export default function AddNewAddress(): JSX.Element {
   ];
 
   const clearFieldsOnPage = () => {
-    setCity('');
-    setStreet('');
-    setPostCode('');
+    navigate(ROUTE_PATH.profile);
   };
 
   const saveBtnClick = () => {

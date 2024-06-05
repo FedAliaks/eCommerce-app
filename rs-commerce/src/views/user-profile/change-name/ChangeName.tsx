@@ -8,12 +8,15 @@ import {
 import { useDispatch } from 'react-redux';
 import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from 'constants/constants';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 
 export default function ChangeName(): JSX.Element {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [firstName, setFirstName] = useState('first-name');
   const [firstNameError, setFirstNameError] = useState('');
@@ -136,11 +139,7 @@ export default function ChangeName(): JSX.Element {
   ];
 
   const clearFieldsOnPage = (): void => {
-    setFirstName('');
-    setLastName('');
-    setDateOfBirth('');
-    setEmail('');
-    dispatch(updateProfileActions.setCheckNewName(false));
+    navigate(ROUTE_PATH.profile);
   };
 
   const saveBtnClick = (): void => {

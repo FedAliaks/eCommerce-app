@@ -10,6 +10,8 @@ import {
   regExpObj,
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import { ROUTE_PATH } from 'constants/constants';
+import { useNavigate } from 'react-router-dom';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
@@ -24,6 +26,7 @@ export default function ChangePassword() {
   const [confirmPassError, setConfirmPassError] = useState('');
   const { newPassword } = useAppSelector(updateProfileSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const checkCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
@@ -120,13 +123,7 @@ export default function ChangePassword() {
   };
 
   const clearFieldsOnPage = () => {
-    setCurrentPass('');
-    setNewPass('');
-    setConfirmPass('');
-    setNewPassError('');
-    setConfirmPassError('');
-    setCurrentPassError('');
-    dispatch(updateProfileActions.setCheckNewPassword(false));
+    navigate(ROUTE_PATH.profile);
   };
 
   return (
