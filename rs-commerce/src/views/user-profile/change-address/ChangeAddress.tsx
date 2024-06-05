@@ -102,35 +102,30 @@ export default function ChangeAddress() {
             },
           })
           .execute()
+          .then((res1) => {
+            if (typeOfAddress && defaultSavedAddressId !== addressID) console.log('change');
+            apiRootWithExistingTokenFlow()
+              .customers()
+              .withId({ ID: res1.body.id })
+              .post({
+                body: {
+                  version: res1.body.version,
+                  actions: [
+                    {
+                      action:
+                        typeOfAddress === 'Shipping'
+                          ? 'setDefaultShippingAddress'
+                          : 'setDefaultBillingAddress',
+                      addressId: addressID,
+                    },
+                  ],
+                },
+              })
+              .execute()
+              .then()
+              .catch(() => addErrorMsg());
+          })
           .then(() => {
-            if (typeOfAddress && defaultSavedAddressId !== addressID)
-              apiRootWithExistingTokenFlow()
-                .me()
-                .get()
-                .execute()
-                .then((res1) => {
-                  apiRootWithExistingTokenFlow()
-                    .customers()
-                    .withId({ ID: res1.body.id })
-                    .post({
-                      body: {
-                        version: res1.body.version,
-                        actions: [
-                          {
-                            action:
-                              typeOfAddress === 'Shipping'
-                                ? 'setDefaultShippingAddress'
-                                : 'setDefaultBillingAddress',
-                            addressId: addressID,
-                          },
-                        ],
-                      },
-                    })
-                    .execute()
-                    .then()
-                    .catch(() => addErrorMsg());
-                })
-                .catch(() => addErrorMsg());
             navigate(ROUTE_PATH.profile);
             toast.success('Your profile has updated successfully');
           })
