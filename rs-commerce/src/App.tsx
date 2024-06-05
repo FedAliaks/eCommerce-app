@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
-import routes from 'utils/routes';
+import routes, { publicRoutes } from 'utils/routes';
 import Layout from 'components/layout/Layout';
 import { LOCAL_STORAGE_TOKEN } from 'constants/constants';
 import { useAppDispatch } from 'hooks/typed-react-redux-hooks';
@@ -10,9 +10,9 @@ import { useEffect } from 'react';
 function App() {
   const dispatch = useAppDispatch();
 
-  alert(
-    'Приветствую. Если есть возможность, то проверь нас в четверг. Заранее благодарны. Успехов в завершении курса. Осталось немного',
-  );
+
+  const { userData, isAuth } = useAppSelector(apiAuthSelector);
+
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN)!)) {
@@ -24,11 +24,29 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        {routes.map((route) => (
-          <Route key={route.path} path={route.path} element={<Layout>{route.component}</Layout>} />
-        ))}
-      </Routes>
+      {isAuth ? (
+        <Routes>
+          {routes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={<Layout>{route.component}</Layout>}
+            />
+          ))}
+        </Routes>
+      ) : (
+        <Routes>
+          {publicRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={
+                route.redirect ? <Navigate to="/login" /> : <Layout>{route.component}</Layout>
+              }
+            />
+          ))}
+        </Routes>
+      )}
     </BrowserRouter>
   );
 }
