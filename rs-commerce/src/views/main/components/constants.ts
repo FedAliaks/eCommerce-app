@@ -77,3 +77,12 @@ export const shareItems = [
     className: style['share-block-image-6'],
   },
 ];
+
+export const promoCodes = [
+  { code: 'HELLO', discount: '20%', description: 'off on your first order' },
+  {
+    code: 'HURRICANE',
+    discount: '5%',
+    description: 'off for every purchase over 100 EUR',
+  },
+];

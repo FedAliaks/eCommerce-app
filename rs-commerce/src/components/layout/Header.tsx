@@ -1,12 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Logo from 'assets/images/logo.png';
-import {
-  LOCAL_STORAGE_AUTH,
-  LOCAL_STORAGE_TOKEN,
-  ROUTE_PATH,
-  TOASTS_TEXT,
-} from 'constants/constants';
+import { LOCAL_STORAGE_TOKEN, ROUTE_PATH, TOASTS_TEXT } from 'constants/constants';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import { apiAuthSelector } from 'redux/selectors';
@@ -22,6 +17,15 @@ function Header() {
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
+  const leftList = [
+    {
+      path: ROUTE_PATH.catalog,
+      title: 'Catalog',
+      className: '',
+      // className: style['underline'],
+    },
+  ];
+
   const rightList = [
     {
       path: ROUTE_PATH.login,
@@ -35,6 +39,12 @@ function Header() {
       className: style['underline'],
       withAuth: false,
     },
+    {
+      path: ROUTE_PATH.profile,
+      title: 'Profile',
+      className: style['underline'],
+      withAuth: true,
+    },
   ];
 
   const toggleBurgerMenu = () => setIsBurgerMenuOpen(!isBurgerMenuOpen);
@@ -45,7 +55,6 @@ function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN);
-    localStorage.setItem(LOCAL_STORAGE_AUTH, JSON.stringify(false));
     dispatch(apiAuthActions.resetApiAuthSlice());
     toast.success(TOASTS_TEXT.logoutMessage);
 
@@ -68,9 +77,18 @@ function Header() {
       </button>
 
       <nav className={`${style['nav']} ${isBurgerMenuOpen ? style['nav-open'] : ''}`}>
+        <ul className={style['nav-left']}>
+          {leftList.map((item) => (
+            <li key={item.path}>
+              <Link to={item.path} className={item.className} aria-label={item.title}>
+                {item.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
         <ul className={style['nav-right']}>
           {rightList
-            .filter((item) => (isAuth ? item.withAuth : true))
+            .filter((item) => (isAuth ? item.withAuth === true : item.withAuth === false))
             .map((item) => (
               <li key={item.path}>
                 <Link to={item.path} className={item.className} aria-label={item.title}>
@@ -78,6 +96,7 @@ function Header() {
                 </Link>
               </li>
             ))}
+
           {isAuth && (
             <li>
               <button

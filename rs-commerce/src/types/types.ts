@@ -1,4 +1,10 @@
-import { CustomerSignInResult, MyCustomerDraft } from '@commercetools/platform-sdk';
+import { QueryParam } from '@commercetools/importapi-sdk';
+import {
+  Category,
+  CustomerSignInResult,
+  MyCustomerDraft,
+  ProductProjection,
+} from '@commercetools/platform-sdk';
 
 export type LoginFormSliceState = {
   emailValue: string;
@@ -29,9 +35,9 @@ export type ApiRegistrationSliceState = {
 };
 
 export type ButtonBigProps = {
-  isActiveStyle: boolean;
   content: string;
-  onClick: () => void;
+  isActiveStyle?: boolean;
+  onClick?: () => void;
 };
 
 export type InputProps = {
@@ -60,3 +66,109 @@ export type CustomLinkProps = {
   elStyle: string;
   text: string;
 };
+
+export type QueryParamsCategories = {
+  expand?: string | string[];
+  sort?: string | string[];
+  limit?: number;
+  offset?: number;
+  withTotal?: boolean;
+  where?: string | string[];
+  [key: string]: QueryParam;
+};
+
+export type QueryParamsProducts = {
+  where?: string | string[];
+  priceCurrency?: string;
+  priceCountry?: string;
+  priceCustomerGroup?: string;
+  priceChannel?: string;
+  localeProjection?: string | string[];
+  expand?: string | string[];
+  sort?: string | string[];
+  limit?: number;
+  offset?: number;
+  withTotal?: boolean;
+  [key: string]: QueryParam;
+};
+
+export type QueryParamsProductsProjections = {
+  fuzzy?: boolean;
+  fuzzyLevel?: number;
+  markMatchingVariants?: boolean;
+  filter?: string | string[];
+  'filter.facets'?: string | string[];
+  'filter.query'?: string | string[];
+  facet?: string | string[];
+  sort?: string | string[];
+  limit?: number;
+  offset?: number;
+  withTotal?: boolean;
+  staged?: boolean;
+  priceCurrency?: string;
+  priceCountry?: string;
+  priceCustomerGroup?: string;
+  priceChannel?: string;
+  localeProjection?: string | string[];
+  storeProjection?: string;
+  expand?: string | string[];
+  [key: string]: QueryParam;
+};
+
+export type PriceFilterValues = {
+  min: Nullable<number>;
+  max: Nullable<number>;
+};
+
+export type SimpleFiltersValues = {
+  [key: string]: {
+    [key: string]: boolean;
+  };
+};
+
+export type ApiCategoriesProductsSliceState = {
+  isLoadingCategories: boolean;
+  categories: Nullable<Category[]>;
+  curCategory: Nullable<Category>;
+  isLoadingProducts: boolean;
+  products: Nullable<ProductProjection[]>;
+  queryParamsProducts: Nullable<QueryParamsProductsProjections>;
+  productsTotal: Nullable<number>;
+  curProductsPage: number;
+  productsInPage: number;
+  searchInputValue: string;
+  productsFilter: Nullable<FilterType>;
+  sortFilterValue: string;
+  priceFilter: PriceFilterValues;
+  simpleFilters: SimpleFiltersValues;
+  canUseMainFilters: boolean;
+};
+
+export type ProductProjectionItemProps = {
+  product: ProductProjection;
+};
+
+export type ButtonPaginationProps = {
+  content: string;
+  curStyle?: string;
+  onClick?: () => void;
+};
+
+export type CategoryItemProps = {
+  data: Nullable<Category>;
+};
+
+export enum FilterType {
+  mainFilter = 'mainFilter',
+  sortFilter = 'sortFilter',
+}
+
+export type MainSortFilterContentProps = {
+  onClick: () => void;
+};
+
+export type SimpleObject = {
+  [key: string]: string;
+};
+
+export type ProductImageItem = { url: string; label: string; dimensions: { w: number; h: number } };
