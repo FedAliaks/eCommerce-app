@@ -1,5 +1,5 @@
 import { InputProfileType } from 'components/profile-component/types';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {
   errorMsgObj,
@@ -10,6 +10,8 @@ import CheckboxDefault from 'components/checkbox-defaut/CheckboxDefault';
 import ButtonDefault from 'components/button-default/ButtonDefault';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
+import { ROUTE_PATH } from 'constants/constants';
+import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import classesLocal from './change-address.module.css';
@@ -17,17 +19,17 @@ import { changeAddressBreadcrumbList } from '../constants';
 
 export default function ChangeAddress() {
   const errCountryDefault = 'You can use only "BY" and "US"';
+  const navigate = useNavigate();
 
   const location = useLocation();
   const addressID = location.state.addressId;
-  const [resultRequest, setResultRequest] = useState('');
   const [isActiveSaveBtn, setIsActiveSaveBtn] = useState(true);
 
   const [streetErr, setStreetErr] = useState('');
   const [cityErr, setCityErr] = useState('');
   const [postCodeErr, setPostCodeErr] = useState('');
   const [countryErr, setCountryErr] = useState('');
-  const [, setIsDefaultAddress] = useState(true);
+  const [IsDefaultAddress, setIsDefaultAddress] = useState(false);
 
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
@@ -82,8 +84,32 @@ export default function ChangeAddress() {
           })
           .execute()
           .then(() => {
-            setResultRequest('Your address has already updated');
-            setTimeout(() => setResultRequest(''), 3000);
+            if (!IsDefaultAddress)
+              apiRootWithExistingTokenFlow()
+                .me()
+                .get()
+                .execute()
+                .then((res1) => {
+                  apiRootWithExistingTokenFlow()
+                    .customers()
+                    .withId({ ID: res1.body.id })
+                    .post({
+                      body: {
+                        version: res1.body.version,
+                        actions: [
+                          {
+                            action: res1.body.shippingAddressIds?.includes(addressID)
+                              ? 'setDefaultShippingAddress'
+                              : 'setDefaultBillingAddress',
+                            addressId: addressID,
+                          },
+                        ],
+                      },
+                    })
+                    .execute();
+                });
+
+            navigate(ROUTE_PATH.profile);
           });
       });
   };
@@ -124,14 +150,7 @@ export default function ChangeAddress() {
   };
 
   const clearBtn = () => {
-    setCity('');
-    setCountry('');
-    setPostCode('');
-    setCountry('');
-    checkCity('');
-    checkCountry('');
-    checkPostCode('');
-    checkStreet('');
+    navigate(ROUTE_PATH.profile);
   };
 
   const addressArray: InputProfileType[] = [
@@ -204,8 +223,6 @@ export default function ChangeAddress() {
                 handler={item.handler}
               />
             ))}
-
-            <div />
           </div>
           <p className={classesLocal['response']}>{resultRequest}</p>
         </div>

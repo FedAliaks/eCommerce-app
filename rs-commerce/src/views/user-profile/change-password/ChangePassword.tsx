@@ -11,6 +11,8 @@ import {
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
+import { ROUTE_PATH } from 'constants/constants';
+import { useNavigate } from 'react-router-dom';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import { changePasswordBreadcrumbList } from '../constants';
@@ -21,10 +23,10 @@ export default function ChangePassword() {
   const [confirmPass, setConfirmPass] = useState('');
   const [currentPassError, setCurrentPassError] = useState('');
   const [newPassError, setNewPassError] = useState('');
-  const [customMsg, setCustomMsg] = useState('');
   const [confirmPassError, setConfirmPassError] = useState('');
   const { newPassword } = useAppSelector(updateProfileSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const checkCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
@@ -115,19 +117,13 @@ export default function ChangePassword() {
             },
           })
           .execute()
-          .then(() => setCustomMsg('You have changed successfully your password'))
+          .then(() => navigate(ROUTE_PATH.profile))
           .catch(() => setCurrentPassError('Check your current password'));
       });
   };
 
   const clearFieldsOnPage = () => {
-    setCurrentPass('');
-    setNewPass('');
-    setConfirmPass('');
-    setNewPassError('');
-    setConfirmPassError('');
-    setCurrentPassError('');
-    dispatch(updateProfileActions.setCheckNewPassword(false));
+    navigate(ROUTE_PATH.profile);
   };
 
   return (
@@ -137,7 +133,6 @@ export default function ChangePassword() {
       <div className={`container ${classes['profile']}`}>
         <div className={classes['profile__column']}>
           <ProfileComponent inputArray={inputArrayPassword} flexVertical />
-          <p className={classes['custom-message']}>{customMsg}</p>
           <div className={classes['profile__password-btn-container']}>
             <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
             <ButtonProfile page="password" content="Save" colored onClick={saveBtnClick} />

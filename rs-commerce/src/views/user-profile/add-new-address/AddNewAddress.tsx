@@ -14,6 +14,8 @@ import {
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import InputDefault, { InputDefaultType } from 'components/input-default/InputDefault';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from 'constants/constants';
 import classesLocal from './add-new-address.module.css';
 import classes from '../UserProfile.module.css';
 import { addAddressBreadcrumbList } from '../constants';
@@ -21,6 +23,7 @@ import { addAddressBreadcrumbList } from '../constants';
 type TypeOfAddressType = 'shipping' | 'billing';
 
 export default function AddNewAddress(): JSX.Element {
+  const navigate = useNavigate();
   const [street, setStreet] = useState('');
   const [streetErr, setStreetErr] = useState(' ');
   const [postCode, setPostCode] = useState('');
@@ -30,7 +33,6 @@ export default function AddNewAddress(): JSX.Element {
   const [isActiveSaveBtn, setIsActiveSaveBtn] = useState(false);
   const [typeOfAddress, setTypeOfAddress] = useState('shipping');
   const [IsDefaultAddress, setIsDefaultAddress] = useState(true);
-  const [resultRequest, setResultRequest] = useState('');
 
   const typeComponent = typeOfAddress as TypeOfAddressType;
   const { billingCountry, shippingCountry } = useAppSelector(registrationFormSelector);
@@ -105,9 +107,7 @@ export default function AddNewAddress(): JSX.Element {
   ];
 
   const clearFieldsOnPage = () => {
-    setCity('');
-    setStreet('');
-    setPostCode('');
+    navigate(ROUTE_PATH.profile);
   };
 
   const saveBtnClick = () => {
@@ -148,8 +148,7 @@ export default function AddNewAddress(): JSX.Element {
                   .get()
                   .execute()
                   .then((response) => {
-                    setResultRequest('You have added address');
-                    setTimeout(() => setResultRequest(''), 5000);
+                    navigate(ROUTE_PATH.profile);
 
                     apiRootWithExistingTokenFlow()
                       .me()
@@ -290,7 +289,7 @@ export default function AddNewAddress(): JSX.Element {
             ))}
           </div>
         </div>
-        <p className={classesLocal['response']}>{resultRequest}</p>
+        <p className={classesLocal['response']} />
         <div className={classes['profile__password-btn-container']}>
           <ButtonDefault content="Cancel" onClick={clearFieldsOnPage} isActive colored={false} />
           <ButtonDefault content="Save" onClick={saveBtnClick} isActive={isActiveSaveBtn} colored />
