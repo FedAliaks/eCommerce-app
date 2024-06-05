@@ -13,9 +13,10 @@ import {
   regExpObj,
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import InputDefault, { InputDefaultType } from 'components/input-default/InputDefault';
+import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import classesLocal from './add-new-address.module.css';
 import classes from '../UserProfile.module.css';
-import UserProfileHeader from '../user-profile-header/UserProfileHeader';
+import { addAddressBreadcrumbList } from '../constants';
 
 type TypeOfAddressType = 'shipping' | 'billing';
 
@@ -243,9 +244,10 @@ export default function AddNewAddress(): JSX.Element {
 
   return (
     <div>
-      <UserProfileHeader title="Add new address" subtitle="Main > Profile > Add address" />
-      <div>
-        <div className={classesLocal['add__address-container']}>
+      <Breadcrumb linksList={addAddressBreadcrumbList} currentPageName="Add new address" />
+
+      <div className="container">
+        <div className={`${classesLocal['add__address-container']} ${classes['profile__column']}`}>
           <div>
             <h3>Select Type of Address</h3>
 
@@ -270,7 +272,7 @@ export default function AddNewAddress(): JSX.Element {
             />
           </div>
 
-          <div className={classes['address']}>
+          <div className={classesLocal['address']}>
             <CountryInput typeComponent={typeComponent} />
 
             {inputFieldsArray.map((item) => (
