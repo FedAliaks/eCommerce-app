@@ -177,12 +177,6 @@ export default function ChangeName(): JSX.Element {
           .execute()
           .then(() => {
             getNameFromServer();
-            apiRootWithExistingTokenFlow()
-              .customers()
-              .withId({ ID: res.body.id })
-              .get()
-              .execute()
-              .then();
             setCustomMsg('Your date have updated');
           });
       });

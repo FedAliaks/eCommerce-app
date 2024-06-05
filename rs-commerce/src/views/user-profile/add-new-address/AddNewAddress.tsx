@@ -32,7 +32,6 @@ export default function AddNewAddress(): JSX.Element {
   const [isActiveSaveBtn, setIsActiveSaveBtn] = useState(false);
   const [typeOfAddress, setTypeOfAddress] = useState('shipping');
   const [IsDefaultAddress, setIsDefaultAddress] = useState(true);
-  const [resultRequest, setResultRequest] = useState('');
 
   const typeComponent = typeOfAddress as TypeOfAddressType;
   const { billingCountry, shippingCountry } = useAppSelector(registrationFormSelector);
@@ -148,8 +147,7 @@ export default function AddNewAddress(): JSX.Element {
                   .get()
                   .execute()
                   .then((response) => {
-                    setResultRequest('You have added address');
-                    setTimeout(() => setResultRequest(''), 5000);
+                    navigate(ROUTE_PATH.profile);
 
                     apiRootWithExistingTokenFlow()
                       .me()
@@ -289,7 +287,7 @@ export default function AddNewAddress(): JSX.Element {
             ))}
           </div>
         </div>
-        <p className={classesLocal['response']}>{resultRequest}</p>
+        <p className={classesLocal['response']} />
         <div className={classes['profile__password-btn-container']}>
           <ButtonDefault content="Cancel" onClick={clearFieldsOnPage} isActive colored={false} />
           <ButtonDefault content="Save" onClick={saveBtnClick} isActive={isActiveSaveBtn} colored />

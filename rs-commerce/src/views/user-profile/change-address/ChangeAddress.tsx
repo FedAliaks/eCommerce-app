@@ -21,7 +21,6 @@ export default function ChangeAddress() {
 
   const location = useLocation();
   const addressID = location.state.addressId;
-  const [resultRequest, setResultRequest] = useState('');
   const [isActiveSaveBtn, setIsActiveSaveBtn] = useState(true);
 
   const [streetErr, setStreetErr] = useState('');
@@ -83,8 +82,7 @@ export default function ChangeAddress() {
           })
           .execute()
           .then(() => {
-            setResultRequest('Your address has already updated');
-            setTimeout(() => setResultRequest(''), 3000);
+            navigate(ROUTE_PATH.profile);
           });
       });
   };
@@ -199,7 +197,6 @@ export default function ChangeAddress() {
 
           <div />
         </div>
-        <p className={classesLocal['response']}>{resultRequest}</p>
       </div>
 
       <div className={classes['profile__password-btn-container']}>
