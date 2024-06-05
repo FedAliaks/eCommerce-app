@@ -7,7 +7,7 @@ import {
 } from '@commercetools/platform-sdk';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { apiLogin, getAllCategories, getAllProductsProjections } from 'api/api';
-import { LOCAL_STORAGE_AUTH, MAX_QUERY_LIMIT, TOASTS_TEXT } from 'constants/constants';
+import { MAX_QUERY_LIMIT, TOASTS_TEXT } from 'constants/constants';
 import toast from 'react-hot-toast';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
@@ -24,7 +24,6 @@ function* workStartAuthFetchSaga(action: PayloadAction<{ data: LoginData }>) {
     yield put(apiAuthActions.setUserData(response.body));
     yield put(apiAuthActions.setIsAuth(true));
     yield put(loginFormActions.resetLoginFormSlice());
-    yield localStorage.setItem(LOCAL_STORAGE_AUTH, JSON.stringify(true));
     yield toast.success(TOASTS_TEXT.authOkMessage);
   } catch (e: unknown) {
     const error = e as ErrorResponse;

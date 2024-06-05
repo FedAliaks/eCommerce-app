@@ -4,7 +4,6 @@ import {
   ClientBuilder,
   type HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { getToken, setToken } from 'utils/token-utils';
 
 const ENV = import.meta.env;
 const projectKey = ENV.VITE_CTP_PROJECT_KEY;
@@ -20,14 +19,6 @@ function apiRootWithAnonymousSessionFlow() {
     },
     scopes,
     fetch,
-    tokenCache: {
-      get() {
-        return getToken();
-      },
-      set(cache) {
-        setToken(cache);
-      },
-    },
   };
 
   const httpMiddlewareOptions: HttpMiddlewareOptions = {
