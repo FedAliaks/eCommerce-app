@@ -2,8 +2,6 @@ import CountryInput from 'views/registration/components/RegistrationForm/compone
 import { registrationFormSelector } from 'redux/selectors';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
-import { apiAuthActions } from 'redux/slices/api-auth-slice';
-import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import CheckboxDefault from 'components/checkbox-defaut/CheckboxDefault';
 import RadioButtonDefault, {
@@ -33,7 +31,6 @@ export default function AddNewAddress(): JSX.Element {
   const [IsDefaultAddress, setIsDefaultAddress] = useState(true);
   const [resultRequest, setResultRequest] = useState('');
 
-  const dispatch = useDispatch();
   const typeComponent = typeOfAddress as TypeOfAddressType;
   const { billingCountry, shippingCountry } = useAppSelector(registrationFormSelector);
 
@@ -150,7 +147,6 @@ export default function AddNewAddress(): JSX.Element {
                   .get()
                   .execute()
                   .then((response) => {
-                    dispatch(apiAuthActions.setUserData({ customer: response.body }));
                     setResultRequest('You have added address');
                     setTimeout(() => setResultRequest(''), 5000);
 
@@ -178,9 +174,7 @@ export default function AddNewAddress(): JSX.Element {
                             },
                           })
                           .execute()
-                          .then((responseNew) => {
-                            dispatch(apiAuthActions.setUserData({ customer: responseNew.body }));
-
+                          .then(() => {
                             if (!IsDefaultAddress) {
                               apiRootWithExistingTokenFlow()
                                 .me()
@@ -208,8 +202,8 @@ export default function AddNewAddress(): JSX.Element {
                                       },
                                     })
                                     .execute()
-                                    .then(console.log)
-                                    .catch(console.log);
+                                    .then()
+                                    .catch();
                                 });
                             }
                           });

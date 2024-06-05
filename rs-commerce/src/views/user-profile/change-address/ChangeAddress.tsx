@@ -9,8 +9,6 @@ import InputProfile from 'components/profile-component/input-profile/inputProfil
 import CheckboxDefault from 'components/checkbox-defaut/CheckboxDefault';
 import ButtonDefault from 'components/button-default/ButtonDefault';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
-import { apiAuthActions } from 'redux/slices/api-auth-slice';
-import { useDispatch } from 'react-redux';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
@@ -18,7 +16,6 @@ import classesLocal from './change-address.module.css';
 
 export default function ChangeAddress() {
   const errCountryDefault = 'You can use only "BY" and "US"';
-  const dispatch = useDispatch();
 
   const location = useLocation();
   const addressID = location.state.addressId;
@@ -29,7 +26,7 @@ export default function ChangeAddress() {
   const [cityErr, setCityErr] = useState('');
   const [postCodeErr, setPostCodeErr] = useState('');
   const [countryErr, setCountryErr] = useState('');
-  const [isDefaultAddress, setIsDefaultAddress] = useState(true);
+  const [, setIsDefaultAddress] = useState(true);
 
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
@@ -83,10 +80,9 @@ export default function ChangeAddress() {
             },
           })
           .execute()
-          .then((res1) => {
+          .then(() => {
             setResultRequest('Your address has already updated');
             setTimeout(() => setResultRequest(''), 3000);
-            dispatch(apiAuthActions.setUserData({ customer: res1.body }));
           });
       });
   };
@@ -181,9 +177,7 @@ export default function ChangeAddress() {
   ];
 
   const toggleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('toggle');
     setIsDefaultAddress(!e.target.checked);
-    console.log(isDefaultAddress);
   };
 
   return (

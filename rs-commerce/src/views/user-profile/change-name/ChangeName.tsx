@@ -8,7 +8,6 @@ import {
 import { useDispatch } from 'react-redux';
 import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
-import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
 import UserProfileHeader from '../user-profile-header/UserProfileHeader';
@@ -48,7 +47,6 @@ export default function ChangeName(): JSX.Element {
 
   useEffect(() => {
     getNameFromServer();
-    console.log('use Effect');
   }, []);
 
   const checkField = (
@@ -185,9 +183,7 @@ export default function ChangeName(): JSX.Element {
               .withId({ ID: res.body.id })
               .get()
               .execute()
-              .then((response) => {
-                dispatch(apiAuthActions.setUserData({ customer: response.body }));
-              });
+              .then();
             setCustomMsg('Your date have updated');
           });
       });
