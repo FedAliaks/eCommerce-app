@@ -1,4 +1,4 @@
-import { SimpleFiltersValues, SimpleObject } from 'types/types';
+import { SimpleFiltersValues, SimpleObject, TeamMember } from 'types/types';
 
 export const LOGIN_PAGE_TEXT = {
   titleForm: 'Login',
@@ -311,3 +311,74 @@ export const INITIAL_PRICE_FILTER_VALUE = {
 };
 
 export const EMPTY_RESPONSE = `There are no products matching your request. \nChange the conditions in the filter.`;
+
+export const team: TeamMember[] = [
+  {
+    name: 'Alexander',
+    position: 'Teamlead',
+    github: 'https://github.com/fedaliaks',
+    description: 'Some short bio description',
+    image: '',
+    contribution: [
+      'initiating regular team discussion;',
+      'creation CommerceTools database;',
+      'active implementation of tasks.',
+    ],
+  },
+  {
+    name: 'Darya',
+    position: 'Developer',
+    github: 'https://github.com/DaryaAniskevich',
+    description: 'Some short bio description',
+    image: '',
+    contribution: [
+      'active participant in code reviews;',
+      'creation app design;',
+      'active implementation of tasks.',
+    ],
+  },
+  {
+    name: 'Sergio',
+    position: 'Developer',
+    github: 'https://github.com/sergioivanov008',
+    description: 'Some short bio description',
+    image: '',
+    contribution: [
+      'high level of CommerceTools documentation proficiency and shared this knowledge;',
+      'high-quality code refactoring',
+      'active implementation of tasks.',
+    ],
+  },
+];
+
+export const collaboration = [
+  {
+    title: 'Shared Vision',
+    description:
+      "We started with a clear understanding of the project's goals. This was achieved through collaborative online brainstorming sessions and careful reading tasks descriptions.",
+  },
+  {
+    title: 'Open Communication',
+    description:
+      'We used an approach of open communication. Regular online meetings and discussing in Discord kept everyone in sync on progress and roadblocks. We used project management tool Trello to track tasks and ensure transparency.',
+  },
+  {
+    title: 'Defined Roles, Shared Responsibilities',
+    description:
+      'Using individual strengths, we assigned clear roles while maintaining a shared responsibility for the overall project. Team members readily helped out when needed.',
+  },
+  {
+    title: 'Code Reviews',
+    description:
+      'Regular code reviews ensured quality, maintainability, and adherence to best practices and sharing experience.',
+  },
+  {
+    title: 'Embracing Challenges',
+    description:
+      "When technical hurdles arose, the team didn't shy away. We tackled them together through brainstorming, researching solutions, and leveraging each other's expertise.",
+  },
+  {
+    title: 'Testing and Refinement',
+    description: 'Rigorous testing ensured a high-quality app.',
+  },
+];
