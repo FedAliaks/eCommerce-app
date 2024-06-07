@@ -21,8 +21,10 @@ function Header() {
     {
       path: ROUTE_PATH.catalog,
       title: 'Catalog',
-      className: '',
-      // className: style['underline'],
+    },
+    {
+      path: ROUTE_PATH.aboutUs,
+      title: 'About us',
     },
   ];
 
@@ -80,7 +82,7 @@ function Header() {
         <ul className={style['nav-left']}>
           {leftList.map((item) => (
             <li key={item.path}>
-              <Link to={item.path} className={item.className} aria-label={item.title}>
+              <Link to={item.path} aria-label={item.title}>
                 {item.title}
               </Link>
             </li>

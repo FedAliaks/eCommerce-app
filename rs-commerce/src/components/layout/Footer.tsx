@@ -12,7 +12,12 @@ function Footer() {
       path: ROUTE_PATH.catalog,
       title: 'Catalog',
     },
+    {
+      path: ROUTE_PATH.aboutUs,
+      title: 'About us',
+    },
   ];
+
   return (
     <footer className={style['footer']}>
       <div className="container">
