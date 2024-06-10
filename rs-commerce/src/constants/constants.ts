@@ -64,6 +64,7 @@ export const ROUTE_PATH = {
   productDetailsId: '/product-details/:id',
   catalog: '/catalog',
   catalogCategory: '/catalog/:category',
+  cart: '/cart',
 };
 
 export const LOCAL_STORAGE_TOKEN = 'hurricane_access_token';
