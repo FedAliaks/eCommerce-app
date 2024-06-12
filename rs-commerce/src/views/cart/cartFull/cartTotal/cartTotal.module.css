@@ -37,3 +37,17 @@
   line-height: 30px;
   color: var(--primary);
 }
+
+.cart-total__promo-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.cart-total__promo {
+  width: 70%;
+  padding: 0 10px;
+  font-size: 18px;
+  border: 2px solid var(--primary);
+  border-radius: 5px;
+}

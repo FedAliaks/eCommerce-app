@@ -1,6 +1,6 @@
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { useEffect, useState } from 'react';
-import { LineItem } from '@commercetools/platform-sdk';
+import { Cart, LineItem } from '@commercetools/platform-sdk';
 import ButtonBig from 'components/button-big/button-big';
 import classes from './cartFull.module.css';
 import CartProduct from './cartProduct/CartProduct';
@@ -8,6 +8,7 @@ import CartTotal from './cartTotal/cartTotal';
 
 export default function CartFull(): JSX.Element {
   const [productArr, setProductArray] = useState<LineItem[]>();
+  const [cartBody, setCartBody] = useState<Cart>();
   const clearCart = () => {
     console.log('clear Cart');
   };
@@ -22,7 +23,8 @@ export default function CartFull(): JSX.Element {
       .then((res) => {
         if (res.body.results[0]?.lineItems) {
           setProductArray(res.body.results[0]?.lineItems);
-          console.log(productArr);
+          setCartBody(res.body.results[0]);
+          console.log(res.body.results[0]);
         }
       });
   }, []);
@@ -34,7 +36,9 @@ export default function CartFull(): JSX.Element {
       <div>
         <div className={classes['cart-full__product-column-header']}>
           {headerColumnArr.map((item, index) => (
-            <p className={index === 0 ? `${classes['column1']}` : undefined}>{item}</p>
+            <p className={index === 0 ? `${classes['column1']}` : undefined} key={`header${item}`}>
+              {item}
+            </p>
           ))}
         </div>
         <div className={classes['products__container']}>
@@ -52,7 +56,7 @@ export default function CartFull(): JSX.Element {
           </div>
         </div>
       </div>
-      <CartTotal />
+      <CartTotal totalPrice={cartBody?.totalPrice.centAmount || 100} />
     </div>
   );
 }
