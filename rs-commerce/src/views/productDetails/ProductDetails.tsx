@@ -91,37 +91,6 @@ function ProductDetails() {
     }
   }, [productDetail]);
 
-  // const getCartData = async () => {
-  //   try {
-  //     let data = null;
-  //     let cartId = isAuth
-  //       ? localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID)
-  //       : localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID);
-
-  //     if (!cartId) {
-  //       const newCart = await apiCreateCart();
-  //       cartId = newCart.body.id;
-  //       // after deletion of anonymous cart in cart page remove it from local storage
-  //       localStorage.setItem(
-  //         isAuth ? LOCAL_STORAGE_AUTH_CART_ID : LOCAL_STORAGE_ANONYM_CART_ID,
-  //         cartId,
-  //       );
-  //     }
-  //     data = await apiGetCart(cartId);
-
-  //     if (data?.body) dispatch(cartActions.setCartData(data?.body));
-  //   } catch (e) {
-  //     const error = getRequestErrorMessage(e.code);
-  //     toast.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (!cartData) {
-  //     getCartData();
-  //   }
-  // }, [cartData]);
-
   if (isLoading) return <Loader isShow />;
   if (errorMessage) return <div className={`container ${style['error']}`}>{errorMessage}</div>;
 

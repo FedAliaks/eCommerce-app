@@ -139,6 +139,7 @@ export const apiCreateCart = async () => {
   let response;
   if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
     response = await apiRootWithExistingTokenFlow()
+      .me()
       .carts()
       .post({
         body: {
@@ -148,7 +149,6 @@ export const apiCreateCart = async () => {
       .execute();
   } else {
     response = await apiRootWithAnonymousSessionFlow()
-      .me()
       .carts()
       .post({
         body: {
@@ -163,7 +163,7 @@ export const apiCreateCart = async () => {
 export const apiGetCart = (cartId: string) => {
   let response;
   if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
-    response = apiRootWithExistingTokenFlow().me().carts().get().execute(); // activeCart().get().execute();//carts().//.withId({ ID: cartId }).get().execute();
+    response = apiRootWithExistingTokenFlow().me().carts().withId({ ID: cartId }).get().execute(); // .get().execute(); // // activeCart().get().execute();//carts().
   } else {
     response = apiRootWithAnonymousSessionFlow().carts().withId({ ID: cartId }).get().execute();
   }
@@ -176,7 +176,7 @@ export const apiUpdateCart = async ({
   cartId,
 }: {
   data: MyCartDraft | MyCartUpdate | CartDraft | CartUpdate;
-  cartId?: string;
+  cartId: string;
 }) => {
   let response: ClientResponse<Cart>;
 
@@ -184,7 +184,8 @@ export const apiUpdateCart = async ({
     response = await apiRootWithExistingTokenFlow()
       .me()
       .carts()
-      .post({ body: (data as MyCartDraft) || (data as MyCartUpdate) })
+      .withId({ ID: cartId as string })
+      .post({ body: (data as MyCartUpdate) || (data as MyCartDraft) })
       .execute();
   } else {
     response = await apiRootWithAnonymousSessionFlow()

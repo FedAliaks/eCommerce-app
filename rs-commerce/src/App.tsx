@@ -49,16 +49,14 @@ function App() {
   useEffect(() => {
     if (JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN)!)) {
       dispatch(apiAuthActions.setIsAuth(true));
-      getCartData(true);
     } else {
       dispatch(apiAuthActions.setIsAuth(false));
-      getCartData(false);
     }
   }, []);
 
-  // useEffect(() => {
-  //   getCartData(isAuth);
-  // }, [isAuth]);
+  useEffect(() => {
+    getCartData(isAuth);
+  }, [isAuth]);
 
   return (
     <BrowserRouter>
