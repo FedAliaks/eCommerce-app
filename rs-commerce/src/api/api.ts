@@ -160,14 +160,28 @@ export const apiCreateCart = async () => {
 
   return response;
 };
-export const apiGetCart = (cartId: string) => {
+export const apiGetCart = async (cartId: string) => {
   let response;
   if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
-    response = apiRootWithExistingTokenFlow().me().carts().withId({ ID: cartId }).get().execute(); // .get().execute(); // // activeCart().get().execute();//carts().
+    response = await apiRootWithExistingTokenFlow()
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .get()
+      .execute();
   } else {
-    response = apiRootWithAnonymousSessionFlow().carts().withId({ ID: cartId }).get().execute();
+    response = await apiRootWithAnonymousSessionFlow()
+      .carts()
+      .withId({ ID: cartId })
+      .get()
+      .execute();
   }
 
+  return response;
+};
+
+export const apiGetActiveCart = async () => {
+  const response = await apiRootWithExistingTokenFlow().me().activeCart().get().execute();
   return response;
 };
 
