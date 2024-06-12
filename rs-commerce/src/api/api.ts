@@ -160,12 +160,11 @@ export const apiCreateCart = async () => {
 
   return response;
 };
-export const apiGetCart = (cartId: string | null) => {
+export const apiGetCart = (cartId: string) => {
   let response;
-  const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
-  if (token && !cartId) {
-    response = apiRootWithExistingTokenFlow().me().carts().get().execute();
-  } else if (!token && cartId) {
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    response = apiRootWithExistingTokenFlow().me().carts().get().execute(); // activeCart().get().execute();//carts().//.withId({ ID: cartId }).get().execute();
+  } else {
     response = apiRootWithAnonymousSessionFlow().carts().withId({ ID: cartId }).get().execute();
   }
 
