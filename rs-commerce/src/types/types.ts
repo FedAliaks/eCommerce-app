@@ -182,3 +182,12 @@ export type SimpleBooleanValue = { [key: string]: boolean };
 export type CartInitialState = {
   cartData: null | Cart | CartPagedQueryResponse;
 };
+
+export type TeamMember = {
+  name: string;
+  position: string;
+  github: string;
+  description: string;
+  image: string;
+  contribution: string[];
+};

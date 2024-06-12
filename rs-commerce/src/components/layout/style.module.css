@@ -69,6 +69,10 @@
   margin-left: auto;
 }
 
+.header .nav-left {
+  gap: 40px;
+}
+
 .footer {
   border-top: 1px solid var(--gray-light);
   padding-top: 20px;
@@ -174,7 +178,11 @@
     gap: 20px;
     margin-left: 0;
   }
-
+  .header .nav-left {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
   .footer-top {
     flex-direction: column;
     align-items: center;
