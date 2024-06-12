@@ -1,20 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { /* apiCreateCart, apiGetCart, */ apiGetOneCategory, apiGetProductDetails } from 'api/api';
+import { apiGetOneCategory, apiGetProductDetails } from 'api/api';
 import Loader from 'components/loader/loader';
 import getRequestErrorMessage from 'utils/utils';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { productDetailSliceActions } from 'redux/slices/product-detail-slice';
-import { /* apiAuthSelector, cartSelector, */ productDetailsSelector } from 'redux/selectors';
+import { productDetailsSelector } from 'redux/selectors';
 import { ErrorResponse } from '@commercetools/importapi-sdk';
 import toast from 'react-hot-toast';
-import {
-  // LOCAL_STORAGE_ANONYM_CART_ID,
-  // LOCAL_STORAGE_AUTH_CART_ID,
-  // LOCAL_STORAGE_TOKEN,
-  ROUTE_PATH,
-} from 'constants/constants';
-// import { cartActions } from 'redux/slices/cart-slice';
+import { ROUTE_PATH } from 'constants/constants';
 import { Breadcrumbs, DescriptionBlock, ImageBlock } from './components';
 import style from './style.module.css';
 
@@ -22,8 +16,7 @@ function ProductDetails() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { productDetail } = useAppSelector(productDetailsSelector);
-  // const { cartData } = useAppSelector(cartSelector);
-  // const { isAuth } = useAppSelector(apiAuthSelector);
+
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [categoryLink, setCategoryLink] = useState<{ name: string; path: string }[]>([]);
