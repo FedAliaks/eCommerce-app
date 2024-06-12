@@ -257,7 +257,7 @@
 }
 @media screen and (max-width: 600px) {
   .filter-input {
-    width: 250px;
+    width: 100%;
   }
   .category {
     grid-template-columns: repeat(1, 1fr);

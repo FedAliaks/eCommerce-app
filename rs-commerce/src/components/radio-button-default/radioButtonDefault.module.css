@@ -1,0 +1,21 @@
+.radio-element {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radio-item {
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.radio-style {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #ccc; /* Рамка для контраста. */
+}

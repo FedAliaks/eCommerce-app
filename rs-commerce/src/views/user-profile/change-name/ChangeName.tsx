@@ -1,8 +1,6 @@
 import { InputProfileType } from 'components/profile-component/types';
 import ProfileComponent from 'components/profile-component/profileComponent';
-import { useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { apiAuthSelector } from 'redux/selectors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   errorMsgObj,
   regExpObj,
@@ -10,40 +8,56 @@ import {
 import { useDispatch } from 'react-redux';
 import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
-import { apiAuthActions } from 'redux/slices/api-auth-slice';
+import Breadcrumb from 'components/breadcrumb/Breadcrumb';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATH } from 'constants/constants';
+import toast from 'react-hot-toast';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
-import UserProfileHeader from '../user-profile-header/UserProfileHeader';
+import { changeNameBreadcrumbList } from '../constants';
 
 export default function ChangeName(): JSX.Element {
-  const { userData } = useAppSelector(apiAuthSelector);
   const dispatch = useDispatch();
-  const customer = userData?.customer;
-  const [firstName, setFirstName] = useState(customer?.firstName || 'first-name');
+  const navigate = useNavigate();
+
+  const [firstName, setFirstName] = useState('first-name');
   const [firstNameError, setFirstNameError] = useState('');
-  const [lastName, setLastName] = useState(customer?.lastName || 'last-name');
+  const [lastName, setLastName] = useState('last-name');
   const [lastNameError, setLastNameError] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState(customer?.dateOfBirth || '2000-01-01');
+  const [dateOfBirth, setDateOfBirth] = useState('2000-01-01');
   const [dateOfBirthError, setDateOfBirthError] = useState('');
-  const [email, setEmail] = useState(customer?.email || 'example@mail.com');
+  const [email, setEmail] = useState('example@mail.com');
   const [emailError, setEmailError] = useState('');
   const [customMsg, setCustomMsg] = useState('');
 
-  const getNameFromServer = () => {
-    if (userData) {
-      apiRootWithExistingTokenFlow()
-        .customers()
-        .withId({ ID: userData.customer.id })
-        .get()
-        .execute()
-        .then((res) => {
-          setFirstName(res.body.firstName || 'name');
-          setLastName(res.body.lastName || 'last - name');
-          setDateOfBirth(res.body.dateOfBirth || '2000-01-01');
-          setEmail(res.body.email || 'example@mail.com');
-        });
-    }
+  const addErrorCustomMsg = () => {
+    setCustomMsg('Something went wrong, try again later');
   };
+
+  const getNameFromServer = () => {
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .customers()
+          .withId({ ID: res.body.id })
+          .get()
+          .execute()
+          .then((res1) => {
+            setFirstName(res1.body.firstName || 'name');
+            setLastName(res1.body.lastName || 'last - name');
+            setDateOfBirth(res1.body.dateOfBirth || '2000-01-01');
+            setEmail(res1.body.email || 'example@mail.com');
+          });
+      })
+      .catch(() => addErrorCustomMsg());
+  };
+
+  useEffect(() => {
+    getNameFromServer();
+  }, []);
 
   const checkField = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -132,64 +146,63 @@ export default function ChangeName(): JSX.Element {
   ];
 
   const clearFieldsOnPage = (): void => {
-    setFirstName('');
-    setLastName('');
-    setDateOfBirth('');
-    setEmail('');
-    dispatch(updateProfileActions.setCheckNewName(false));
+    navigate(ROUTE_PATH.profile);
   };
 
   const saveBtnClick = (): void => {
-    if (userData) {
-      apiRootWithExistingTokenFlow()
-        .customers()
-        .withId({ ID: userData.customer.id })
-        .post({
-          body: {
-            version: userData.customer.version,
-            actions: [
-              {
-                action: 'setFirstName',
-                firstName,
-              },
-              {
-                action: 'setLastName',
-                lastName,
-              },
-              {
-                action: 'setDateOfBirth',
-                dateOfBirth,
-              },
-              {
-                action: 'changeEmail',
-                email,
-              },
-            ],
-          },
-        })
-        .execute()
-        .then(() => {
-          getNameFromServer();
-          apiRootWithExistingTokenFlow()
-            .customers()
-            .withId({ ID: userData.customer.id })
-            .get()
-            .execute()
-            .then((response) => {
-              dispatch(apiAuthActions.setUserData({ customer: response.body }));
-            });
-          setCustomMsg('Your date have updated');
-        });
-    }
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .customers()
+          .withId({ ID: res.body.id })
+          .post({
+            body: {
+              version: res.body.version,
+              actions: [
+                {
+                  action: 'setFirstName',
+                  firstName,
+                },
+                {
+                  action: 'setLastName',
+                  lastName,
+                },
+                {
+                  action: 'setDateOfBirth',
+                  dateOfBirth,
+                },
+                {
+                  action: 'changeEmail',
+                  email,
+                },
+              ],
+            },
+          })
+          .execute()
+          .then(() => {
+            getNameFromServer();
+            setCustomMsg('Your date have updated');
+            toast.success('Your profile has updated successfully');
+            navigate(ROUTE_PATH.profile);
+          })
+          .catch(() => addErrorCustomMsg());
+      })
+      .catch(() => addErrorCustomMsg());
   };
 
   return (
     <div>
-      <UserProfileHeader title="Change name" subtitle="Main > Profile > Edit name" />
+      <Breadcrumb
+        linksList={changeNameBreadcrumbList}
+        currentPageName="Change personal information"
+      />
 
-      <div className={classes['profile']}>
+      <div className={`container ${classes['profile']}`}>
         <div className={classes['profile__column']}>
-          <h1>Personal information</h1>
+          <h2>Personal information</h2>
           <ProfileComponent inputArray={inputArrayAddress} flexVertical />
           <p className={classes['custom-message']}>{customMsg}</p>
           <div className={classes['profile__password-btn-container']}>

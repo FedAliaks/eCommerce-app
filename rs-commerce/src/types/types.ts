@@ -1,5 +1,7 @@
 import { QueryParam } from '@commercetools/importapi-sdk';
 import {
+  Cart,
+  CartPagedQueryResponse,
   Category,
   CustomerSignInResult,
   MyCustomerDraft,
@@ -176,3 +178,7 @@ export type ProductImageItem = { url: string; label: string; dimensions: { w: nu
 export type SimpleValue = { id: string; value: string };
 
 export type SimpleBooleanValue = { [key: string]: boolean };
+
+export type CartInitialState = {
+  cartData: null | Cart | CartPagedQueryResponse;
+};

@@ -1,126 +1,140 @@
 import ProfileComponent from 'components/profile-component/profileComponent';
-import { useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { apiAuthSelector } from 'redux/selectors';
 import { InputProfileType, ProfileComponentType } from 'components/profile-component/types';
 import CustomLink from 'components/custom-link/custom-link';
 import { ROUTE_PATH } from 'constants/constants';
+import { useEffect, useState } from 'react';
+import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import classes from './UserProfile.module.css';
-import UserProfileHeader from './user-profile-header/UserProfileHeader';
+import { userProfileBreadcrumbList } from './constants';
 
 export default function UserProfile(): JSX.Element {
-  const { userData } = useAppSelector(apiAuthSelector);
-  const customer = userData?.customer;
+  const [state, setState] = useState<JSX.Element[]>();
 
-  const inputArrayPersonal: InputProfileType[] = [
-    {
-      title: 'First name',
-      id: 'first-name',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.firstName || 'name',
-      isDisabled: true,
-    },
-    {
-      title: 'Last name',
-      id: 'last-name',
-      isSizeSmall: true,
-      type: 'text',
-      value: customer?.lastName || 'name',
-      isDisabled: true,
-    },
-    {
-      title: 'Date of birth',
-      id: 'date-of-birth',
-      isSizeSmall: false,
-      type: 'data',
-      value: customer?.dateOfBirth || '1900-01-01',
-      isDisabled: true,
-    },
-  ];
+  const addInfo = (ProfileUsersComponents: ProfileComponentType[]) =>
+    ProfileUsersComponents.map((item, index) => (
+      <ProfileComponent
+        title={item.title}
+        subtitle={item.subtitle}
+        inputArray={item.inputArray}
+        defaultAddress={item.defaultAddress}
+        key={`address${index}` || item.title || item.subtitle}
+        linkTo={item.linkTo}
+        addressId={item.addressId}
+      />
+    ));
 
-  const ProfileUsersComponents: ProfileComponentType[] = [
-    {
-      title: 'Personal information',
-      inputArray: inputArrayPersonal,
+  const getPersonalInfo = () => {
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        const inputArrayPersonal: InputProfileType[] = [
+          {
+            title: 'First name',
+            id: 'first-name',
+            isSizeSmall: true,
+            type: 'text',
+            value: res.body.firstName || 'name',
+            isDisabled: true,
+          },
+          {
+            title: 'Last name',
+            id: 'last-name',
+            isSizeSmall: true,
+            type: 'text',
+            value: res.body.lastName || 'name',
+            isDisabled: true,
+          },
+          {
+            title: 'Date of birth',
+            id: 'date-of-birth',
+            isSizeSmall: false,
+            type: 'data',
+            value: res.body.dateOfBirth || '1900-01-01',
+            isDisabled: true,
+          },
+        ];
 
-      linkTo: ROUTE_PATH.changeName,
-    },
-  ];
+        const ProfileUsersComponents: ProfileComponentType[] = [
+          {
+            title: 'Personal information',
+            inputArray: inputArrayPersonal,
 
-  const arrayAddresses = userData?.customer.addresses;
+            linkTo: ROUTE_PATH.changeName,
+          },
+        ];
 
-  if (arrayAddresses)
-    arrayAddresses.forEach((item) => {
-      const address: InputProfileType[] = [
-        {
-          title: 'Country',
-          id: 'country-billing',
-          isSizeSmall: true,
-          type: 'text',
-          value: item.country || '',
-          isDisabled: true,
-        },
-        {
-          title: 'Post code',
-          id: 'post-code-billing',
-          isSizeSmall: true,
-          type: 'text',
-          value: item.postalCode || '000000',
-          isDisabled: true,
-        },
-        {
-          title: 'City',
-          id: 'city-billing',
-          isSizeSmall: true,
-          type: 'text',
-          value: item.city || 'city',
-          isDisabled: true,
-        },
-        {
-          title: 'Street',
-          id: 'street-billing',
-          isSizeSmall: true,
-          type: 'text',
-          value: item.streetName || 'street',
-          isDisabled: true,
-        },
-      ];
+        const arrayAddresses = res.body.addresses;
+        arrayAddresses.forEach((item) => {
+          const address: InputProfileType[] = [
+            {
+              title: 'Country',
+              id: 'country-billing',
+              isSizeSmall: true,
+              type: 'text',
+              value: item.country || '',
+              isDisabled: true,
+            },
+            {
+              title: 'Post code',
+              id: 'post-code-billing',
+              isSizeSmall: true,
+              type: 'text',
+              value: item.postalCode || '000000',
+              isDisabled: true,
+            },
+            {
+              title: 'City',
+              id: 'city-billing',
+              isSizeSmall: true,
+              type: 'text',
+              value: item.city || 'city',
+              isDisabled: true,
+            },
+            {
+              title: 'Street',
+              id: 'street-billing',
+              isSizeSmall: true,
+              type: 'text',
+              value: item.streetName || 'street',
+              isDisabled: true,
+            },
+          ];
 
-      ProfileUsersComponents.push({
-        title: 'Address information',
-        subtitle: customer?.shippingAddressIds?.includes(item?.id || '')
-          ? 'Shipping address'
-          : 'Billing address',
-        defaultAddress:
-          (item.id || '') === customer?.defaultBillingAddressId ||
-          (item.id || '') === customer?.defaultShippingAddressId,
-        inputArray: address,
-        addressId: item.id,
+          ProfileUsersComponents.push({
+            title: 'Address information',
+            subtitle: res.body.shippingAddressIds?.includes(item?.id || '')
+              ? 'Shipping address'
+              : 'Billing address',
+            defaultAddress:
+              (item.id || '') === res.body.defaultBillingAddressId ||
+              (item.id || '') === res.body.defaultShippingAddressId,
+            inputArray: address,
+            addressId: item.id,
 
-        linkTo: ROUTE_PATH.changeAddress,
+            linkTo: ROUTE_PATH.changeAddress,
+          });
+        });
+        setState(addInfo(ProfileUsersComponents));
       });
-    });
+  };
+
+  useEffect(() => {
+    getPersonalInfo();
+  }, []);
 
   return (
     <div className={classes['container']}>
-      <UserProfileHeader title="Profile" subtitle="Main > Profile" />
+      <Breadcrumb linksList={userProfileBreadcrumbList} currentPageName="Profile" />
 
-      <div className={classes['profile']}>
-        <div className={classes['profile__column']}>
-          {ProfileUsersComponents.map((item, index) => (
-            <ProfileComponent
-              title={item.title}
-              subtitle={item.subtitle}
-              inputArray={item.inputArray}
-              defaultAddress={item.defaultAddress}
-              key={`address${index}` || item.title || item.subtitle}
-              linkTo={item.linkTo}
-              addressId={item.addressId}
-            />
-          ))}
-        </div>
+      <div className={`container ${classes['profile']}`}>
+        <div className={classes['profile__column']}>{state}</div>
         <div className={classes['profile__column']}>
           <CustomLink to={ROUTE_PATH.changePassword} text="Change password" elStyle="link" />
+
+          <CustomLink to={ROUTE_PATH.addNewAddress} text="Add new address" elStyle="link" />
         </div>
       </div>
     </div>
