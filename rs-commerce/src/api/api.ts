@@ -1,9 +1,14 @@
 import { ClientResponse } from '@commercetools/importapi-sdk';
 import {
   ByProjectKeyRequestBuilder,
+  Cart,
+  CartDraft,
+  CartUpdate,
   Category,
   CategoryPagedQueryResponse,
   CustomerSignInResult,
+  MyCartDraft,
+  MyCartUpdate,
   MyCustomerDraft,
   Product,
   ProductPagedQueryResponse,
@@ -129,3 +134,79 @@ export async function apiGetOneCategory({
 
   return response;
 }
+
+export const apiCreateCart = async () => {
+  let response;
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    response = await apiRootWithExistingTokenFlow()
+      .me()
+      .carts()
+      .post({
+        body: {
+          currency: 'EUR',
+        },
+      })
+      .execute();
+  } else {
+    response = await apiRootWithAnonymousSessionFlow()
+      .carts()
+      .post({
+        body: {
+          currency: 'EUR',
+        },
+      })
+      .execute();
+  }
+
+  return response;
+};
+export const apiGetCart = async (cartId: string) => {
+  let response;
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    response = await apiRootWithExistingTokenFlow()
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .get()
+      .execute();
+  } else {
+    response = await apiRootWithAnonymousSessionFlow()
+      .carts()
+      .withId({ ID: cartId })
+      .get()
+      .execute();
+  }
+
+  return response;
+};
+
+export const apiGetActiveCart = async () => {
+  const response = await apiRootWithExistingTokenFlow().me().activeCart().get().execute();
+  return response;
+};
+
+export const apiUpdateCart = async ({
+  data,
+  cartId,
+}: {
+  data: MyCartDraft | MyCartUpdate | CartDraft | CartUpdate;
+  cartId: string;
+}) => {
+  let response: ClientResponse<Cart>;
+
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    response = await apiRootWithExistingTokenFlow()
+      .me()
+      .carts()
+      .withId({ ID: cartId as string })
+      .post({ body: (data as MyCartUpdate) || (data as MyCartDraft) })
+      .execute();
+  } else {
+    response = await apiRootWithAnonymousSessionFlow()
+      .carts()
+      .withId({ ID: cartId as string })
+      .post({ body: (data as CartUpdate) || (data as CartDraft) })
+      .execute();
+  }
+  return response;
+};

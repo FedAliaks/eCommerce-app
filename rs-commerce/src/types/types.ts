@@ -1,5 +1,7 @@
 import { QueryParam } from '@commercetools/importapi-sdk';
 import {
+  Cart,
+  CartPagedQueryResponse,
   Category,
   CustomerSignInResult,
   MyCustomerDraft,
@@ -172,3 +174,7 @@ export type SimpleObject = {
 };
 
 export type ProductImageItem = { url: string; label: string; dimensions: { w: number; h: number } };
+
+export type CartInitialState = {
+  cartData: null | Cart | CartPagedQueryResponse;
+};

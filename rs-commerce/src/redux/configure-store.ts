@@ -9,6 +9,7 @@ import { updateProfileReducer } from './slices/update-profile-slice';
 
 import { productDetailReducer } from './slices/product-detail-slice';
 import rootSaga from './sagas/sagas';
+import { cartReducer } from './slices/cart-slice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -24,6 +25,7 @@ export const store = configureStore({
 
     productDetail: productDetailReducer,
     apiCategoriesProducts: apiCategoriesProductsReducer,
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
