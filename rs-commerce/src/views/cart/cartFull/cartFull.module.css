@@ -1,3 +1,23 @@
-.cart-full__product-column-header {
+.cart-full__container {
   display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.cart-full__product-column-header {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  justify-items: center;
+  padding: 10px;
+  background-color: var(--lilac-light-30);
+}
+
+.column1 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.product__clear-btn-container {
+  display: flex;
+  justify-content: end;
 }

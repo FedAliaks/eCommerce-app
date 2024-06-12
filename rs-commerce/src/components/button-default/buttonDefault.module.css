@@ -17,3 +17,7 @@
   background-color: var(--lilac-dark);
   color: var(--white);
 }
+
+.profile__button_small {
+  width: 60px;
+}

@@ -26,7 +26,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
       {image ? <img className={classes['product__image']} src={image} alt="imageProduct" /> : null}
 
       <p className={classes['product__content']}>
-        {name.length > 15 ? `${name.slice(0, 20)}...` : name}
+        {name.length > 15 ? `${name.slice(0, 15)}...` : name}
       </p>
 
       <p className={classes['product__content']}>{`${price / 100} EUR`}</p>

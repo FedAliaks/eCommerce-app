@@ -1,11 +1,16 @@
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { useEffect, useState } from 'react';
 import { LineItem } from '@commercetools/platform-sdk';
+import ButtonBig from 'components/button-big/button-big';
 import classes from './cartFull.module.css';
-import CartProduct from './carttProduct/CartProduct';
+import CartProduct from './cartProduct/CartProduct';
+import CartTotal from './cartTotal/cartTotal';
 
 export default function CartFull(): JSX.Element {
   const [productArr, setProductArray] = useState<LineItem[]>();
+  const clearCart = () => {
+    console.log('clear Cart');
+  };
 
   useEffect(() => {
     // getCart
@@ -22,14 +27,15 @@ export default function CartFull(): JSX.Element {
       });
   }, []);
 
+  const headerColumnArr = ['Product', 'Price', 'Quantity', 'Total cost'];
+
   return (
     <div className={classes['cart-full__container']}>
       <div>
         <div className={classes['cart-full__product-column-header']}>
-          <p>Product</p>
-          <p>Price</p>
-          <p>Quantity</p>
-          <p>Total cost</p>
+          {headerColumnArr.map((item, index) => (
+            <p className={index === 0 ? `${classes['column1']}` : undefined}>{item}</p>
+          ))}
         </div>
         <div className={classes['products__container']}>
           {productArr?.map((item) => (
@@ -41,8 +47,12 @@ export default function CartFull(): JSX.Element {
               quantity={item.quantity}
             />
           ))}
+          <div className={classes['product__clear-btn-container']}>
+            <ButtonBig content="Clear Shopping Cart" isActiveStyle onClick={clearCart} />
+          </div>
         </div>
       </div>
+      <CartTotal />
     </div>
   );
 }
