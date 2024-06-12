@@ -1,9 +1,14 @@
 import { ClientResponse } from '@commercetools/importapi-sdk';
 import {
   ByProjectKeyRequestBuilder,
+  Cart,
+  CartDraft,
+  CartUpdate,
   Category,
   CategoryPagedQueryResponse,
   CustomerSignInResult,
+  MyCartDraft,
+  MyCartUpdate,
   MyCustomerDraft,
   Product,
   ProductPagedQueryResponse,
@@ -129,3 +134,65 @@ export async function apiGetOneCategory({
 
   return response;
 }
+
+export const apiCreateCart = async () => {
+  let response;
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    response = await apiRootWithExistingTokenFlow()
+      .carts()
+      .post({
+        body: {
+          currency: 'EUR',
+        },
+      })
+      .execute();
+  } else {
+    response = await apiRootWithAnonymousSessionFlow()
+      .me()
+      .carts()
+      .post({
+        body: {
+          currency: 'EUR',
+        },
+      })
+      .execute();
+  }
+
+  return response;
+};
+export const apiGetCart = (cartId: string | null) => {
+  let response;
+  const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
+  if (token && !cartId) {
+    response = apiRootWithExistingTokenFlow().me().carts().get().execute();
+  } else if (!token && cartId) {
+    response = apiRootWithAnonymousSessionFlow().carts().withId({ ID: cartId }).get().execute();
+  }
+
+  return response;
+};
+
+export const apiUpdateCart = async ({
+  data,
+  cartId,
+}: {
+  data: MyCartDraft | MyCartUpdate | CartDraft | CartUpdate;
+  cartId?: string;
+}) => {
+  let response: ClientResponse<Cart>;
+
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    response = await apiRootWithExistingTokenFlow()
+      .me()
+      .carts()
+      .post({ body: (data as MyCartDraft) || (data as MyCartUpdate) })
+      .execute();
+  } else {
+    response = await apiRootWithAnonymousSessionFlow()
+      .carts()
+      .withId({ ID: cartId as string })
+      .post({ body: (data as CartUpdate) || (data as CartDraft) })
+      .execute();
+  }
+  return response;
+};
