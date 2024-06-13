@@ -49,6 +49,8 @@ export default function CartFull(): JSX.Element {
               price={item.price.value.centAmount}
               totalCost={item.totalPrice.centAmount}
               quantity={item.quantity}
+              idBook={item.id}
+              idCart={cartBody?.id || 'unknown idCart'}
             />
           ))}
           <div className={classes['product__clear-btn-container']}>

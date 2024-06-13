@@ -7,18 +7,73 @@ export type CartProductType = {
   price: number;
   totalCost: number;
   quantity: number;
+  idBook: string;
+  idCart: string;
 };
 
 export default function CartProduct(props: CartProductType): JSX.Element {
-  const { name, image, price, totalCost, quantity } = props;
+  const { name, image, price, totalCost, quantity, idBook, idCart } = props;
   const [countProduct, setCountProduct] = useState(quantity);
 
   const increaseCount = () => {
     setCountProduct(countProduct + 1);
+
+    /*     apiRootWithExistingTokenFlow().carts().withId({ID: idCart}).get().execute().then(res => {
+      console.log(res);
+      apiRootWithExistingTokenFlow().carts().withId({ID: idCart}).post({
+        body: {
+          version: res.body.version,
+          actions: [
+            {
+              action: 'addLineItem',
+              productId: idBook,
+              variantId: 1,
+              quantity: countProduct
+            }
+          ]
+        }
+      }).execute().then(console.log).catch(console.log)
+
+      
+    })
+ */
+
+    /*     apiRootWithExistingTokenFlow().me().carts().get().execute().then(res => 
+      {
+
+
+
+
+
+
+        apiRootWithExistingTokenFlow().carts().withId({ID: idCart}).post({
+          body: {
+            version: res.body.results[0]?.version || 1,
+            actions: [
+              {
+                action: 'changeLineItemQuantity',
+                quantity: countProduct
+              }
+            ]
+          }
+        }).execute().then(result => console.log(result))
+
+
+
+      }) */
+
+    console.log(idBook);
+    console.log(idCart);
   };
 
   const decreaseCount = () => {
     setCountProduct(countProduct - 1);
+    console.log(idBook);
+    console.log(idCart);
+  };
+
+  const deletePositionFromCart = () => {
+    console.log('delete book');
   };
 
   return (
@@ -43,7 +98,11 @@ export default function CartProduct(props: CartProductType): JSX.Element {
       </div>
 
       <p>{`${totalCost / 100} EUR`}</p>
-      <img src="/src/assets/images/basket-for-cart.png" alt="clear-position" />
+      <div
+        role="presentation"
+        className={classes['product__delete']}
+        onClick={deletePositionFromCart}
+      />
     </div>
   );
 }

@@ -38,3 +38,12 @@
   border: none;
   cursor: pointer;
 }
+
+.product__delete {
+  background-image: url('/src/assets/images/basket-for-cart.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
