@@ -9,6 +9,7 @@ import CartTotal from './cartTotal/cartTotal';
 export default function CartFull(): JSX.Element {
   const [productArr, setProductArray] = useState<LineItem[]>();
   const [cartBody, setCartBody] = useState<Cart>();
+
   const clearCart = () => {
     console.log('clear Cart');
   };
@@ -61,7 +62,7 @@ export default function CartFull(): JSX.Element {
           </div>
         </div>
       </div>
-      <CartTotal totalPrice={cartBody?.totalPrice.centAmount || 100} />
+      <CartTotal totalPrice={cartBody?.totalPrice.centAmount || 100} idCart={cartBody?.id || ''} />
     </div>
   );
 }

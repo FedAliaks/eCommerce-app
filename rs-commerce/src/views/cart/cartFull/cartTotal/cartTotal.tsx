@@ -1,18 +1,46 @@
 import ButtonDefault from 'components/button-default/ButtonDefault';
+import { useState } from 'react';
+import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import classes from './cartTotal.module.css';
 
 export type CartTotalType = {
   totalPrice: number;
+  idCart: string;
 };
 
 export default function CartTotal(props: CartTotalType): JSX.Element {
-  const { totalPrice } = props;
+  const { totalPrice, idCart } = props;
+  const [promoCode, setPromoCode] = useState('');
+
   const usePromoCode = () => {
-    console.log('add promo');
+    apiRootWithExistingTokenFlow()
+      .carts()
+      .withId({ ID: idCart })
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .carts()
+          .withId({ ID: idCart })
+          .post({
+            body: {
+              version: res.body.version,
+              actions: [
+                {
+                  action: 'addDiscountCode',
+                  code: promoCode.toUpperCase(),
+                },
+              ],
+            },
+          })
+          .execute()
+          .then((result) => console.log(result))
+          .catch(console.log);
+      });
   };
 
-  const clickCheckOut = () => {
-    console.log('click check out');
+  const changePromoInputField = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPromoCode(e.target.value);
   };
 
   return (
@@ -31,10 +59,10 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
           type="text"
           placeholder="Input Promo Code"
           className={classes['cart-total__promo']}
+          onChange={(e) => changePromoInputField(e)}
         />
         <ButtonDefault content="Apply" colored onClick={usePromoCode} isActive small />
       </div>
-      <ButtonDefault content="Check out" colored={false} onClick={clickCheckOut} isActive />
     </div>
   );
 }

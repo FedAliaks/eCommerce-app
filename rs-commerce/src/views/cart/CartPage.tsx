@@ -25,8 +25,8 @@ export default function Cart(): JSX.Element {
 
   // 57c69d29-4263-4fb5-b374-81abf0ec2094
   // 9935ab95-8859-4530-8341-51bf96b33487'
-
-  /*      apiRootWithExistingTokenFlow().me().carts().get().execute().then(res => {
+  /* 
+       apiRootWithExistingTokenFlow().me().carts().get().execute().then(res => {
     console.log(res.body.results[0]);
 
     if (res.body.results[0]?.customerId) {
@@ -36,7 +36,7 @@ export default function Cart(): JSX.Element {
           actions: [
             {
               action: 'addLineItem',
-              productId: '57c69d29-4263-4fb5-b374-81abf0ec2094',
+              productId: '9935ab95-8859-4530-8341-51bf96b33487',
               quantity: 1
             }
           ]
