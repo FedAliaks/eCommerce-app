@@ -1,21 +1,22 @@
 import { useState } from 'react';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import { LineItem } from '@commercetools/platform-sdk';
 import classes from './cartProduct.module.css';
 
 export type CartProductType = {
-  name: string;
-  image: string | undefined;
-  price: number;
-  totalCost: number;
-  quantity: number;
-  idBook: string;
+  product: LineItem;
   idCart: string;
-  idLineItems: string;
 };
 
 export default function CartProduct(props: CartProductType): JSX.Element {
-  const { name, image, price, totalCost, quantity, idBook, idCart, idLineItems } = props;
-  const [countProduct, setCountProduct] = useState(quantity);
+  const { product, idCart } = props;
+  const image = Array.isArray(product.variant.images) ? product.variant.images[0]?.url : '';
+  const name = product.name['en'] || '';
+  const startPrice = product.price.value.centAmount;
+  const priceDiscounted = product.price.discounted?.value.centAmount;
+  const totalPrice = product.totalPrice.centAmount;
+
+  const [countProduct, setCountProduct] = useState(product.quantity);
 
   const increaseCount = () => {
     setCountProduct(countProduct + 1);
@@ -35,7 +36,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
               actions: [
                 {
                   action: 'addLineItem',
-                  productId: idBook,
+                  productId: product.id,
                 },
               ],
             },
@@ -49,7 +50,6 @@ export default function CartProduct(props: CartProductType): JSX.Element {
 
   const decreaseCount = () => {
     setCountProduct(countProduct - 1);
-    console.log(idBook);
     console.log(idCart);
 
     apiRootWithExistingTokenFlow()
@@ -68,7 +68,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
               actions: [
                 {
                   action: 'changeLineItemQuantity',
-                  lineItemId: idLineItems,
+                  lineItemId: product.id,
                   quantity: countProduct - 1,
                 },
               ],
@@ -97,7 +97,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
               actions: [
                 {
                   action: 'removeLineItem',
-                  lineItemId: idBook,
+                  lineItemId: product.id,
                 },
               ],
             },
@@ -116,7 +116,17 @@ export default function CartProduct(props: CartProductType): JSX.Element {
         {name.length > 15 ? `${name.slice(0, 15)}...` : name}
       </p>
 
-      <p className={classes['product__content']}>{`${price / 100} EUR`}</p>
+      <div className={classes['price-component']}>
+        <p
+          className={
+            classes['product__content']
+          }>{`${(priceDiscounted || startPrice) / 100} EUR`}</p>
+
+        {priceDiscounted ? (
+          <p
+            className={`${classes['product__content']} ${classes['product__content_colored']}  `}>{`${startPrice / 100} EUR`}</p>
+        ) : null}
+      </div>
 
       <div>
         <button type="button" className={classes['product__button']} onClick={decreaseCount}>
@@ -129,7 +139,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
         </button>
       </div>
 
-      <p>{`${totalCost / 100} EUR`}</p>
+      <p>{`${totalPrice / 100} EUR`}</p>
       <div
         role="presentation"
         className={classes['product__delete']}

@@ -24,9 +24,10 @@ export default function Cart(): JSX.Element {
   // add position in cart
 
   // 57c69d29-4263-4fb5-b374-81abf0ec2094
-  // 9935ab95-8859-4530-8341-51bf96b33487'
-  /* 
-       apiRootWithExistingTokenFlow().me().carts().get().execute().then(res => {
+  // 9935ab95-8859-4530-8341-51bf96b33487
+  // 5160a3bd-7fb7-43f2-9b05-96c0e8b115f5
+
+  /*        apiRootWithExistingTokenFlow().me().carts().get().execute().then(res => {
     console.log(res.body.results[0]);
 
     if (res.body.results[0]?.customerId) {
@@ -52,7 +53,7 @@ export default function Cart(): JSX.Element {
 
 
 
-  })  */
+  })   */
 
   // getCart
   /*   apiRootWithExistingTokenFlow().me().carts().get().execute().then(res => {

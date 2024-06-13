@@ -45,18 +45,7 @@ export default function CartFull(): JSX.Element {
           ))}
         </div>
         <div className={classes['products__container']}>
-          {productArr?.map((item) => (
-            <CartProduct
-              name={item.name['en'] || 'name'}
-              image={item.variant.images ? item.variant.images[0]?.url : undefined}
-              price={item.price.value.centAmount}
-              totalCost={item.totalPrice.centAmount}
-              quantity={item.quantity}
-              idBook={item.productId}
-              idCart={cartBody?.id || 'unknown idCart'}
-              idLineItems={item.id}
-            />
-          ))}
+          {productArr?.map((item) => <CartProduct product={item} idCart={cartBody?.id || ''} />)}
           <div className={classes['product__clear-btn-container']}>
             <ButtonBig content="Clear Shopping Cart" isActiveStyle onClick={clearCart} />
           </div>
