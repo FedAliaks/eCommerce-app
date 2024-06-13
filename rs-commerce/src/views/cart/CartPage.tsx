@@ -68,7 +68,7 @@ export default function Cart(): JSX.Element {
       .get()
       .execute()
       .then((res) => {
-        setCountInCart(res.body.count);
+        setCountInCart(res.body.results[0]?.lineItems.length || 0);
       })
       .catch();
   }, []);
