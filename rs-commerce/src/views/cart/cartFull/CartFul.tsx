@@ -24,6 +24,8 @@ export default function CartFull(): JSX.Element {
         if (res.body.results[0]?.lineItems) {
           setProductArray(res.body.results[0]?.lineItems);
           setCartBody(res.body.results[0]);
+          console.log('product Arr');
+          console.log(productArr);
           console.log(res.body.results[0]);
         }
       });
@@ -49,8 +51,9 @@ export default function CartFull(): JSX.Element {
               price={item.price.value.centAmount}
               totalCost={item.totalPrice.centAmount}
               quantity={item.quantity}
-              idBook={item.id}
+              idBook={item.productId}
               idCart={cartBody?.id || 'unknown idCart'}
+              idLineItems={item.id}
             />
           ))}
           <div className={classes['product__clear-btn-container']}>

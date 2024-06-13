@@ -10,67 +10,75 @@ export type CartProductType = {
   quantity: number;
   idBook: string;
   idCart: string;
+  idLineItems: string;
 };
 
 export default function CartProduct(props: CartProductType): JSX.Element {
-  const { name, image, price, totalCost, quantity, idBook, idCart } = props;
+  const { name, image, price, totalCost, quantity, idBook, idCart, idLineItems } = props;
   const [countProduct, setCountProduct] = useState(quantity);
 
   const increaseCount = () => {
     setCountProduct(countProduct + 1);
 
-    /*     apiRootWithExistingTokenFlow().carts().withId({ID: idCart}).get().execute().then(res => {
-      console.log(res);
-      apiRootWithExistingTokenFlow().carts().withId({ID: idCart}).post({
-        body: {
-          version: res.body.version,
-          actions: [
-            {
-              action: 'addLineItem',
-              productId: idBook,
-              variantId: 1,
-              quantity: countProduct
-            }
-          ]
-        }
-      }).execute().then(console.log).catch(console.log)
-
-      
-    })
- */
-
-    /*     apiRootWithExistingTokenFlow().me().carts().get().execute().then(res => 
-      {
-
-
-
-
-
-
-        apiRootWithExistingTokenFlow().carts().withId({ID: idCart}).post({
-          body: {
-            version: res.body.results[0]?.version || 1,
-            actions: [
-              {
-                action: 'changeLineItemQuantity',
-                quantity: countProduct
-              }
-            ]
-          }
-        }).execute().then(result => console.log(result))
-
-
-
-      }) */
-
-    console.log(idBook);
-    console.log(idCart);
+    apiRootWithExistingTokenFlow()
+      .carts()
+      .withId({ ID: idCart })
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .carts()
+          .withId({ ID: idCart })
+          .post({
+            body: {
+              version: res.body.version,
+              actions: [
+                {
+                  action: 'addLineItem',
+                  productId: idBook,
+                },
+              ],
+            },
+          })
+          .execute()
+          .then(console.log)
+          .catch((err) => console.log(err.message));
+      })
+      .catch(console.log);
   };
 
   const decreaseCount = () => {
     setCountProduct(countProduct - 1);
     console.log(idBook);
     console.log(idCart);
+
+    apiRootWithExistingTokenFlow()
+      .carts()
+      .withId({ ID: idCart })
+      .get()
+      .execute()
+      .then((res) => {
+        console.log(res);
+        apiRootWithExistingTokenFlow()
+          .carts()
+          .withId({ ID: idCart })
+          .post({
+            body: {
+              version: res.body.version,
+              actions: [
+                {
+                  action: 'changeLineItemQuantity',
+                  lineItemId: idLineItems,
+                  quantity: countProduct - 1,
+                },
+              ],
+            },
+          })
+          .execute()
+          .then(console.log)
+          .catch((err) => console.log(err.message));
+      })
+      .catch(console.log);
   };
 
   const deletePositionFromCart = () => {
