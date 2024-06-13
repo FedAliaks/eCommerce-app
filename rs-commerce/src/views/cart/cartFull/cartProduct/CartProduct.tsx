@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import classes from './cartProduct.module.css';
 
 export type CartProductType = {
@@ -73,7 +74,30 @@ export default function CartProduct(props: CartProductType): JSX.Element {
   };
 
   const deletePositionFromCart = () => {
-    console.log('delete book');
+    apiRootWithExistingTokenFlow()
+      .carts()
+      .withId({ ID: idCart })
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .carts()
+          .withId({ ID: idCart })
+          .post({
+            body: {
+              version: res.body.version,
+              actions: [
+                {
+                  action: 'removeLineItem',
+                  lineItemId: idBook,
+                },
+              ],
+            },
+          })
+          .execute()
+          .then(console.log)
+          .catch(console.log);
+      });
   };
 
   return (
