@@ -36,7 +36,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
               actions: [
                 {
                   action: 'addLineItem',
-                  productId: product.id,
+                  productId: product.productId,
                 },
               ],
             },
