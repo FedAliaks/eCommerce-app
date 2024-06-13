@@ -16,6 +16,7 @@ function ProductDetails() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { productDetail } = useAppSelector(productDetailsSelector);
+
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [categoryLink, setCategoryLink] = useState<{ name: string; path: string }[]>([]);
