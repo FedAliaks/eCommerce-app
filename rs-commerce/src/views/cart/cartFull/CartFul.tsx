@@ -62,7 +62,11 @@ export default function CartFull(): JSX.Element {
           </div>
         </div>
       </div>
-      <CartTotal totalPrice={cartBody?.totalPrice.centAmount || 100} idCart={cartBody?.id || ''} />
+      <CartTotal
+        discounted={cartBody?.discountOnTotalPrice?.discountedAmount.centAmount}
+        totalPrice={cartBody?.totalPrice.centAmount || 100}
+        idCart={cartBody?.id || ''}
+      />
     </div>
   );
 }

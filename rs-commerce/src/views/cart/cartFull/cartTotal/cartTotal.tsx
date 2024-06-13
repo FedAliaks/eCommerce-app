@@ -6,10 +6,11 @@ import classes from './cartTotal.module.css';
 export type CartTotalType = {
   totalPrice: number;
   idCart: string;
+  discounted: number | undefined;
 };
 
 export default function CartTotal(props: CartTotalType): JSX.Element {
-  const { totalPrice, idCart } = props;
+  const { totalPrice, idCart, discounted } = props;
   const [promoCode, setPromoCode] = useState('');
 
   const usePromoCode = () => {
@@ -46,14 +47,27 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
   return (
     <div className={classes['cart-total__container']}>
       <h2 className={classes['cart-total__title']}>Cart Total</h2>
-      <div className={classes['cart-total__sum-container']}>
+
+      <div className={classes['cart-total__sum-block']}>
         <p className={classes['cart-total__subtitle']}>Subtotal</p>
-        <p className={classes['cart-total__sum']}>{`${totalPrice / 100} EUR`}</p>
-        <p className={classes['cart-total__subtitle']}>Discounted</p>
-        <p className={classes['cart-total__sum']}>-50 000 EUR</p>
+        <p
+          className={
+            classes['cart-total__sum']
+          }>{`${discounted ? (totalPrice + discounted) / 100 : totalPrice / 100} EUR`}</p>
+      </div>
+
+      {discounted ? (
+        <div className={classes['cart-total__sum-block']}>
+          <p className={classes['cart-total__subtitle']}>Discounted</p>
+          <p className={classes['cart-total__sum']}>{`${discounted / 100} EUR`}</p>
+        </div>
+      ) : null}
+
+      <div className={classes['cart-total__sum-block']}>
         <p className={classes['cart-total__subtitle']}>Total</p>
         <p className={classes['cart-total__sum_colored']}>{`${totalPrice / 100} EUR`}</p>
       </div>
+
       <div className={classes['cart-total__promo-container']}>
         <input
           type="text"

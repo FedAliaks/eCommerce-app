@@ -18,10 +18,10 @@
   color: var(--dark);
 }
 
-.cart-total__sum-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
+.cart-total__sum-block {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
 }
 
 .cart-total__sum {
