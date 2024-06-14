@@ -117,6 +117,10 @@ function Header() {
           )}
         </ul>
       </nav>
+
+      <Link to="/cart">
+        <img src="src/assets/images/cart-image.png" width="28" height="28" alt="cart-logo" />
+      </Link>
     </header>
   );
 }
