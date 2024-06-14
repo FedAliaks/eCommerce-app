@@ -2,6 +2,9 @@ import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { useEffect, useState } from 'react';
 import { Cart, LineItem } from '@commercetools/platform-sdk';
 import ButtonBig from 'components/button-big/button-big';
+import { useAppSelector } from 'hooks/typed-react-redux-hooks';
+import { apiAuthSelector } from 'redux/selectors';
+import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
 import classes from './cartFull.module.css';
 import CartProduct from './cartProduct/CartProduct';
 import CartTotal from './cartTotal/cartTotal';
@@ -10,6 +13,8 @@ export default function CartFull(): JSX.Element {
   const [productArr, setProductArray] = useState<LineItem[]>();
   const [cartBody, setCartBody] = useState<Cart>();
   const [update, setUpdate] = useState(0);
+  const { isAuth } = useAppSelector(apiAuthSelector);
+  const idCartResponse: string = localStorage.getItem('hurricane_anonym_cart') as string;
 
   const clearCart = () => {
     console.log('clear Cart');
@@ -21,20 +26,39 @@ export default function CartFull(): JSX.Element {
 
   useEffect(() => {
     // getCart
-    apiRootWithExistingTokenFlow()
-      .me()
-      .carts()
-      .get()
-      .execute()
-      .then((res) => {
-        if (res.body.results[0]?.lineItems) {
-          setProductArray(res.body.results[0]?.lineItems);
-          setCartBody(res.body.results[0]);
-          console.log('product Arr');
-          console.log(productArr);
-          console.log(res.body.results[0]);
-        }
-      });
+
+    if (isAuth) {
+      apiRootWithExistingTokenFlow()
+        .me()
+        .carts()
+        .get()
+        .execute()
+        .then((res) => {
+          if (res.body.results[0]?.lineItems) {
+            setProductArray(res.body.results[0]?.lineItems);
+            setCartBody(res.body.results[0]);
+            console.log('product Arr');
+            console.log(productArr);
+            console.log(res.body.results[0]);
+          }
+        });
+    } else {
+      apiRootWithAnonymousSessionFlow()
+        .carts()
+        .withId({ ID: idCartResponse })
+        .get()
+        .execute()
+        .then((res) => {
+          if (res.body.lineItems) {
+            setProductArray(res.body.lineItems);
+            setCartBody(res.body);
+            console.log('product Arr');
+            console.log(productArr);
+            console.log(res.body);
+          }
+        })
+        .catch();
+    }
   }, [update]);
 
   const headerColumnArr = ['Product', 'Price', 'Quantity', 'Total cost'];

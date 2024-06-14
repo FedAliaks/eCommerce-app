@@ -113,6 +113,10 @@ export const publicRoutes = [
     component: <ProductDetails />,
   },
   {
+    path: ROUTE_PATH.cart,
+    component: <Cart />,
+  },
+  {
     path: '*',
     component: <NotFound />,
   },

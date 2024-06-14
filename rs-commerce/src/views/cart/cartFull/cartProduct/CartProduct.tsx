@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { LineItem } from '@commercetools/platform-sdk';
+import { apiAuthSelector } from 'redux/selectors';
+import { useAppSelector } from 'hooks/typed-react-redux-hooks';
+import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
 import classes from './cartProduct.module.css';
 
 export type CartProductType = {
@@ -18,99 +21,190 @@ export default function CartProduct(props: CartProductType): JSX.Element {
   const totalPrice = product.totalPrice.centAmount;
 
   const [countProduct, setCountProduct] = useState(product.quantity);
+  const { isAuth } = useAppSelector(apiAuthSelector);
+  const idCartResponse: string = localStorage.getItem('hurricane_anonym_cart') as string;
 
   const increaseCount = () => {
     setCountProduct(countProduct + 1);
 
-    apiRootWithExistingTokenFlow()
-      .carts()
-      .withId({ ID: idCart })
-      .get()
-      .execute()
-      .then((res) => {
-        apiRootWithExistingTokenFlow()
-          .carts()
-          .withId({ ID: idCart })
-          .post({
-            body: {
-              version: res.body.version,
-              actions: [
-                {
-                  action: 'addLineItem',
-                  productId: product.productId,
-                },
-              ],
-            },
-          })
-          .execute()
-          .then(() => {
-            updateCart();
-          })
-          .catch((err) => console.log(err.message));
-      })
-      .catch(console.log);
+    if (isAuth) {
+      apiRootWithExistingTokenFlow()
+        .carts()
+        .withId({ ID: idCart })
+        .get()
+        .execute()
+        .then((res) => {
+          apiRootWithExistingTokenFlow()
+            .carts()
+            .withId({ ID: idCart })
+            .post({
+              body: {
+                version: res.body.version,
+                actions: [
+                  {
+                    action: 'addLineItem',
+                    productId: product.productId,
+                  },
+                ],
+              },
+            })
+            .execute()
+            .then(() => {
+              updateCart();
+            })
+            .catch((err) => console.log(err.message));
+        })
+        .catch(console.log);
+    } else {
+      apiRootWithAnonymousSessionFlow()
+        .carts()
+        .withId({ ID: idCartResponse })
+        .get()
+        .execute()
+        .then((res) => {
+          apiRootWithAnonymousSessionFlow()
+            .carts()
+            .withId({ ID: idCartResponse })
+            .post({
+              body: {
+                version: res.body.version,
+                actions: [
+                  {
+                    action: 'addLineItem',
+                    productId: product.productId,
+                  },
+                ],
+              },
+            })
+            .execute()
+            .then(() => {
+              updateCart();
+            })
+            .catch((err) => console.log(err.message));
+        })
+        .catch(console.log);
+    }
   };
 
   const decreaseCount = () => {
     setCountProduct(countProduct - 1);
     updateCart();
 
-    apiRootWithExistingTokenFlow()
-      .carts()
-      .withId({ ID: idCart })
-      .get()
-      .execute()
-      .then((res) => {
-        console.log(res);
-        apiRootWithExistingTokenFlow()
-          .carts()
-          .withId({ ID: idCart })
-          .post({
-            body: {
-              version: res.body.version,
-              actions: [
-                {
-                  action: 'changeLineItemQuantity',
-                  lineItemId: product.id,
-                  quantity: countProduct - 1,
-                },
-              ],
-            },
-          })
-          .execute()
-          .then(() => {
-            updateCart();
-          })
-          .catch((err) => console.log(err.message));
-      })
-      .catch(console.log);
+    if (isAuth) {
+      apiRootWithExistingTokenFlow()
+        .carts()
+        .withId({ ID: idCart })
+        .get()
+        .execute()
+        .then((res) => {
+          console.log(res);
+          apiRootWithExistingTokenFlow()
+            .carts()
+            .withId({ ID: idCart })
+            .post({
+              body: {
+                version: res.body.version,
+                actions: [
+                  {
+                    action: 'changeLineItemQuantity',
+                    lineItemId: product.id,
+                    quantity: countProduct - 1,
+                  },
+                ],
+              },
+            })
+            .execute()
+            .then(() => {
+              updateCart();
+            })
+            .catch((err) => console.log(err.message));
+        })
+        .catch(console.log);
+    } else {
+      apiRootWithAnonymousSessionFlow()
+        .carts()
+        .withId({ ID: idCartResponse })
+        .get()
+        .execute()
+        .then((res) => {
+          console.log(res);
+          apiRootWithAnonymousSessionFlow()
+            .carts()
+            .withId({ ID: idCartResponse })
+            .post({
+              body: {
+                version: res.body.version,
+                actions: [
+                  {
+                    action: 'changeLineItemQuantity',
+                    lineItemId: product.id,
+                    quantity: countProduct - 1,
+                  },
+                ],
+              },
+            })
+            .execute()
+            .then(() => {
+              updateCart();
+            })
+            .catch((err) => console.log(err.message));
+        })
+        .catch(console.log);
+    }
   };
 
   const deletePositionFromCart = () => {
-    apiRootWithExistingTokenFlow()
-      .carts()
-      .withId({ ID: idCart })
-      .get()
-      .execute()
-      .then((res) => {
-        apiRootWithExistingTokenFlow()
-          .carts()
-          .withId({ ID: idCart })
-          .post({
-            body: {
-              version: res.body.version,
-              actions: [
-                {
-                  action: 'removeLineItem',
-                  lineItemId: product.id,
-                },
-              ],
-            },
-          })
-          .execute()
-          .then(() => updateCart())
-          .catch(console.log);
-      });
+    if (isAuth) {
+      apiRootWithExistingTokenFlow()
+        .carts()
+        .withId({ ID: idCart })
+        .get()
+        .execute()
+        .then((res) => {
+          apiRootWithExistingTokenFlow()
+            .carts()
+            .withId({ ID: idCart })
+            .post({
+              body: {
+                version: res.body.version,
+                actions: [
+                  {
+                    action: 'removeLineItem',
+                    lineItemId: product.id,
+                  },
+                ],
+              },
+            })
+            .execute()
+            .then(() => updateCart())
+            .catch(console.log);
+        });
+    } else {
+      apiRootWithAnonymousSessionFlow()
+        .carts()
+        .withId({ ID: idCartResponse })
+        .get()
+        .execute()
+        .then((res) => {
+          apiRootWithAnonymousSessionFlow()
+            .carts()
+            .withId({ ID: idCartResponse })
+            .post({
+              body: {
+                version: res.body.version,
+                actions: [
+                  {
+                    action: 'removeLineItem',
+                    lineItemId: product.id,
+                  },
+                ],
+              },
+            })
+            .execute()
+            .then(() => updateCart())
+            .catch(console.log);
+        });
+    }
   };
 
   return (
