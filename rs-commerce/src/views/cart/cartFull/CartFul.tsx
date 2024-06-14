@@ -9,12 +9,15 @@ import CartTotal from './cartTotal/cartTotal';
 export default function CartFull(): JSX.Element {
   const [productArr, setProductArray] = useState<LineItem[]>();
   const [cartBody, setCartBody] = useState<Cart>();
+  const [update, setUpdate] = useState(0);
 
   const clearCart = () => {
     console.log('clear Cart');
   };
 
-  const updateCart = (): void => {};
+  const updateCart = (): void => {
+    setUpdate(Math.random());
+  };
 
   useEffect(() => {
     // getCart
@@ -32,7 +35,7 @@ export default function CartFull(): JSX.Element {
           console.log(res.body.results[0]);
         }
       });
-  }, [updateCart]);
+  }, [update]);
 
   const headerColumnArr = ['Product', 'Price', 'Quantity', 'Total cost'];
 
