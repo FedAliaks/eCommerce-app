@@ -14,6 +14,8 @@ export default function CartFull(): JSX.Element {
     console.log('clear Cart');
   };
 
+  const updateCart = (): void => {};
+
   useEffect(() => {
     // getCart
     apiRootWithExistingTokenFlow()
@@ -30,7 +32,7 @@ export default function CartFull(): JSX.Element {
           console.log(res.body.results[0]);
         }
       });
-  }, []);
+  }, [updateCart]);
 
   const headerColumnArr = ['Product', 'Price', 'Quantity', 'Total cost'];
 
@@ -45,7 +47,9 @@ export default function CartFull(): JSX.Element {
           ))}
         </div>
         <div className={classes['products__container']}>
-          {productArr?.map((item) => <CartProduct product={item} idCart={cartBody?.id || ''} />)}
+          {productArr?.map((item) => (
+            <CartProduct product={item} idCart={cartBody?.id || ''} updateCart={updateCart} />
+          ))}
           <div className={classes['product__clear-btn-container']}>
             <ButtonBig content="Clear Shopping Cart" isActiveStyle onClick={clearCart} />
           </div>

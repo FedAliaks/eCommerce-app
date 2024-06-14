@@ -6,10 +6,11 @@ import classes from './cartProduct.module.css';
 export type CartProductType = {
   product: LineItem;
   idCart: string;
+  updateCart: () => void;
 };
 
 export default function CartProduct(props: CartProductType): JSX.Element {
-  const { product, idCart } = props;
+  const { product, idCart, updateCart } = props;
   const image = Array.isArray(product.variant.images) ? product.variant.images[0]?.url : '';
   const name = product.name['en'] || '';
   const startPrice = product.price.value.centAmount;
@@ -42,7 +43,9 @@ export default function CartProduct(props: CartProductType): JSX.Element {
             },
           })
           .execute()
-          .then(console.log)
+          .then(() => {
+            updateCart();
+          })
           .catch((err) => console.log(err.message));
       })
       .catch(console.log);
@@ -50,7 +53,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
 
   const decreaseCount = () => {
     setCountProduct(countProduct - 1);
-    console.log(idCart);
+    updateCart();
 
     apiRootWithExistingTokenFlow()
       .carts()
@@ -75,7 +78,9 @@ export default function CartProduct(props: CartProductType): JSX.Element {
             },
           })
           .execute()
-          .then(console.log)
+          .then(() => {
+            updateCart();
+          })
           .catch((err) => console.log(err.message));
       })
       .catch(console.log);
@@ -103,7 +108,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
             },
           })
           .execute()
-          .then(console.log)
+          .then(() => updateCart())
           .catch(console.log);
       });
   };
