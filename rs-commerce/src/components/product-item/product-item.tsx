@@ -1,10 +1,23 @@
+import { useEffect, useState } from 'react';
 import { ProductProjectionItemProps } from 'types/types';
 import { NUMBER_ZERO, ROUTE_PATH } from 'constants/constants';
 import { Link } from 'react-router-dom';
+import CartButton from 'components/CartButton/CartButton';
+import { useAppSelector } from 'hooks/typed-react-redux-hooks';
+import { cartSelector } from 'redux/selectors';
 import image from '../../assets/catalog-page/no-image.jpg';
 import style from './style.module.css';
 
 function ProductItem({ product }: ProductProjectionItemProps) {
+  const { cartData } = useAppSelector(cartSelector);
+  const [isInCart, setIsInCart] = useState(false);
+
+  useEffect(() => {
+    if (cartData && 'lineItems' in cartData) {
+      setIsInCart(Boolean(cartData.lineItems.find((item) => item.productId === product.id)));
+    }
+  }, [cartData]);
+
   const emptyImage: HTMLImageElement = new Image();
   emptyImage.src = image;
 
@@ -53,24 +66,35 @@ function ProductItem({ product }: ProductProjectionItemProps) {
     itemDiscountedPrice = '';
   }
 
+  const handleCartButtonClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+  };
+
   return (
     <Link to={`${ROUTE_PATH.productDetails}/${product.id}`} className={style['product-item']}>
-      <div className={style['item-image-wrapper']}>
-        <img alt={product.key} className={style['item-image']} src={itemImgSrc} />
-        {curDiscountedPriceFormatted && (
-          <div className={style['discount-label']}>{curDiscountedPercentFormatted}</div>
-        )}
+      <div>
+        <div className={style['item-image-wrapper']}>
+          <img alt={product.key} className={style['item-image']} src={itemImgSrc} />
+          {curDiscountedPriceFormatted && (
+            <div className={style['discount-label']}>{curDiscountedPercentFormatted}</div>
+          )}
+        </div>
+        <div className={style['item-text-wrapper']}>
+          <div className={style['item-rating']}>{itemRating}</div>
+          <div className={style['item-name']}>{itemName}</div>
+          <div className={style['item-author-year']}>{itemAuthorYear}</div>
+          <div className={style['item-description']}>{itemDescription}</div>
+          <div className={style['item-cover']}>{itemCover}</div>
+          <div className={style['item-format']}>{itemFormat}</div>
+          <div className={style['item-prices-wrapper']}>
+            <div className={itemPriceStyle}>{itemPrice}</div>
+            <div className={style['item-price-discounted']}>{itemDiscountedPrice}</div>
+          </div>
+        </div>
       </div>
-      <div className={style['item-text-wrapper']}>
-        <div className={style['item-rating']}>{itemRating}</div>
-        <div className={style['item-name']}>{itemName}</div>
-        <div className={style['item-author-year']}>{itemAuthorYear}</div>
-        <div className={style['item-description']}>{itemDescription}</div>
-        <div className={style['item-cover']}>{itemCover}</div>
-        <div className={style['item-format']}>{itemFormat}</div>
-        <div className={style['item-prices-wrapper']}>
-          <div className={itemPriceStyle}>{itemPrice}</div>
-          <div className={style['item-price-discounted']}>{itemDiscountedPrice}</div>
+      <div className={style['cart-button-wrapper']}>
+        <div onClick={handleCartButtonClick} role="presentation">
+          <CartButton type={isInCart ? 'remove' : 'add'} curProductId={product.id} />
         </div>
       </div>
     </Link>
