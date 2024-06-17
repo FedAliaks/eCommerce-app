@@ -30,7 +30,7 @@ function Catalog(): JSX.Element {
 
   const getCurrentCategoryData = async (categorySlug: string) => {
     try {
-      const categoryData = await apiGetOneCategory(categorySlug);
+      const categoryData = await apiGetOneCategory({ isKey: true, categoryKey: categorySlug });
 
       dispatch(apiCategoriesProductsActions.setCurCategory(categoryData.body));
     } catch (e) {

@@ -12,8 +12,6 @@ export default function ProfileComponent(props: ProfileComponentType): JSX.Eleme
   const navigate = useNavigate();
 
   const moveToChange = () => {
-    console.log('move');
-    console.log(addressId);
     dispatch(updateProfileActions.setAddressIdForChange(addressId || ''));
 
     if (addressId) {

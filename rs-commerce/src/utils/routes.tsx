@@ -1,4 +1,5 @@
 import { ROUTE_PATH } from 'constants/constants';
+import AboutUs from 'views/AboutUs/AboutUs';
 import Catalog from 'views/Catalog/Catalog';
 import Login from 'views/login/Login';
 import Main from 'views/main/Main';
@@ -53,12 +54,71 @@ const routes = [
     component: <Catalog />,
   },
   {
+    path: ROUTE_PATH.productDetailsId,
+    component: <ProductDetails />,
+  },
+  {
+    path: ROUTE_PATH.aboutUs,
+    component: <AboutUs />,
+  },
+  {
     path: '*',
     component: <NotFound />,
+  },
+];
+
+export const publicRoutes = [
+  {
+    path: ROUTE_PATH.main,
+    component: <Main />,
+  },
+  {
+    path: ROUTE_PATH.login,
+    component: <Login />,
+  },
+  {
+    path: ROUTE_PATH.registration,
+    component: <Registration />,
+  },
+  {
+    path: ROUTE_PATH.profile,
+    redirect: true,
+  },
+  {
+    path: ROUTE_PATH.changePassword,
+    redirect: true,
+  },
+  {
+    path: ROUTE_PATH.changeName,
+    redirect: true,
+  },
+  {
+    path: ROUTE_PATH.addNewAddress,
+    redirect: true,
+  },
+  {
+    path: ROUTE_PATH.changeAddress,
+    redirect: true,
+  },
+  {
+    path: ROUTE_PATH.catalog,
+    component: <Catalog />,
+  },
+  {
+    path: ROUTE_PATH.catalogCategory,
+    component: <Catalog />,
   },
   {
     path: ROUTE_PATH.productDetailsId,
     component: <ProductDetails />,
+  },
+  {
+    path: ROUTE_PATH.aboutUs,
+    component: <AboutUs />,
+  },
+  {
+    path: '*',
+    component: <NotFound />,
   },
 ];
 

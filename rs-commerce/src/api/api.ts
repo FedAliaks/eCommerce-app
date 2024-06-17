@@ -1,9 +1,14 @@
 import { ClientResponse } from '@commercetools/importapi-sdk';
 import {
   ByProjectKeyRequestBuilder,
+  Cart,
+  CartDraft,
+  CartUpdate,
   Category,
   CategoryPagedQueryResponse,
   CustomerSignInResult,
+  MyCartDraft,
+  MyCartUpdate,
   MyCustomerDraft,
   Product,
   ProductPagedQueryResponse,
@@ -107,15 +112,101 @@ export async function apiGetProductDetails(productId: string): Promise<ClientRes
   return response;
 }
 
-export async function apiGetOneCategory(categoryKey: string): Promise<ClientResponse<Category>> {
+export async function apiGetOneCategory({
+  isKey,
+  categoryKey,
+}: {
+  isKey: boolean;
+  categoryKey: string;
+}): Promise<ClientResponse<Category>> {
   let apiRoot: ByProjectKeyRequestBuilder;
   if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
     apiRoot = apiRootWithExistingTokenFlow();
   } else {
     apiRoot = apiRootWithAnonymousSessionFlow();
   }
-
-  const response = await apiRoot.categories().withKey({ key: categoryKey }).get().execute();
+  let response = null;
+  if (isKey) {
+    response = await apiRoot.categories().withKey({ key: categoryKey }).get().execute();
+  } else {
+    response = await apiRoot.categories().withId({ ID: categoryKey }).get().execute();
+  }
 
   return response;
 }
+
+export const apiCreateCart = async () => {
+  let response;
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    response = await apiRootWithExistingTokenFlow()
+      .me()
+      .carts()
+      .post({
+        body: {
+          currency: 'EUR',
+        },
+      })
+      .execute();
+  } else {
+    response = await apiRootWithAnonymousSessionFlow()
+      .carts()
+      .post({
+        body: {
+          currency: 'EUR',
+        },
+      })
+      .execute();
+  }
+
+  return response;
+};
+export const apiGetCart = async (cartId: string) => {
+  let response;
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    response = await apiRootWithExistingTokenFlow()
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .get()
+      .execute();
+  } else {
+    response = await apiRootWithAnonymousSessionFlow()
+      .carts()
+      .withId({ ID: cartId })
+      .get()
+      .execute();
+  }
+
+  return response;
+};
+
+export const apiGetActiveCart = async () => {
+  const response = await apiRootWithExistingTokenFlow().me().activeCart().get().execute();
+  return response;
+};
+
+export const apiUpdateCart = async ({
+  data,
+  cartId,
+}: {
+  data: MyCartDraft | MyCartUpdate | CartDraft | CartUpdate;
+  cartId: string;
+}) => {
+  let response: ClientResponse<Cart>;
+
+  if (localStorage.getItem(LOCAL_STORAGE_TOKEN)) {
+    response = await apiRootWithExistingTokenFlow()
+      .me()
+      .carts()
+      .withId({ ID: cartId as string })
+      .post({ body: (data as MyCartUpdate) || (data as MyCartDraft) })
+      .execute();
+  } else {
+    response = await apiRootWithAnonymousSessionFlow()
+      .carts()
+      .withId({ ID: cartId as string })
+      .post({ body: (data as CartUpdate) || (data as CartDraft) })
+      .execute();
+  }
+  return response;
+};

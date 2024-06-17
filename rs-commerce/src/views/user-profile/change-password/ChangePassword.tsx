@@ -2,7 +2,7 @@ import ProfileComponent from 'components/profile-component/profileComponent';
 import { InputProfileType } from 'components/profile-component/types';
 import { useState } from 'react';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { updateProfileSelector, apiAuthSelector } from 'redux/selectors';
+import { updateProfileSelector } from 'redux/selectors';
 import { useDispatch } from 'react-redux';
 import { updateProfileActions } from 'redux/slices/update-profile-slice';
 import {
@@ -10,9 +10,14 @@ import {
   regExpObj,
 } from 'views/registration/components/RegistrationForm/components/InputRegistration/utils/checkFields';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
+import Breadcrumb from 'components/breadcrumb/Breadcrumb';
+import { LOCAL_STORAGE_TOKEN, ROUTE_PATH } from 'constants/constants';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import ButtonProfile from '../button-profile/ButtonProfile';
 import classes from '../UserProfile.module.css';
-import UserProfileHeader from '../user-profile-header/UserProfileHeader';
+import { changePasswordBreadcrumbList } from '../constants';
 
 export default function ChangePassword() {
   const [currentPass, setCurrentPass] = useState('');
@@ -20,11 +25,10 @@ export default function ChangePassword() {
   const [confirmPass, setConfirmPass] = useState('');
   const [currentPassError, setCurrentPassError] = useState('');
   const [newPassError, setNewPassError] = useState('');
-  const [customMsg, setCustomMsg] = useState('');
   const [confirmPassError, setConfirmPassError] = useState('');
   const { newPassword } = useAppSelector(updateProfileSelector);
-  const { userData } = useAppSelector(apiAuthSelector);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const checkCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
@@ -98,42 +102,49 @@ export default function ChangePassword() {
   ];
 
   const saveBtnClick = () => {
-    if (userData) {
-      apiRootWithExistingTokenFlow()
-        .customers()
-        .password()
-        .post({
-          body: {
-            id: userData?.customer?.id,
-            version: userData.customer.version,
-            currentPassword: currentPass,
-            newPassword: newPass,
-          },
-        })
-        .execute()
-        .then(() => setCustomMsg('You have changed successfully your password'))
-        .catch(() => setCurrentPassError('Check your current password'));
-    }
+    apiRootWithExistingTokenFlow()
+      .me()
+      .get()
+      .execute()
+      .then((res) => {
+        apiRootWithExistingTokenFlow()
+          .customers()
+          .password()
+          .post({
+            body: {
+              id: res.body.id,
+              version: res.body.version,
+              currentPassword: currentPass,
+              newPassword: newPass,
+            },
+          })
+          .execute()
+          .then(() => {
+            toast.success('Password has changed. Entry in your profile again');
+            localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+            dispatch(apiAuthActions.setIsAuth(false));
+            navigate(ROUTE_PATH.login);
+          })
+          .catch(() => {
+            setCurrentPassError('Check your current password');
+          });
+      })
+      .catch(() => {
+        setCurrentPassError('New and old passwords are equal');
+      });
   };
 
   const clearFieldsOnPage = () => {
-    setCurrentPass('');
-    setNewPass('');
-    setConfirmPass('');
-    setNewPassError('');
-    setConfirmPassError('');
-    setCurrentPassError('');
-    dispatch(updateProfileActions.setCheckNewPassword(false));
+    navigate(ROUTE_PATH.profile);
   };
 
   return (
     <div>
-      <UserProfileHeader title="Change password" subtitle="Main > Profile > Edit password" />
+      <Breadcrumb linksList={changePasswordBreadcrumbList} currentPageName="Change password" />
 
-      <div className={classes['profile']}>
+      <div className={`container ${classes['profile']}`}>
         <div className={classes['profile__column']}>
           <ProfileComponent inputArray={inputArrayPassword} flexVertical />
-          <p className={classes['custom-message']}>{customMsg}</p>
           <div className={classes['profile__password-btn-container']}>
             <ButtonProfile content="Cancel" colored={false} onClick={clearFieldsOnPage} />
             <ButtonProfile page="password" content="Save" colored onClick={saveBtnClick} />
