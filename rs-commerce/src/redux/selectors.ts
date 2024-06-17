@@ -7,3 +7,4 @@ export const apiRegistrationSelector = (state: RootState) => state.apiRegistrati
 export const updateProfileSelector = (state: RootState) => state.updateProfile;
 export const productDetailsSelector = (state: RootState) => state.productDetail;
 export const apiCategoriesProductsSelector = (state: RootState) => state.apiCategoriesProducts;
+export const cartSelector = (state: RootState) => state.cart;

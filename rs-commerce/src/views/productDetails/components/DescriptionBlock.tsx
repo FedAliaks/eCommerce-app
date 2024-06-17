@@ -2,16 +2,23 @@ import { Heading, SubHeading } from 'components/heading';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import star from 'assets/images/star.svg';
-import { productDetailsSelector } from 'redux/selectors';
+import { cartSelector, productDetailsSelector } from 'redux/selectors';
+import { useParams } from 'react-router-dom';
 import style from '../style.module.css';
 import Price from './Price';
 import DescriptionText from './DescriptionText';
 import DescriptionList from './DescriptionList';
+import CartButton from './CartButton';
 
 function DescriptionBlock() {
+  const { id } = useParams();
+
   const { productDetail } = useAppSelector(productDetailsSelector);
+  const { cartData } = useAppSelector(cartSelector);
 
   const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
+  const [isInCart, setIsInCart] = useState(false);
+
   const price = productDetail?.masterVariant.prices?.[0]?.value || null;
   const discount = productDetail?.masterVariant.prices?.[0]?.discounted?.value || null;
 
@@ -21,6 +28,12 @@ function DescriptionBlock() {
       setAttributes((prev) => ({ ...prev, [item.name]: item.value }));
     });
   }, [productDetail]);
+
+  useEffect(() => {
+    if (cartData && 'lineItems' in cartData) {
+      setIsInCart(Boolean(cartData.lineItems.find((item) => item.productId === id)));
+    }
+  }, [cartData]);
 
   const descriptionList = {
     'Publication Year': attributes['publicationYear'],
@@ -45,6 +58,7 @@ function DescriptionBlock() {
           </div>
         </div>
       )}
+      <CartButton type={isInCart ? 'remove' : 'add'} />
       <DescriptionText description={attributes['description'] || ''} />
       <DescriptionList descriptionList={descriptionList} />
     </div>
