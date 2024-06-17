@@ -138,7 +138,7 @@ export default function Cart(): JSX.Element {
     <div>
       <Breadcrumb linksList={cartBreadcrumbList} currentPageName="Your cart" />
 
-      <div className={classes['cart-container']}>
+      <div className={`container ${classes['cart-container']}`}>
         {countInCart > 0 ? <CartFull setUpdateAllCart={setUpdateAllCart} /> : <CartEmpty />}
       </div>
     </div>

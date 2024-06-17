@@ -1,9 +1,4 @@
-.cart-page__container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .cart-container {
-  padding: 10px;
+  padding-top: 50px;
+  padding-bottom: 100px;
 }

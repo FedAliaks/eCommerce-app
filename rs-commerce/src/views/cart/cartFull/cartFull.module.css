@@ -1,7 +1,7 @@
 .cart-full__container {
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .cart-full__product-column-header {
@@ -20,4 +20,16 @@
 .product__clear-btn-container {
   display: flex;
   justify-content: end;
+}
+
+@media screen and (max-width: 1024px) {
+  .cart-full__container {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .cart-full__product-column-header {
+    font-size: 12px;
+  }
 }
