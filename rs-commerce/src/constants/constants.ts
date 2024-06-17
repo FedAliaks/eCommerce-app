@@ -1,5 +1,9 @@
-import { SimpleFiltersValues, SimpleObject, TeamMember } from 'types/types';
 import { getInitialSimpleFiltersValues, getRatingValues } from 'utils/checkbox-utils';
+import { SimpleFiltersValues, SimpleObject, TeamMember } from 'types/types';
+import daryaImg from 'assets/about-us/darya.jpg';
+import alexandrImg from 'assets/about-us/alexandr.jpg';
+import sergioImg from 'assets/about-us/sergio.jpg';
+
 
 export const LOGIN_PAGE_TEXT = {
   titleForm: 'Login',
@@ -220,8 +224,11 @@ export const team: TeamMember[] = [
     name: 'Alexander',
     position: 'Teamlead',
     github: 'https://github.com/fedaliaks',
-    description: 'Some short bio description',
-    image: '',
+
+    description:
+      "Has a higher technical education and a master's degree in mechanical engineering. Yes, a general technical base, a good relationship with mathematics and more helped in completing the RSSchool course. Yes, he submitted on the second try, given that from the second attempt he began to understand where and what was coming from. Yes, RSSchool is a place where you really need to learn, and not do everything carelessly, but the result is noticeable, and you also have an understanding of where and how to grow, that you can do everything even better (well, okay, he knew that before). Yes, and once again he was convinced that even the impossible becomes possible.",
+    image: alexandrImg,
+
     contribution: [
       'initiating regular team discussion;',
       'creation CommerceTools database;',
@@ -232,8 +239,11 @@ export const team: TeamMember[] = [
     name: 'Darya',
     position: 'Developer',
     github: 'https://github.com/DaryaAniskevich',
-    description: 'Some short bio description',
-    image: '',
+
+    description:
+      'Has a higher economic education. After several years of working in bank decided to become a developer. Currently a Frontend developer with commercial development experience. Hungry for new challenges. Decided to attend RSSchool to refresh theoretical knowledge, expand her competencies, learn something new from other participants and share her knowledge with them.',
+    image: daryaImg,
+
     contribution: [
       'active participant in code reviews;',
       'creation app design;',
@@ -244,8 +254,11 @@ export const team: TeamMember[] = [
     name: 'Sergio',
     position: 'Developer',
     github: 'https://github.com/sergioivanov008',
-    description: 'Some short bio description',
-    image: '',
+
+    description:
+      'He is currently working as a designer in a very specific field, but his goal is to become a developer and change his life.',
+    image: sergioImg,
+
     contribution: [
       'high level of CommerceTools documentation proficiency and shared this knowledge;',
       'high-quality code refactoring',

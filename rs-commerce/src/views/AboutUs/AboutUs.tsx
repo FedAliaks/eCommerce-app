@@ -2,6 +2,9 @@ import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import { ROUTE_PATH, collaboration, team } from 'constants/constants';
 import schoolIcon from 'assets/about-us/RS.svg';
 import collaborationImg from 'assets/about-us/collaboration.png';
+
+import { Heading } from 'components/heading';
+
 import TeamItem from './components/TeamItem';
 import style from './style.module.css';
 
@@ -21,21 +24,26 @@ function AboutUs() {
     <>
       <Breadcrumb linksList={linksList} currentPageName="About us" />
       <section className={`container ${style['container']}`}>
-        <h2 className={style['heading']}>
+
+        <Heading className={style['heading']}>
+
           Hurricane Team with{' '}
           <a href="https://rs.school/">
             RS School <img src={schoolIcon} alt="RS School logo" />
           </a>
-        </h2>
+        </Heading>
+
         <div className={style['team']}>
           {team.map((item) => (
             <TeamItem item={item} key={item.name} />
           ))}
         </div>
         <div className={style['collaboration']}>
-          <h3 className={style['collaboration__title']}>
-            Our secrets of successful collaboration:
-          </h3>
+
+          <Heading className={style['collaboration__title']}>
+            Our secrets of successful collaboration
+          </Heading>
+
           <div className={style['collaboration__content']}>
             <ul className={style['collaboration__list']}>
               {collaboration.map((item) => (
