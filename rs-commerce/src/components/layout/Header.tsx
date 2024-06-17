@@ -12,6 +12,7 @@ import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import { apiAuthSelector } from 'redux/selectors';
 import toast from 'react-hot-toast';
 import style from './style.module.css';
+import cartImg from '../../assets/images/cart-image.png';
 
 function Header() {
   const dispatch = useAppDispatch();
@@ -121,7 +122,7 @@ function Header() {
       </nav>
 
       <Link to={ROUTE_PATH.cart} className={style['nav-cart']}>
-        <img src="src/assets/images/cart-image.png" width="28" height="28" alt="cart-logo" />
+        <img src={cartImg} width="28" height="28" alt="cart-logo" />
       </Link>
     </header>
   );
