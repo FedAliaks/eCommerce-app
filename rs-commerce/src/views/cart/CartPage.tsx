@@ -9,6 +9,8 @@ import {
 } from 'constants/constants';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
 import { Cart } from '@commercetools/platform-sdk';
+import { useDispatch } from 'react-redux';
+import { cartActions } from 'redux/slices/cart-slice';
 import CartFull from './cartFull/CartFul';
 import CartEmpty from './cartEmpty/CartEmpty';
 import classes from './cartPage.module.css';
@@ -17,6 +19,7 @@ export default function CartPage(): JSX.Element {
   const [countInCart, setCountInCart] = useState<number>(0);
   const [updateCart, setUpdateAllCart] = useState(0);
   const [cartBody, setCartBody] = useState<Cart>();
+  const dispatch = useDispatch();
 
   const isAuth = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN)!);
   const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
@@ -32,6 +35,7 @@ export default function CartPage(): JSX.Element {
         .then((res) => {
           setCountInCart(res.body.lineItems.length || 0);
           setCartBody(res.body);
+          dispatch(cartActions.setCartData(res.body));
         })
         .catch();
     } else {
@@ -43,6 +47,7 @@ export default function CartPage(): JSX.Element {
         .then((res) => {
           setCountInCart(res.body.lineItems.length || 0);
           setCartBody(res.body);
+          dispatch(cartActions.setCartData(res.body));
         })
         .catch();
     }
