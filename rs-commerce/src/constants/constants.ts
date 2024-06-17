@@ -4,7 +4,6 @@ import daryaImg from 'assets/about-us/darya.jpg';
 import alexandrImg from 'assets/about-us/alexandr.jpg';
 import sergioImg from 'assets/about-us/sergio.jpg';
 
-
 export const LOGIN_PAGE_TEXT = {
   titleForm: 'Login',
   linkRegistration: "Don't have an account yet? ",

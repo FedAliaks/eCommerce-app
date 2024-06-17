@@ -24,9 +24,7 @@ function AboutUs() {
     <>
       <Breadcrumb linksList={linksList} currentPageName="About us" />
       <section className={`container ${style['container']}`}>
-
         <Heading className={style['heading']}>
-
           Hurricane Team with{' '}
           <a href="https://rs.school/">
             RS School <img src={schoolIcon} alt="RS School logo" />
@@ -39,7 +37,6 @@ function AboutUs() {
           ))}
         </div>
         <div className={style['collaboration']}>
-
           <Heading className={style['collaboration__title']}>
             Our secrets of successful collaboration
           </Heading>
