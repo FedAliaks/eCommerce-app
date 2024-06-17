@@ -1,4 +1,5 @@
 import { SimpleFiltersValues, SimpleObject, TeamMember } from 'types/types';
+import daryaImg from 'assets/about-us/darya.jpg';
 
 export const LOGIN_PAGE_TEXT = {
   titleForm: 'Login',
@@ -329,8 +330,9 @@ export const team: TeamMember[] = [
     name: 'Darya',
     position: 'Developer',
     github: 'https://github.com/DaryaAniskevich',
-    description: 'Some short bio description',
-    image: '',
+    description:
+      'Frontend developer with commercial development experience. Hungry for new challenges and expanding of my competencies.',
+    image: daryaImg,
     contribution: [
       'active participant in code reviews;',
       'creation app design;',
