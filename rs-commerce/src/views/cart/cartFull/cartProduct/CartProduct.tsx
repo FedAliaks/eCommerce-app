@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { LineItem } from '@commercetools/platform-sdk';
-import { apiAuthSelector } from 'redux/selectors';
-import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
-import { LOCAL_STORAGE_ANONYM_CART_ID, LOCAL_STORAGE_AUTH_CART_ID } from 'constants/constants';
+import {
+  LOCAL_STORAGE_ANONYM_CART_ID,
+  LOCAL_STORAGE_AUTH_CART_ID,
+  LOCAL_STORAGE_TOKEN,
+} from 'constants/constants';
 import classes from './cartProduct.module.css';
 
 export type CartProductType = {
@@ -21,7 +23,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
   const totalPrice = product.totalPrice.centAmount;
 
   const [countProduct, setCountProduct] = useState(product.quantity);
-  const { isAuth } = useAppSelector(apiAuthSelector);
+  const isAuth = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN)!);
   const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
   const idAuthCart: string = localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID) as string;
 
@@ -52,10 +54,8 @@ export default function CartProduct(props: CartProductType): JSX.Element {
             .execute()
             .then(() => {
               updateCart();
-            })
-            .catch((err) => console.log(err.message));
-        })
-        .catch(console.log);
+            });
+        });
     } else {
       apiRootWithAnonymousSessionFlow()
         .carts()
@@ -80,17 +80,14 @@ export default function CartProduct(props: CartProductType): JSX.Element {
             .execute()
             .then(() => {
               updateCart();
-            })
-            .catch((err) => console.log(err.message));
-        })
-        .catch(console.log);
+            });
+        });
     }
   };
 
   const decreaseCount = () => {
     setCountProduct(countProduct - 1);
     updateCart();
-    console.log('decreaseCount');
 
     if (isAuth) {
       apiRootWithExistingTokenFlow()
@@ -117,10 +114,8 @@ export default function CartProduct(props: CartProductType): JSX.Element {
             .execute()
             .then(() => {
               updateCart();
-            })
-            .catch((err) => console.log(err.message));
-        })
-        .catch(console.log);
+            });
+        });
     } else {
       apiRootWithAnonymousSessionFlow()
         .carts()
@@ -129,7 +124,6 @@ export default function CartProduct(props: CartProductType): JSX.Element {
         .get()
         .execute()
         .then((res) => {
-          console.log(res);
           apiRootWithAnonymousSessionFlow()
             .carts()
             .withId({ ID: idAnonymCart })
@@ -148,10 +142,8 @@ export default function CartProduct(props: CartProductType): JSX.Element {
             .execute()
             .then(() => {
               updateCart();
-            })
-            .catch((err) => console.log(err.message));
-        })
-        .catch(console.log);
+            });
+        });
     }
   };
 
@@ -178,8 +170,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
               },
             })
             .execute()
-            .then(() => updateCart())
-            .catch(console.log);
+            .then(() => updateCart());
         });
     } else {
       apiRootWithAnonymousSessionFlow()
@@ -203,8 +194,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
               },
             })
             .execute()
-            .then(() => updateCart())
-            .catch(console.log);
+            .then(() => updateCart());
         });
     }
   };

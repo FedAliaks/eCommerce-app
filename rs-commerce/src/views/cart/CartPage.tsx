@@ -4,10 +4,9 @@ import Breadcrumb from 'components/breadcrumb/Breadcrumb';
 import {
   LOCAL_STORAGE_ANONYM_CART_ID,
   LOCAL_STORAGE_AUTH_CART_ID,
+  LOCAL_STORAGE_TOKEN,
   ROUTE_PATH,
 } from 'constants/constants';
-import { useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { apiAuthSelector } from 'redux/selectors';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
 import { Cart } from '@commercetools/platform-sdk';
 import CartFull from './cartFull/CartFul';
@@ -19,7 +18,7 @@ export default function CartPage(): JSX.Element {
   const [updateCart, setUpdateAllCart] = useState(0);
   const [cartBody, setCartBody] = useState<Cart>();
 
-  const { isAuth } = useAppSelector(apiAuthSelector);
+  const isAuth = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN)!);
   const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
   const idAuthCart: string = localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID) as string;
 
@@ -31,7 +30,6 @@ export default function CartPage(): JSX.Element {
         .get()
         .execute()
         .then((res) => {
-          console.log(res);
           setCountInCart(res.body.lineItems.length || 0);
           setCartBody(res.body);
         })
@@ -43,8 +41,6 @@ export default function CartPage(): JSX.Element {
         .get()
         .execute()
         .then((res) => {
-          console.log('res');
-          console.log(res);
           setCountInCart(res.body.lineItems.length || 0);
           setCartBody(res.body);
         })
