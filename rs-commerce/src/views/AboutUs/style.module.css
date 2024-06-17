@@ -5,6 +5,7 @@
 .heading {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   font-size: 36px;
   margin-bottom: 30px;
@@ -61,7 +62,6 @@
   margin-bottom: 8px;
 }
 .team-item__description {
-
   font-size: 20px;
 
   font-weight: 600;
@@ -81,7 +81,6 @@
   color: #3a3a3a;
 }
 .collaboration__title {
-
   font-size: 30px;
 
   margin-bottom: 20px;
@@ -112,10 +111,9 @@
     padding-bottom: 60px;
   }
   .heading {
-
     font-size: 28px;
     margin-bottom: 15px;
-
+  }
   .team-item__image {
     height: 350px;
   }
@@ -149,7 +147,6 @@
 @media screen and (max-width: 768px) {
   .heading {
     flex-direction: column;
-    align-items: flex-start;
     gap: 5px;
   }
   .heading a {
@@ -161,7 +158,7 @@
   }
   .team {
     flex-direction: column;
-
+    align-items: center;
     gap: 10px;
   }
 
@@ -194,7 +191,6 @@
     padding-bottom: 30px;
   }
   .heading {
-
     font-size: 22px;
     margin-bottom: 10px;
   }
@@ -202,5 +198,4 @@
   .team-item {
     width: 100%;
   }
-
 }
