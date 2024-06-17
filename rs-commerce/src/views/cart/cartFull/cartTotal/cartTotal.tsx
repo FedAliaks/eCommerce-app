@@ -4,31 +4,32 @@ import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { apiAuthSelector } from 'redux/selectors';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
+import { LOCAL_STORAGE_ANONYM_CART_ID, LOCAL_STORAGE_AUTH_CART_ID } from 'constants/constants';
 import classes from './cartTotal.module.css';
 
 export type CartTotalType = {
   totalPrice: number;
-  idCart: string;
   discounted: number | undefined;
 };
 
 export default function CartTotal(props: CartTotalType): JSX.Element {
-  const { totalPrice, idCart, discounted } = props;
+  const { totalPrice, discounted } = props;
   const [promoCode, setPromoCode] = useState('');
   const { isAuth } = useAppSelector(apiAuthSelector);
-  const idCartResponse: string = localStorage.getItem('hurricane_anonym_cart') as string;
+  const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
+  const idAuthCart: string = localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID) as string;
 
   const usePromoCode = () => {
     if (isAuth) {
       apiRootWithExistingTokenFlow()
         .carts()
-        .withId({ ID: idCart })
+        .withId({ ID: idAnonymCart })
         .get()
         .execute()
         .then((res) => {
           apiRootWithExistingTokenFlow()
             .carts()
-            .withId({ ID: idCart })
+            .withId({ ID: idAuthCart })
             .post({
               body: {
                 version: res.body.version,
@@ -47,13 +48,13 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
     } else {
       apiRootWithAnonymousSessionFlow()
         .carts()
-        .withId({ ID: idCartResponse })
+        .withId({ ID: idAnonymCart })
         .get()
         .execute()
         .then((res) => {
           apiRootWithAnonymousSessionFlow()
             .carts()
-            .withId({ ID: idCartResponse })
+            .withId({ ID: idAnonymCart })
             .post({
               body: {
                 version: res.body.version,

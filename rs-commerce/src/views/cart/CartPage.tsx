@@ -1,7 +1,11 @@
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 import { useEffect, useState } from 'react';
 import Breadcrumb from 'components/breadcrumb/Breadcrumb';
-import { ROUTE_PATH } from 'constants/constants';
+import {
+  LOCAL_STORAGE_ANONYM_CART_ID,
+  LOCAL_STORAGE_AUTH_CART_ID,
+  ROUTE_PATH,
+} from 'constants/constants';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSelector } from 'redux/selectors';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
@@ -11,9 +15,11 @@ import classes from './cartPage.module.css';
 
 export default function Cart(): JSX.Element {
   const [countInCart, setCountInCart] = useState<number>(0);
+  const [updateCart, setUpdateAllCart] = useState(0);
 
   const { isAuth } = useAppSelector(apiAuthSelector);
-  const idCartResponse: string = localStorage.getItem('hurricane_anonym_cart') as string;
+  const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
+  const idAuthCart: string = localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID) as string;
 
   // createCart
 
@@ -33,26 +39,23 @@ export default function Cart(): JSX.Element {
   // 9935ab95-8859-4530-8341-51bf96b33487
   // 5160a3bd-7fb7-43f2-9b05-96c0e8b115f5
 
-  if (isAuth) {
+  /*    if (isAuth) {
     apiRootWithExistingTokenFlow()
-      .me()
-      .carts()
+      .carts().withId({ID: idAuthCart})
       .get()
       .execute()
       .then((res) => {
-        console.log(res.body.results[0]);
-
-        if (res.body.results[0]?.customerId) {
+        if (res.body.customerId) {  
           apiRootWithExistingTokenFlow()
             .carts()
-            .withId({ ID: res.body.results[0].id })
+            .withId({ ID: res.body.id })
             .post({
               body: {
-                version: res.body.results[0].version,
+                version: res.body.version,
                 actions: [
                   {
                     action: 'addLineItem',
-                    productId: '9935ab95-8859-4530-8341-51bf96b33487',
+                    productId: '5160a3bd-7fb7-43f2-9b05-96c0e8b115f5',
                     quantity: 1,
                   },
                 ],
@@ -66,7 +69,7 @@ export default function Cart(): JSX.Element {
   } else {
     apiRootWithAnonymousSessionFlow()
       .carts()
-      .withId({ ID: idCartResponse })
+      .withId({ ID: idAnonymCart })
       .get()
       .execute()
       .then((res) => {
@@ -74,7 +77,7 @@ export default function Cart(): JSX.Element {
         console.log(res.body.version);
         apiRootWithAnonymousSessionFlow()
           .carts()
-          .withId({ ID: idCartResponse })
+          .withId({ ID: idAnonymCart })
           .post({
             body: {
               version: res.body.version,
@@ -91,30 +94,24 @@ export default function Cart(): JSX.Element {
           .then(console.log)
           .catch(console.log);
       });
-  }
-
-  // getCart
-  /*   apiRootWithExistingTokenFlow().me().carts().get().execute().then(res => {
-    if (res.body.results[0]?.lineItems)
-    console.log(res.body.results[0]?.lineItems)
-  }) */
+  }  */
 
   useEffect(() => {
     if (isAuth) {
       apiRootWithExistingTokenFlow()
-        .me()
         .carts()
+        .withId({ ID: idAuthCart })
         .get()
         .execute()
         .then((res) => {
           console.log(res);
-          setCountInCart(res.body.results[0]?.lineItems.length || 0);
+          setCountInCart(res.body.lineItems.length || 0);
         })
         .catch();
     } else {
       apiRootWithAnonymousSessionFlow()
         .carts()
-        .withId({ ID: idCartResponse })
+        .withId({ ID: idAnonymCart })
         .get()
         .execute()
         .then((res) => {
@@ -124,7 +121,7 @@ export default function Cart(): JSX.Element {
         })
         .catch();
     }
-  }, []);
+  }, [updateCart]);
 
   const cartBreadcrumbList = [
     {
@@ -142,7 +139,7 @@ export default function Cart(): JSX.Element {
       <Breadcrumb linksList={cartBreadcrumbList} currentPageName="Your cart" />
 
       <div className={classes['cart-container']}>
-        {countInCart > 0 ? <CartFull /> : <CartEmpty />}
+        {countInCart > 0 ? <CartFull setUpdateAllCart={setUpdateAllCart} /> : <CartEmpty />}
       </div>
     </div>
   );
