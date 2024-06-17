@@ -1,6 +1,6 @@
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
-import { useEffect, useState } from 'react';
-import { Cart, LineItem } from '@commercetools/platform-sdk';
+
+import { Cart } from '@commercetools/platform-sdk';
 import ButtonBig from 'components/button-big/button-big';
 import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthSelector } from 'redux/selectors';
@@ -12,19 +12,16 @@ import CartTotal from './cartTotal/cartTotal';
 
 type CartFullType = {
   setUpdateAllCart: React.Dispatch<React.SetStateAction<number>>;
+  cartBody?: Cart;
 };
 
 export default function CartFull(props: CartFullType): JSX.Element {
-  const { setUpdateAllCart } = props;
-  const [productArr, setProductArray] = useState<LineItem[]>();
-  const [cartBody, setCartBody] = useState<Cart>();
-  const [update, setUpdate] = useState(0);
+  const { setUpdateAllCart, cartBody } = props;
   const { isAuth } = useAppSelector(apiAuthSelector);
   const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
   const idAuthCart: string = localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID) as string;
 
   const updateCart = (): void => {
-    setUpdate(Math.random());
     setUpdateAllCart(Math.random);
     console.log('update product');
   };
@@ -33,6 +30,7 @@ export default function CartFull(props: CartFullType): JSX.Element {
     console.log('clear Cart');
 
     if (isAuth) {
+      console.log('auth');
       apiRootWithExistingTokenFlow()
         .carts()
         .withId({ ID: idAuthCart })
@@ -61,18 +59,20 @@ export default function CartFull(props: CartFullType): JSX.Element {
                 .then((result) => {
                   console.log(result);
                   localStorage.setItem(LOCAL_STORAGE_AUTH_CART_ID, result.body.id);
+                  updateCart();
                 })
                 .catch((err) => console.log(err));
             });
         });
     } else {
+      console.log('no auth');
       apiRootWithAnonymousSessionFlow()
         .carts()
         .withId({ ID: idAnonymCart })
         .get()
         .execute()
         .then((res) => {
-          apiRootWithExistingTokenFlow()
+          apiRootWithAnonymousSessionFlow()
             .carts()
             .withId({ ID: idAnonymCart })
             .delete({
@@ -82,7 +82,7 @@ export default function CartFull(props: CartFullType): JSX.Element {
             })
             .execute()
             .then(() => {
-              apiRootWithExistingTokenFlow()
+              apiRootWithAnonymousSessionFlow()
                 .me()
                 .carts()
                 .post({
@@ -94,47 +94,13 @@ export default function CartFull(props: CartFullType): JSX.Element {
                 .then((result) => {
                   console.log(result);
                   localStorage.setItem(LOCAL_STORAGE_ANONYM_CART_ID, result.body.id);
+                  updateCart();
                 })
                 .catch((err) => console.log(err));
             });
         });
     }
   };
-
-  useEffect(() => {
-    // getCart
-
-    if (isAuth) {
-      apiRootWithExistingTokenFlow()
-        .carts()
-        .withId({ ID: idAuthCart })
-        .get()
-        .execute()
-        .then((res) => {
-          if (res.body.lineItems) {
-            setProductArray(res.body.lineItems);
-            setCartBody(res.body);
-            console.log('product Arr');
-            console.log(res.body);
-          }
-        });
-    } else {
-      apiRootWithAnonymousSessionFlow()
-        .carts()
-        .withId({ ID: idAnonymCart })
-        .get()
-        .execute()
-        .then((res) => {
-          if (res.body.lineItems) {
-            setProductArray(res.body.lineItems);
-            setCartBody(res.body);
-            console.log('product Arr');
-            console.log(res.body);
-          }
-        })
-        .catch();
-    }
-  }, [update]);
 
   const headerColumnArr = ['Product', 'Price', 'Quantity', 'Total cost'];
 
@@ -149,7 +115,9 @@ export default function CartFull(props: CartFullType): JSX.Element {
           ))}
         </div>
         <div className={classes['products__container']}>
-          {productArr?.map((item) => <CartProduct product={item} updateCart={updateCart} />)}
+          {cartBody?.lineItems.map((item) => (
+            <CartProduct product={item} updateCart={updateCart} />
+          ))}
           <div className={classes['product__clear-btn-container']}>
             <ButtonBig content="Clear Shopping Cart" isActiveStyle onClick={clearCart} />
           </div>
