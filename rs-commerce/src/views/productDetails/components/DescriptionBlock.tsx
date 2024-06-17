@@ -4,11 +4,11 @@ import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import star from 'assets/images/star.svg';
 import { cartSelector, productDetailsSelector } from 'redux/selectors';
 import { useParams } from 'react-router-dom';
+import CartButton from 'components/CartButton/CartButton';
 import style from '../style.module.css';
 import Price from './Price';
 import DescriptionText from './DescriptionText';
 import DescriptionList from './DescriptionList';
-import CartButton from './CartButton';
 
 function DescriptionBlock() {
   const { id } = useParams();
@@ -58,7 +58,7 @@ function DescriptionBlock() {
           </div>
         </div>
       )}
-      <CartButton type={isInCart ? 'remove' : 'add'} />
+      <CartButton type={isInCart ? 'remove' : 'add'} curProductId={id!} />
       <DescriptionText description={attributes['description'] || ''} />
       <DescriptionList descriptionList={descriptionList} />
     </div>

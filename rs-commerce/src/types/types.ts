@@ -179,6 +179,7 @@ export type SimpleValue = { id: string; value: string };
 
 export type SimpleBooleanValue = { [key: string]: boolean };
 
+
 export type TeamMember = {
   name: string;
   position: string;
@@ -190,4 +191,13 @@ export type TeamMember = {
 
 export type CartInitialState = {
   cartData: null | Cart | CartPagedQueryResponse;
+};
+
+export type TeamMember = {
+  name: string;
+  position: string;
+  github: string;
+  description: string;
+  image: string;
+  contribution: string[];
 };

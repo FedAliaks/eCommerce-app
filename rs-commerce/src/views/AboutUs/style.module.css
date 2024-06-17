@@ -5,8 +5,8 @@
 .heading {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
+  font-size: 36px;
   margin-bottom: 30px;
 }
 
@@ -30,6 +30,7 @@
   width: 100%;
   background-color: #f4f5f7;
 }
+
 .team-item__image {
   width: 100%;
   height: 400px;
@@ -60,7 +61,9 @@
   margin-bottom: 8px;
 }
 .team-item__description {
-  font-size: 18px;
+
+  font-size: 20px;
+
   font-weight: 600;
   margin-bottom: 10px;
 }
@@ -78,6 +81,9 @@
   color: #3a3a3a;
 }
 .collaboration__title {
+
+  font-size: 30px;
+
   margin-bottom: 20px;
 }
 .collaboration__content {
@@ -106,11 +112,14 @@
     padding-bottom: 60px;
   }
   .heading {
+
+    font-size: 28px;
     margin-bottom: 15px;
-  }
+
   .team-item__image {
     height: 350px;
   }
+
   .team-item__info {
     padding: 15px 20px;
   }
@@ -140,6 +149,7 @@
 @media screen and (max-width: 768px) {
   .heading {
     flex-direction: column;
+    align-items: flex-start;
     gap: 5px;
   }
   .heading a {
@@ -151,12 +161,14 @@
   }
   .team {
     flex-direction: column;
-    align-items: center;
+
     gap: 10px;
   }
+
   .team-item {
     width: 50%;
   }
+
   .collaboration__content {
     flex-direction: column;
     gap: 20px;
@@ -169,20 +181,26 @@
     width: 100%;
   }
 }
+
 @media screen and (max-width: 600px) {
   .team-item {
     width: 70%;
   }
 }
+
 @media screen and (max-width: 415px) {
   .container {
     padding-top: 15px;
     padding-bottom: 30px;
   }
   .heading {
+
+    font-size: 22px;
     margin-bottom: 10px;
   }
+
   .team-item {
     width: 100%;
   }
+
 }

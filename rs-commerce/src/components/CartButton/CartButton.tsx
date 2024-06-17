@@ -2,18 +2,16 @@ import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { cartSelector, productDetailsSelector } from 'redux/selectors';
 import { cartActions } from 'redux/slices/cart-slice';
 import { apiUpdateCart, apiGetCart } from 'api/api';
-import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import style from '../style.module.css';
+import style from './style.module.css';
 
 type CartButtonProps = {
   type: 'add' | 'remove';
+  curProductId: string;
 };
 
-function CartButton({ type }: CartButtonProps) {
+function CartButton({ type, curProductId }: CartButtonProps) {
   const dispatch = useAppDispatch();
-
-  const { id } = useParams();
 
   const { productDetail } = useAppSelector(productDetailsSelector);
   const { cartData } = useAppSelector(cartSelector);
@@ -27,7 +25,7 @@ function CartButton({ type }: CartButtonProps) {
             actions: [
               {
                 action: 'addLineItem',
-                productId: id,
+                productId: curProductId,
                 variantId: productDetail?.masterVariant.id,
                 quantity: 1,
               },
@@ -38,7 +36,7 @@ function CartButton({ type }: CartButtonProps) {
 
         toast.success('Added to cart!');
       } else {
-        const lineItem = cartData.lineItems.find((item) => item.productId === id);
+        const lineItem = cartData.lineItems.find((item) => item.productId === curProductId);
         await apiUpdateCart({
           data: {
             version: cartData.version,
