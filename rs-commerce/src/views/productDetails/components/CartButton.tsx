@@ -20,10 +20,11 @@ function CartButton({ type }: CartButtonProps) {
 
   const cardButtonHandler = async () => {
     if (cartData && 'lineItems' in cartData) {
+      const currentCart = await apiGetCart(cartData.id);
       if (type === 'add') {
         await apiUpdateCart({
           data: {
-            version: cartData.version,
+            version: currentCart.body.version,
             actions: [
               {
                 action: 'addLineItem',
@@ -41,7 +42,7 @@ function CartButton({ type }: CartButtonProps) {
         const lineItem = cartData.lineItems.find((item) => item.productId === id);
         await apiUpdateCart({
           data: {
-            version: cartData.version,
+            version: currentCart.body.version,
             actions: [
               {
                 action: 'removeLineItem',
