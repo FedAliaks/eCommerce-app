@@ -1,6 +1,7 @@
 import { SimpleFiltersValues, SimpleObject, TeamMember } from 'types/types';
 import daryaImg from 'assets/about-us/darya.jpg';
 import alexandrImg from 'assets/about-us/alexandr.jpg';
+import sergioImg from 'assets/about-us/sergio.jpg';
 
 export const LOGIN_PAGE_TEXT = {
   titleForm: 'Login',
@@ -345,8 +346,9 @@ export const team: TeamMember[] = [
     name: 'Sergio',
     position: 'Developer',
     github: 'https://github.com/sergioivanov008',
-    description: 'Some short bio description',
-    image: '',
+    description:
+      'He is currently working as a designer in a very specific field, but his goal is to become a developer and change his life.',
+    image: sergioImg,
     contribution: [
       'high level of CommerceTools documentation proficiency and shared this knowledge;',
       'high-quality code refactoring',
