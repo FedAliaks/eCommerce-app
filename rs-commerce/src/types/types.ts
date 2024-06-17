@@ -175,6 +175,15 @@ export type SimpleObject = {
 
 export type ProductImageItem = { url: string; label: string; dimensions: { w: number; h: number } };
 
+export type TeamMember = {
+  name: string;
+  position: string;
+  github: string;
+  description: string;
+  image: string;
+  contribution: string[];
+};
+
 export type CartInitialState = {
   cartData: null | Cart | CartPagedQueryResponse;
 };
