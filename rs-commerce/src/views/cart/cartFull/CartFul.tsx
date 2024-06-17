@@ -116,7 +116,7 @@ export default function CartFull(props: CartFullType): JSX.Element {
         </div>
         <div className={classes['products__container']}>
           {cartBody?.lineItems.map((item) => (
-            <CartProduct product={item} updateCart={updateCart} />
+            <CartProduct product={item} updateCart={updateCart} key={item.id} />
           ))}
           <div className={classes['product__clear-btn-container']}>
             <ButtonBig content="Clear Shopping Cart" isActiveStyle onClick={clearCart} />
