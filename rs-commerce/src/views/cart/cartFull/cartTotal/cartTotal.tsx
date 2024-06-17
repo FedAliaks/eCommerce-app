@@ -1,10 +1,12 @@
 import ButtonDefault from 'components/button-default/ButtonDefault';
 import { useState } from 'react';
 import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
-import { apiAuthSelector } from 'redux/selectors';
-import { useAppSelector } from 'hooks/typed-react-redux-hooks';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
-import { LOCAL_STORAGE_ANONYM_CART_ID, LOCAL_STORAGE_AUTH_CART_ID } from 'constants/constants';
+import {
+  LOCAL_STORAGE_ANONYM_CART_ID,
+  LOCAL_STORAGE_AUTH_CART_ID,
+  LOCAL_STORAGE_TOKEN,
+} from 'constants/constants';
 import classes from './cartTotal.module.css';
 
 export type CartTotalType = {
@@ -17,9 +19,9 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
   const { totalPrice, discounted, updateCart } = props;
   const [promoCode, setPromoCode] = useState('');
   const [promoCodeMsg, setPromoCodeMsg] = useState('');
-  const { isAuth } = useAppSelector(apiAuthSelector);
   const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
   const idAuthCart: string = localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID) as string;
+  const isAuth = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN)!);
 
   const usePromoCode = () => {
     if (isAuth) {
@@ -47,9 +49,7 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
             .then(() => {
               updateCart();
               setPromoCodeMsg('promo code applied');
-            })
-
-            .catch(console.log);
+            });
         });
     } else {
       apiRootWithAnonymousSessionFlow()
@@ -76,8 +76,7 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
             .then(() => {
               setPromoCodeMsg('promo code applied');
               updateCart();
-            })
-            .catch(console.log);
+            });
         });
     }
   };

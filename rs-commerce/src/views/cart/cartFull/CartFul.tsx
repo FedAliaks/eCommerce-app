@@ -2,10 +2,12 @@ import apiRootWithExistingTokenFlow from 'SDK/apiRootWithExistingTokenFlow';
 
 import { Cart } from '@commercetools/platform-sdk';
 import ButtonBig from 'components/button-big/button-big';
-import { useAppSelector } from 'hooks/typed-react-redux-hooks';
-import { apiAuthSelector } from 'redux/selectors';
 import apiRootWithAnonymousSessionFlow from 'SDK/apiRootWithAnonymousSessionFlow';
-import { LOCAL_STORAGE_ANONYM_CART_ID, LOCAL_STORAGE_AUTH_CART_ID } from 'constants/constants';
+import {
+  LOCAL_STORAGE_ANONYM_CART_ID,
+  LOCAL_STORAGE_AUTH_CART_ID,
+  LOCAL_STORAGE_TOKEN,
+} from 'constants/constants';
 import classes from './cartFull.module.css';
 import CartProduct from './cartProduct/CartProduct';
 import CartTotal from './cartTotal/cartTotal';
@@ -17,20 +19,16 @@ type CartFullType = {
 
 export default function CartFull(props: CartFullType): JSX.Element {
   const { setUpdateAllCart, cartBody } = props;
-  const { isAuth } = useAppSelector(apiAuthSelector);
+  const isAuth = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TOKEN)!);
   const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
   const idAuthCart: string = localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID) as string;
 
   const updateCart = (): void => {
     setUpdateAllCart(Math.random);
-    console.log('update product');
   };
 
   const clearCart = () => {
-    console.log('clear Cart');
-
     if (isAuth) {
-      console.log('auth');
       apiRootWithExistingTokenFlow()
         .carts()
         .withId({ ID: idAuthCart })
@@ -57,15 +55,12 @@ export default function CartFull(props: CartFullType): JSX.Element {
                 })
                 .execute()
                 .then((result) => {
-                  console.log(result);
                   localStorage.setItem(LOCAL_STORAGE_AUTH_CART_ID, result.body.id);
                   updateCart();
-                })
-                .catch((err) => console.log(err));
+                });
             });
         });
     } else {
-      console.log('no auth');
       apiRootWithAnonymousSessionFlow()
         .carts()
         .withId({ ID: idAnonymCart })
@@ -92,11 +87,9 @@ export default function CartFull(props: CartFullType): JSX.Element {
                 })
                 .execute()
                 .then((result) => {
-                  console.log(result);
                   localStorage.setItem(LOCAL_STORAGE_ANONYM_CART_ID, result.body.id);
                   updateCart();
-                })
-                .catch((err) => console.log(err));
+                });
             });
         });
     }
