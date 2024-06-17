@@ -156,6 +156,7 @@ export default function CartFull(props: CartFullType): JSX.Element {
         </div>
       </div>
       <CartTotal
+        updateCart={updateCart}
         discounted={cartBody?.discountOnTotalPrice?.discountedAmount.centAmount}
         totalPrice={cartBody?.totalPrice.centAmount || 100}
       />

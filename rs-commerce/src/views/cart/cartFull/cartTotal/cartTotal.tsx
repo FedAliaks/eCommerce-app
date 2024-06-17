@@ -10,11 +10,13 @@ import classes from './cartTotal.module.css';
 export type CartTotalType = {
   totalPrice: number;
   discounted: number | undefined;
+  updateCart: () => void;
 };
 
 export default function CartTotal(props: CartTotalType): JSX.Element {
-  const { totalPrice, discounted } = props;
+  const { totalPrice, discounted, updateCart } = props;
   const [promoCode, setPromoCode] = useState('');
+  const [promoCodeMsg, setPromoCodeMsg] = useState('');
   const { isAuth } = useAppSelector(apiAuthSelector);
   const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
   const idAuthCart: string = localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID) as string;
@@ -42,7 +44,11 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
               },
             })
             .execute()
-            .then((result) => console.log(result))
+            .then(() => {
+              updateCart();
+              setPromoCodeMsg('promo code applied');
+            })
+
             .catch(console.log);
         });
     } else {
@@ -67,7 +73,10 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
               },
             })
             .execute()
-            .then((result) => console.log(result))
+            .then(() => {
+              setPromoCodeMsg('promo code applied');
+              updateCart();
+            })
             .catch(console.log);
         });
     }
@@ -110,6 +119,7 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
         />
         <ButtonDefault content="Apply" colored onClick={usePromoCode} isActive small />
       </div>
+      <p>{promoCodeMsg}</p>
     </div>
   );
 }
