@@ -2,7 +2,9 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { render, screen } from '@testing-library/react';
 import ProductItem from 'components/product-item/product-item';
 import { ROUTE_PATH } from 'constants/constants';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+import { store } from 'redux/configure-store';
 
 describe('Product card render', () => {
   it('should render product card', () => {
@@ -65,9 +67,11 @@ describe('Product card render', () => {
     };
 
     render(
-      <MemoryRouter initialEntries={[`${ROUTE_PATH.productDetails}/${product.id}`]}>
-        <ProductItem product={product as ProductProjection} />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[`${ROUTE_PATH.productDetails}/${product.id}`]}>
+          <ProductItem product={product as ProductProjection} />
+        </MemoryRouter>
+      </Provider>,
     );
 
     expect(screen.getByText(name)).toBeInTheDocument();

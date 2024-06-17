@@ -12,7 +12,7 @@ describe('About Us page', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText('Our secrets of successful collaboration:')).toBeInTheDocument();
+    expect(screen.getByText('Our secrets of successful collaboration')).toBeInTheDocument();
   });
 
   it('should render About us Team member card', () => {
