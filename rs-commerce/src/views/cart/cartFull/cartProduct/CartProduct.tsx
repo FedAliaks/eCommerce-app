@@ -90,6 +90,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
   const decreaseCount = () => {
     setCountProduct(countProduct - 1);
     updateCart();
+    console.log('decreaseCount');
 
     if (isAuth) {
       apiRootWithExistingTokenFlow()
@@ -98,7 +99,6 @@ export default function CartProduct(props: CartProductType): JSX.Element {
         .get()
         .execute()
         .then((res) => {
-          console.log(res);
           apiRootWithExistingTokenFlow()
             .carts()
             .withId({ ID: idAuthCart })
@@ -125,6 +125,7 @@ export default function CartProduct(props: CartProductType): JSX.Element {
       apiRootWithAnonymousSessionFlow()
         .carts()
         .withId({ ID: idAnonymCart })
+
         .get()
         .execute()
         .then((res) => {

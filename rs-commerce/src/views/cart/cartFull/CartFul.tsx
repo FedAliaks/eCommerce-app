@@ -23,14 +23,82 @@ export default function CartFull(props: CartFullType): JSX.Element {
   const idAnonymCart: string = localStorage.getItem(LOCAL_STORAGE_ANONYM_CART_ID) as string;
   const idAuthCart: string = localStorage.getItem(LOCAL_STORAGE_AUTH_CART_ID) as string;
 
-  const clearCart = () => {
-    console.log('clear Cart');
-  };
-
   const updateCart = (): void => {
     setUpdate(Math.random());
     setUpdateAllCart(Math.random);
     console.log('update product');
+  };
+
+  const clearCart = () => {
+    console.log('clear Cart');
+
+    if (isAuth) {
+      apiRootWithExistingTokenFlow()
+        .carts()
+        .withId({ ID: idAuthCart })
+        .get()
+        .execute()
+        .then((res) => {
+          apiRootWithExistingTokenFlow()
+            .carts()
+            .withId({ ID: idAuthCart })
+            .delete({
+              queryArgs: {
+                version: res.body.version,
+              },
+            })
+            .execute()
+            .then(() => {
+              apiRootWithExistingTokenFlow()
+                .me()
+                .carts()
+                .post({
+                  body: {
+                    currency: 'EUR',
+                  },
+                })
+                .execute()
+                .then((result) => {
+                  console.log(result);
+                  localStorage.setItem(LOCAL_STORAGE_AUTH_CART_ID, result.body.id);
+                })
+                .catch((err) => console.log(err));
+            });
+        });
+    } else {
+      apiRootWithAnonymousSessionFlow()
+        .carts()
+        .withId({ ID: idAnonymCart })
+        .get()
+        .execute()
+        .then((res) => {
+          apiRootWithExistingTokenFlow()
+            .carts()
+            .withId({ ID: idAnonymCart })
+            .delete({
+              queryArgs: {
+                version: res.body.version,
+              },
+            })
+            .execute()
+            .then(() => {
+              apiRootWithExistingTokenFlow()
+                .me()
+                .carts()
+                .post({
+                  body: {
+                    currency: 'EUR',
+                  },
+                })
+                .execute()
+                .then((result) => {
+                  console.log(result);
+                  localStorage.setItem(LOCAL_STORAGE_ANONYM_CART_ID, result.body.id);
+                })
+                .catch((err) => console.log(err));
+            });
+        });
+    }
   };
 
   useEffect(() => {
@@ -47,7 +115,6 @@ export default function CartFull(props: CartFullType): JSX.Element {
             setProductArray(res.body.lineItems);
             setCartBody(res.body);
             console.log('product Arr');
-            console.log(productArr);
             console.log(res.body);
           }
         });
@@ -62,7 +129,6 @@ export default function CartFull(props: CartFullType): JSX.Element {
             setProductArray(res.body.lineItems);
             setCartBody(res.body);
             console.log('product Arr');
-            console.log(productArr);
             console.log(res.body);
           }
         })

@@ -39,7 +39,7 @@ export default function Cart(): JSX.Element {
   // 9935ab95-8859-4530-8341-51bf96b33487
   // 5160a3bd-7fb7-43f2-9b05-96c0e8b115f5
 
-  /*    if (isAuth) {
+  /*      if (isAuth) {
     apiRootWithExistingTokenFlow()
       .carts().withId({ID: idAuthCart})
       .get()
@@ -55,7 +55,7 @@ export default function Cart(): JSX.Element {
                 actions: [
                   {
                     action: 'addLineItem',
-                    productId: '5160a3bd-7fb7-43f2-9b05-96c0e8b115f5',
+                    productId: '57c69d29-4263-4fb5-b374-81abf0ec2094',
                     quantity: 1,
                   },
                 ],
