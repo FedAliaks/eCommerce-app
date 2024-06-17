@@ -1,6 +1,7 @@
 import { ROUTE_PATH } from 'constants/constants';
 import AboutUs from 'views/AboutUs/AboutUs';
 import Catalog from 'views/Catalog/Catalog';
+import CartPage from 'views/cart/CartPage';
 import Login from 'views/login/Login';
 import Main from 'views/main/Main';
 import NotFound from 'views/notFound/NotFound';
@@ -58,6 +59,10 @@ const routes = [
     component: <ProductDetails />,
   },
   {
+    path: ROUTE_PATH.cart,
+    component: <CartPage />,
+  },
+  {
     path: ROUTE_PATH.aboutUs,
     component: <AboutUs />,
   },
@@ -111,6 +116,10 @@ export const publicRoutes = [
   {
     path: ROUTE_PATH.productDetailsId,
     component: <ProductDetails />,
+  },
+  {
+    path: ROUTE_PATH.cart,
+    component: <CartPage />,
   },
   {
     path: ROUTE_PATH.aboutUs,

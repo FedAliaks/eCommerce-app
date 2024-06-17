@@ -68,6 +68,9 @@ export const ROUTE_PATH = {
   productDetailsId: '/product-details/:id',
   catalog: '/catalog',
   catalogCategory: '/catalog/:category',
+
+  cart: '/cart',
+
   aboutUs: '/about-us',
 };
 

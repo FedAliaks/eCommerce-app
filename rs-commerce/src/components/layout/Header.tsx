@@ -119,6 +119,10 @@ function Header() {
           )}
         </ul>
       </nav>
+
+      <Link to={ROUTE_PATH.cart} className={style['nav-cart']}>
+        <img src="src/assets/images/cart-image.png" width="28" height="28" alt="cart-logo" />
+      </Link>
     </header>
   );
 }
