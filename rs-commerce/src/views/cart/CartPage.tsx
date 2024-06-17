@@ -67,7 +67,7 @@ export default function CartPage(): JSX.Element {
     <div>
       <Breadcrumb linksList={cartBreadcrumbList} currentPageName="Your cart" />
 
-      <div className={classes['cart-container']}>
+      <div className={`container ${classes['cart-container']}`}>
         {countInCart > 0 ? (
           <CartFull cartBody={cartBody} setUpdateAllCart={setUpdateAllCart} />
         ) : (

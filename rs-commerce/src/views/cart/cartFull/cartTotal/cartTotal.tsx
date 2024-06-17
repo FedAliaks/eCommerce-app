@@ -25,7 +25,7 @@ export default function CartTotal(props: CartTotalType): JSX.Element {
     if (isAuth) {
       apiRootWithExistingTokenFlow()
         .carts()
-        .withId({ ID: idAnonymCart })
+        .withId({ ID: idAuthCart })
         .get()
         .execute()
         .then((res) => {

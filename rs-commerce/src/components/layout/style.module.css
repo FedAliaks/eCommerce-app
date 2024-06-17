@@ -99,15 +99,24 @@
   padding-top: 15px;
   text-align: center;
 }
+.nav-cart {
+  margin-left: 20px;
+  padding: 3px;
+  display: flex;
+}
 @media screen and (max-width: 820px) {
   .header {
     padding-top: 20px;
     padding-bottom: 20px;
+    align-items: flex-start;
   }
   .header a.logo,
   .footer .logo {
     font-size: 16px;
     text-wrap: pretty;
+  }
+  .header a.logo {
+    order: 1;
   }
   .header a.logo img {
     width: 30px;
@@ -121,6 +130,8 @@
     display: inline-block;
     border: none;
     background-color: transparent;
+    order: 3;
+    margin-left: 15px;
   }
   .burger_menu span {
     background: var(--black);
@@ -194,5 +205,10 @@
   }
   .footer-bottom {
     font-size: 12px;
+  }
+
+  .nav-cart {
+    order: 2;
+    margin-left: auto;
   }
 }

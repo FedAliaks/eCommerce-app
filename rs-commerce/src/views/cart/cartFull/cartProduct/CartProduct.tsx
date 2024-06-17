@@ -230,7 +230,11 @@ export default function CartProduct(props: CartProductType): JSX.Element {
       </div>
 
       <div>
-        <button type="button" className={classes['product__button']} onClick={decreaseCount}>
+        <button
+          type="button"
+          className={classes['product__button']}
+          onClick={decreaseCount}
+          disabled={countProduct === 1}>
           −
         </button>
         <input className={classes['product__input']} type="text" value={countProduct} readOnly />
@@ -241,10 +245,12 @@ export default function CartProduct(props: CartProductType): JSX.Element {
       </div>
 
       <p>{`${totalPrice / 100} EUR`}</p>
-      <div
-        role="presentation"
+      <button
+        type="button"
         className={classes['product__delete']}
         onClick={deletePositionFromCart}
+        title="Remove from Cart"
+        aria-label="Remove from Cart"
       />
     </div>
   );
