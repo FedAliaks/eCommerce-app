@@ -1,12 +1,18 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Logo from 'assets/images/logo.png';
-import { LOCAL_STORAGE_TOKEN, ROUTE_PATH, TOASTS_TEXT } from 'constants/constants';
+import {
+  LOCAL_STORAGE_AUTH_CART_ID,
+  LOCAL_STORAGE_TOKEN,
+  ROUTE_PATH,
+  TOASTS_TEXT,
+} from 'constants/constants';
 import { useAppDispatch, useAppSelector } from 'hooks/typed-react-redux-hooks';
 import { apiAuthActions } from 'redux/slices/api-auth-slice';
 import { apiAuthSelector } from 'redux/selectors';
 import toast from 'react-hot-toast';
 import style from './style.module.css';
+import cartImg from '../../assets/images/cart-image.png';
 
 function Header() {
   const dispatch = useAppDispatch();
@@ -21,8 +27,10 @@ function Header() {
     {
       path: ROUTE_PATH.catalog,
       title: 'Catalog',
-      className: '',
-      // className: style['underline'],
+    },
+    {
+      path: ROUTE_PATH.aboutUs,
+      title: 'About us',
     },
   ];
 
@@ -55,6 +63,8 @@ function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_AUTH_CART_ID);
+    // todo: add logic of creation new anonymous cart and replace cartData in store
     dispatch(apiAuthActions.resetApiAuthSlice());
     toast.success(TOASTS_TEXT.logoutMessage);
 
@@ -80,7 +90,7 @@ function Header() {
         <ul className={style['nav-left']}>
           {leftList.map((item) => (
             <li key={item.path}>
-              <Link to={item.path} className={item.className} aria-label={item.title}>
+              <Link to={item.path} aria-label={item.title}>
                 {item.title}
               </Link>
             </li>
@@ -110,6 +120,10 @@ function Header() {
           )}
         </ul>
       </nav>
+
+      <Link to={ROUTE_PATH.cart} className={style['nav-cart']}>
+        <img src={cartImg} width="28" height="28" alt="cart-logo" />
+      </Link>
     </header>
   );
 }

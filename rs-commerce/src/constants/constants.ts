@@ -1,4 +1,8 @@
-import { SimpleFiltersValues, SimpleObject } from 'types/types';
+import { getInitialSimpleFiltersValues, getRatingValues } from 'utils/checkbox-utils';
+import { SimpleFiltersValues, SimpleObject, TeamMember } from 'types/types';
+import daryaImg from 'assets/about-us/darya.jpg';
+import alexandrImg from 'assets/about-us/alexandr.jpg';
+import sergioImg from 'assets/about-us/sergio.jpg';
 
 export const LOGIN_PAGE_TEXT = {
   titleForm: 'Login',
@@ -64,9 +68,16 @@ export const ROUTE_PATH = {
   productDetailsId: '/product-details/:id',
   catalog: '/catalog',
   catalogCategory: '/catalog/:category',
+
+  cart: '/cart',
+
+  aboutUs: '/about-us',
 };
 
 export const LOCAL_STORAGE_TOKEN = 'hurricane_access_token';
+
+export const LOCAL_STORAGE_ANONYM_CART_ID = 'hurricane_anonym_cart';
+export const LOCAL_STORAGE_AUTH_CART_ID = 'hurricane_auth_cart';
 
 export const STATUS = {
   CODE_400: 400,
@@ -145,6 +156,12 @@ export const SORT_REQUESTS: SimpleObject = {
   authorDown: `variants.attributes.author desc`,
 };
 
+export const RATING_VALUES_PROPS = {
+  min: 0,
+  max: 5,
+  step: 0.1,
+};
+
 export const MAIN_FILTER_PROPS = {
   price: {
     title: 'Price:',
@@ -170,127 +187,20 @@ export const MAIN_FILTER_PROPS = {
   rating: {
     title: 'Rating:',
     name: 'rating',
-    values: [
-      { id: '5.0', value: '5.0' },
-      { id: '4.9', value: '4.9' },
-      { id: '4.8', value: '4.8' },
-      { id: '4.7', value: '4.7' },
-      { id: '4.6', value: '4.6' },
-      { id: '4.5', value: '4.5' },
-      { id: '4.4', value: '4.4' },
-      { id: '4.3', value: '4.3' },
-      { id: '4.2', value: '4.2' },
-      { id: '4.1', value: '4.1' },
-      { id: '4.0', value: '4.0' },
-      { id: '3.9', value: '3.9' },
-      { id: '3.8', value: '3.8' },
-      { id: '3.7', value: '3.7' },
-      { id: '3.6', value: '3.6' },
-      { id: '3.5', value: '3.5' },
-      { id: '3.4', value: '3.4' },
-      { id: '3.3', value: '3.3' },
-      { id: '3.2', value: '3.2' },
-      { id: '3.1', value: '3.1' },
-      { id: '3.0', value: '3.0' },
-      { id: '2.9', value: '2.9' },
-      { id: '2.8', value: '2.8' },
-      { id: '2.7', value: '2.7' },
-      { id: '2.6', value: '2.6' },
-      { id: '2.5', value: '2.5' },
-      { id: '2.4', value: '2.4' },
-      { id: '2.3', value: '2.3' },
-      { id: '2.2', value: '2.2' },
-      { id: '2.1', value: '2.1' },
-      { id: '2.0', value: '2.0' },
-      { id: '1.9', value: '1.9' },
-      { id: '1.8', value: '1.8' },
-      { id: '1.7', value: '1.7' },
-      { id: '1.6', value: '1.6' },
-      { id: '1.5', value: '1.5' },
-      { id: '1.4', value: '1.4' },
-      { id: '1.3', value: '1.3' },
-      { id: '1.2', value: '1.2' },
-      { id: '1.1', value: '1.1' },
-      { id: '1.0', value: '1.0' },
-      { id: '0.9', value: '0.9' },
-      { id: '0.8', value: '0.8' },
-      { id: '0.7', value: '0.7' },
-      { id: '0.6', value: '0.6' },
-      { id: '0.5', value: '0.5' },
-      { id: '0.4', value: '0.4' },
-      { id: '0.3', value: '0.3' },
-      { id: '0.2', value: '0.2' },
-      { id: '0.1', value: '0.1' },
-      { id: '0.0', value: '0.0' },
-    ],
+    values: getRatingValues(
+      RATING_VALUES_PROPS.min,
+      RATING_VALUES_PROPS.max,
+      RATING_VALUES_PROPS.step,
+    ),
   },
   btnClearAll: 'Clear all',
   btnApply: 'Apply',
 };
 
 export const INITIAL_SIMPLE_FILTER_VALUES: SimpleFiltersValues = {
-  cover: {
-    Paperback: false,
-    Hardcover: false,
-  },
-  format: {
-    A4: false,
-    A5: false,
-    A6: false,
-  },
-  rating: {
-    '5.0': false,
-    '4.9': false,
-    '4.8': false,
-    '4.7': false,
-    '4.6': false,
-    '4.5': false,
-    '4.4': false,
-    '4.3': false,
-    '4.2': false,
-    '4.1': false,
-    '4.0': false,
-    '3.9': false,
-    '3.8': false,
-    '3.7': false,
-    '3.6': false,
-    '3.5': false,
-    '3.4': false,
-    '3.3': false,
-    '3.2': false,
-    '3.1': false,
-    '3.0': false,
-    '2.9': false,
-    '2.8': false,
-    '2.7': false,
-    '2.6': false,
-    '2.5': false,
-    '2.4': false,
-    '2.3': false,
-    '2.2': false,
-    '2.1': false,
-    '2.0': false,
-    '1.9': false,
-    '1.8': false,
-    '1.7': false,
-    '1.6': false,
-    '1.5': false,
-    '1.4': false,
-    '1.3': false,
-    '1.2': false,
-    '1.1': false,
-    '1.0': false,
-    '0.9': false,
-    '0.8': false,
-    '0.7': false,
-    '0.6': false,
-    '0.5': false,
-    '0.4': false,
-    '0.3': false,
-    '0.2': false,
-    '0.1': false,
-    '0.0': false,
-  },
+  cover: getInitialSimpleFiltersValues(MAIN_FILTER_PROPS.cover.values),
+  format: getInitialSimpleFiltersValues(MAIN_FILTER_PROPS.format.values),
+  rating: getInitialSimpleFiltersValues(MAIN_FILTER_PROPS.rating.values),
 };
 
 export const SIMPLE_FILTERS_REQUESTS: SimpleObject = {
@@ -310,3 +220,83 @@ export const INITIAL_PRICE_FILTER_VALUE = {
 };
 
 export const EMPTY_RESPONSE = `There are no products matching your request. \nChange the conditions in the filter.`;
+
+export const team: TeamMember[] = [
+  {
+    name: 'Alexander',
+    position: 'Teamlead',
+    github: 'https://github.com/fedaliaks',
+
+    description:
+      "Has a higher technical education and a master's degree in mechanical engineering. Yes, a general technical base, a good relationship with mathematics and more helped in completing the RSSchool course. Yes, he submitted on the second try, given that from the second attempt he began to understand where and what was coming from. Yes, RSSchool is a place where you really need to learn, and not do everything carelessly, but the result is noticeable, and you also have an understanding of where and how to grow, that you can do everything even better (well, okay, he knew that before). Yes, and once again he was convinced that even the impossible becomes possible.",
+    image: alexandrImg,
+
+    contribution: [
+      'initiating regular team discussion;',
+      'creation CommerceTools database;',
+      'active implementation of tasks.',
+    ],
+  },
+  {
+    name: 'Darya',
+    position: 'Developer',
+    github: 'https://github.com/DaryaAniskevich',
+
+    description:
+      'Has a higher economic education. After several years of working in bank decided to become a developer. Currently a Frontend developer with commercial development experience. Hungry for new challenges. Decided to attend RSSchool to refresh theoretical knowledge, expand her competencies, learn something new from other participants and share her knowledge with them.',
+    image: daryaImg,
+
+    contribution: [
+      'active participant in code reviews;',
+      'creation app design;',
+      'active implementation of tasks.',
+    ],
+  },
+  {
+    name: 'Sergio',
+    position: 'Developer',
+    github: 'https://github.com/sergioivanov008',
+
+    description:
+      'He is currently working as a designer in a very specific field, but his goal is to become a developer and change his life.',
+    image: sergioImg,
+
+    contribution: [
+      'high level of CommerceTools documentation proficiency and shared this knowledge;',
+      'high-quality code refactoring',
+      'active implementation of tasks.',
+    ],
+  },
+];
+
+export const collaboration = [
+  {
+    title: 'Shared Vision',
+    description:
+      "We started with a clear understanding of the project's goals. This was achieved through collaborative online brainstorming sessions and careful reading tasks descriptions.",
+  },
+  {
+    title: 'Open Communication',
+    description:
+      'We used an approach of open communication. Regular online meetings and discussing in Discord kept everyone in sync on progress and roadblocks. We used project management tool Trello to track tasks and ensure transparency.',
+  },
+  {
+    title: 'Defined Roles, Shared Responsibilities',
+    description:
+      'Using individual strengths, we assigned clear roles while maintaining a shared responsibility for the overall project. Team members readily helped out when needed.',
+  },
+  {
+    title: 'Code Reviews',
+    description:
+      'Regular code reviews ensured quality, maintainability, and adherence to best practices and sharing experience.',
+  },
+  {
+    title: 'Embracing Challenges',
+    description:
+      "When technical hurdles arose, the team didn't shy away. We tackled them together through brainstorming, researching solutions, and leveraging each other's expertise.",
+  },
+  {
+    title: 'Testing and Refinement',
+    description: 'Rigorous testing ensured a high-quality app.',
+  },
+];

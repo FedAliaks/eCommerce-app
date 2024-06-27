@@ -138,6 +138,7 @@
 .description__rating {
   white-space: nowrap;
   width: max-content;
+  margin-bottom: 20px;
 }
 .description__rating div {
   overflow: hidden;
@@ -225,6 +226,7 @@
 .modal-slider__dot.active {
   background-color: var(--gray-middle);
 }
+
 @media screen and (max-width: 1600px) {
   .modal-slider-image {
     height: 85vh;
