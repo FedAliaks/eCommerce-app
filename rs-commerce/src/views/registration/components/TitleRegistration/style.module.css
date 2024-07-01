@@ -1,0 +1,39 @@
+.registration__title-block {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.registration__title {
+  color: var(--grey-middle);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.registration__login-block {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.registration__login-content {
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.registration__link {
+  color: var(--lilac-dark);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 1024px) {
+  .registration__title-block {
+    flex-direction: column;
+  }
+}

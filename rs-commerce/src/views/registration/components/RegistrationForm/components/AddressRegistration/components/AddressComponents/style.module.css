@@ -1,0 +1,19 @@
+.address {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+}
+.error {
+  max-width: 240px;
+}
+
+@media screen and (max-width: 1024px) {
+  .address {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+  .error {
+    max-width: 100%;
+  }
+}

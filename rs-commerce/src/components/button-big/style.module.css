@@ -1,0 +1,29 @@
+.login-page-btn {
+  border: 1px solid var(--primary);
+  border-radius: 5px;
+  height: 55px;
+  padding: 15px;
+  background: var(--primary);
+  font-family: var(--font-poppins);
+  font-weight: 400;
+  font-size: 16px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition-time);
+  padding: 0 20px;
+  min-width: 240px;
+}
+.login-page-btn.btn-not-active {
+  border: 1px solid #adadad;
+  background: #adadad;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 1024px) {
+  .login-page-btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,193 @@
+import { QueryParam } from '@commercetools/importapi-sdk';
+import {
+  Cart,
+  CartPagedQueryResponse,
+  Category,
+  CustomerSignInResult,
+  MyCustomerDraft,
+  ProductProjection,
+} from '@commercetools/platform-sdk';
+
+export type LoginFormSliceState = {
+  emailValue: string;
+  emailTouched: boolean;
+  isEmailValid: boolean;
+  emailTips: string;
+  passwordValue: string;
+  passwordTouched: boolean;
+  isPasswordValid: boolean;
+  passwordTips: string;
+  loginFormErrorMessage: string;
+};
+
+export type Nullable<T> = T | null;
+
+export type ApiAuthSliceState = {
+  isLoadingAuth: boolean;
+  isAuth: boolean;
+  loginData: Nullable<LoginData>;
+  isAuthError400: boolean;
+  userData: Nullable<CustomerSignInResult>;
+};
+
+export type ApiRegistrationSliceState = {
+  isLoadingRegistration: boolean;
+  registrationData: Nullable<MyCustomerDraft>;
+  isRegistrationError400: boolean;
+};
+
+export type ButtonBigProps = {
+  content: string;
+  isActiveStyle?: boolean;
+  onClick?: () => void;
+};
+
+export type InputProps = {
+  nameWrapper: string;
+  nameId: string;
+  namePlaceholder: string;
+  inputValue: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  inputTips: string;
+  clearFunction?: () => void;
+};
+
+export type LoginData = {
+  email: string;
+  password: string;
+};
+
+export type MessageProps = {
+  isOk: boolean;
+  content: string;
+  closeElement: () => void;
+};
+
+export type CustomLinkProps = {
+  to: string;
+  elStyle: string;
+  text: string;
+};
+
+export type QueryParamsCategories = {
+  expand?: string | string[];
+  sort?: string | string[];
+  limit?: number;
+  offset?: number;
+  withTotal?: boolean;
+  where?: string | string[];
+  [key: string]: QueryParam;
+};
+
+export type QueryParamsProducts = {
+  where?: string | string[];
+  priceCurrency?: string;
+  priceCountry?: string;
+  priceCustomerGroup?: string;
+  priceChannel?: string;
+  localeProjection?: string | string[];
+  expand?: string | string[];
+  sort?: string | string[];
+  limit?: number;
+  offset?: number;
+  withTotal?: boolean;
+  [key: string]: QueryParam;
+};
+
+export type QueryParamsProductsProjections = {
+  fuzzy?: boolean;
+  fuzzyLevel?: number;
+  markMatchingVariants?: boolean;
+  filter?: string | string[];
+  'filter.facets'?: string | string[];
+  'filter.query'?: string | string[];
+  facet?: string | string[];
+  sort?: string | string[];
+  limit?: number;
+  offset?: number;
+  withTotal?: boolean;
+  staged?: boolean;
+  priceCurrency?: string;
+  priceCountry?: string;
+  priceCustomerGroup?: string;
+  priceChannel?: string;
+  localeProjection?: string | string[];
+  storeProjection?: string;
+  expand?: string | string[];
+  [key: string]: QueryParam;
+};
+
+export type PriceFilterValues = {
+  min: Nullable<number>;
+  max: Nullable<number>;
+};
+
+export type SimpleFiltersValues = {
+  [key: string]: {
+    [key: string]: boolean;
+  };
+};
+
+export type ApiCategoriesProductsSliceState = {
+  isLoadingCategories: boolean;
+  categories: Nullable<Category[]>;
+  curCategory: Nullable<Category>;
+  isLoadingProducts: boolean;
+  products: Nullable<ProductProjection[]>;
+  queryParamsProducts: Nullable<QueryParamsProductsProjections>;
+  productsTotal: Nullable<number>;
+  curProductsPage: number;
+  productsInPage: number;
+  searchInputValue: string;
+  productsFilter: Nullable<FilterType>;
+  sortFilterValue: string;
+  priceFilter: PriceFilterValues;
+  simpleFilters: SimpleFiltersValues;
+  canUseMainFilters: boolean;
+};
+
+export type ProductProjectionItemProps = {
+  product: ProductProjection;
+};
+
+export type ButtonPaginationProps = {
+  content: string;
+  curStyle?: string;
+  onClick?: () => void;
+};
+
+export type CategoryItemProps = {
+  data: Nullable<Category>;
+};
+
+export enum FilterType {
+  mainFilter = 'mainFilter',
+  sortFilter = 'sortFilter',
+}
+
+export type MainSortFilterContentProps = {
+  onClick: () => void;
+};
+
+export type SimpleObject = {
+  [key: string]: string;
+};
+
+export type ProductImageItem = { url: string; label: string; dimensions: { w: number; h: number } };
+
+export type SimpleValue = { id: string; value: string };
+
+export type SimpleBooleanValue = { [key: string]: boolean };
+
+export type CartInitialState = {
+  cartData: null | Cart | CartPagedQueryResponse;
+};
+
+export type TeamMember = {
+  name: string;
+  position: string;
+  github: string;
+  description: string;
+  image: string;
+  contribution: string[];
+};

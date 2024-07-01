@@ -1,0 +1,27 @@
+.registration__subtitle-block {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.registration__subtitle-block h2 {
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.input__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input_checkbox {
+  transform: scale(1.5);
+}
+
+@media screen and (max-width: 1024px) {
+  .registration__subtitle-block {
+    gap: 10px;
+    flex-direction: column;
+    margin-bottom: 25px;
+  }
+}

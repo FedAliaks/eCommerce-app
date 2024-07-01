@@ -1,0 +1,15 @@
+.category-item {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  text-decoration: none;
+}
+.category-item:hover {
+  font-weight: 600;
+}
+.category-item.active {
+  font-weight: 600;
+}

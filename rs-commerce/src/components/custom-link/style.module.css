@@ -1,0 +1,8 @@
+.text-blue {
+  color: #209fc1;
+  cursor: pointer;
+  transition: var(--transition-time);
+}
+.text-blue:hover {
+  color: #eb5798;
+}
